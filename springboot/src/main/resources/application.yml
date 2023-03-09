@@ -1,0 +1,26 @@
+server:
+  port: 9999
+spring:
+  spring.jackson.date-format: yyyy-MM-dd HH:mm:ss
+  spring.jackson.time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://49.235.73.252:3306/graduationdesign?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
+    username: GraduationDesign
+    password: 4tBAZfiYmyJfpxtP
+    type: com.alibaba.druid.pool.DruidDataSource
+#  rabbitmq:
+#    host: 49.235.73.252
+#    port: 5672
+#    virtual-host: /
+#    username: admin
+#    password: aaaaaa
+#    listener:
+#      simple:
+#        prefetch: 1 # 每次只能获取一条消息，处理完成才能获取下一条
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
