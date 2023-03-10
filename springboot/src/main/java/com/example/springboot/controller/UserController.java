@@ -2,6 +2,7 @@ package com.example.springboot.controller;
 
 import com.example.springboot.entity.Result;
 import com.example.springboot.entity.User;
+import com.example.springboot.entity.eneityVO.UserVO;
 import com.example.springboot.jwt.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController extends BaseController{
 
     /**
-     * 用户登陆类
+     * 用户登陆
      * @return 登陆结果
      */
     @RequestMapping("/login")
@@ -25,12 +26,31 @@ public class UserController extends BaseController{
     @ResponseBody
     public Result login(@RequestBody User user) {
 
-        System.out.println(user.getUsername());
         User logInUser = userService.findUserByUserName(user.getUsername());
         if (logInUser != null && logInUser.getPassword().equals(user.getPassword())) {
-            return Result.succeed(JwtUtil.generateToken(logInUser.getId()));
+            logInUser = userService.findUserById(logInUser.getId());
+            UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);
+            return Result.succeed(userVO);
         }
         return Result.fail("登陆失败");
+
+    }
+
+    /**
+     * 获取用户最新信息
+     * @return
+     */
+    @RequestMapping("/upgrade")
+    @CrossOrigin
+    @ResponseBody
+    public Result upgrade() {
+
+        String id = (String) request.getAttribute("id");
+
+        if (id != null) {
+            return Result.succeed(userService.findUserById(id));
+        }
+        return Result.fail("请重新登陆");
 
     }
 }

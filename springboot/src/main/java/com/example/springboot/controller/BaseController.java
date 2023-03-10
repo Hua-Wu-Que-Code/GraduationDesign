@@ -3,6 +3,8 @@ package com.example.springboot.controller;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author huawuque
  * @version 1.0
@@ -14,4 +16,7 @@ public class BaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    HttpServletRequest request;
 }

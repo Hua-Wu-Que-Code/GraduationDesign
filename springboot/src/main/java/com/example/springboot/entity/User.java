@@ -1,15 +1,19 @@
 package com.example.springboot.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户信息表(User)实体类
  *
  * @author huawuque
- * @since 2023-03-10 09:19:12
+ * @since 2023-03-10 11:04:49
  */
+@Data
 public class User implements Serializable {
-    private static final long serialVersionUID = -27472825269116783L;
+    private static final long serialVersionUID = -88916332598912439L;
     /**
      * ID
 
@@ -17,7 +21,6 @@ public class User implements Serializable {
     private String id;
     /**
      * 用户名
-
      */
     private String username;
     /**
@@ -40,63 +43,18 @@ public class User implements Serializable {
      * 住址
      */
     private String address;
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    /**
+     * 角色：
+        1.管理员
+        2.医生
+        3.供药商
+        4.患者
+     */
+    private Integer role;
+    /**
+     * 权限
+     */
+    private List<Permission> permissions;
 
 }
 

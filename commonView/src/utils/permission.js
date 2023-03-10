@@ -22,6 +22,7 @@ export function activeRouter() {
             };
             root.children.push(obj)
         })
+        console.log(root)
         if (router) {
             router.addRoute(root)
         }

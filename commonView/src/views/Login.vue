@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import ValidCode from "@/components/ValidCode";
 import {activeRouter} from "@/utils/permission";
 import {Login} from "@/api/index"
@@ -118,10 +117,10 @@ export default {
                 message: "登录成功"
               })
               sessionStorage.setItem("user", JSON.stringify(res.data))  // 缓存用户信息
-
               // 登录成功的时候更新当前路由
               activeRouter()
-              this.$router.push("/")  //登录成功之后进行页面的跳转，跳转到主页
+              this.$router.push('/home')//登录成功之后进行页面的跳转，跳转到主页
+              /*this.$router.push("/")*/
             } else {
               this.$message({
                 type: "error",

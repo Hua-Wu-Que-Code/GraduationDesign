@@ -7,3 +7,9 @@ export function Login(form) {
         password: form.password
     })
 }
+
+export function upgrade() {
+    return request.post('/user/upgrade',{
+
+    })
+}
