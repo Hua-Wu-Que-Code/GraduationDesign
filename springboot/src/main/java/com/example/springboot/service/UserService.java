@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends BaseService{
 
-    public User findUserById(int id) {
+    public User findUserById(String id) {
         return userMapper.findUserById(id);
     }
 
+    public User findUserByUserName(String username) {
+        return userMapper.findUserByUserName(username);
+    }
 }

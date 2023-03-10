@@ -17,10 +17,6 @@
                 <ValidCode @input="createValidCode" />
               </div>
             </el-form-item>
-<!--            <el-form-item>-->
-<!--              <el-radio v-model="form.role" :label="1" style="color: white">管理员</el-radio>-->
-<!--              <el-radio v-model="form.role" :label="2" style="color: white">普通用户</el-radio>-->
-<!--            </el-form-item>-->
             <el-form-item>
               <el-button style="width: 100%" type="primary" @click="login">登 录</el-button>
             </el-form-item>
@@ -41,6 +37,7 @@
 import request from "@/utils/request";
 import ValidCode from "@/components/ValidCode";
 import {activeRouter} from "@/utils/permission";
+import {Login} from "@/api/index"
 
 export default {
   name: "Login",
@@ -61,12 +58,6 @@ export default {
         ],
       },
       validCode: ''
-      // 加背景图片
-      // bg: {
-      //   backgroundImage: "url(" + require("@/assets/bg.jpg") + ")",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundSize: "100% 100%"
-      // }
     }
   },
   mounted() {
@@ -119,8 +110,9 @@ export default {
             this.$message.error("验证码错误")
             return
           }
-          request.post("/user/login", this.form).then(res => {
-            if (res.code === '0') {
+          Login(this.form).then(res => {
+            console.log(res)
+            if (res.code === 100) {
               this.$message({
                 type: "success",
                 message: "登录成功"
@@ -130,7 +122,6 @@ export default {
               // 登录成功的时候更新当前路由
               activeRouter()
               this.$router.push("/")  //登录成功之后进行页面的跳转，跳转到主页
-
             } else {
               this.$message({
                 type: "error",

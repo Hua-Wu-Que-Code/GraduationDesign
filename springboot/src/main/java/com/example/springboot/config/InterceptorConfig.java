@@ -29,9 +29,9 @@ public class InterceptorConfig extends WebMvcConfigurationSupport
 
     public List<String> excludePattern(){
         List<String> ret = new ArrayList<String>();
-        ret.add("/signIn");
-        ret.add("/signUp");
-        ret.add("/hello");
+        ret.add("/user/login");
+        ret.add("/user/signUp");
+        ret.add("/test/hello");
         return ret;
     }
 }

@@ -12,8 +12,7 @@ public class JwtUtil {
     final static String key = "testJwtSaltKey"; //签名
     final static Integer ttl = 24*60*60*1000;   //有效时间
 
-    static public String generateToken( Integer initId ) {
-        String id = initId.toString();
+    static public String generateToken( String id ) {
         String token = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 //jwt的id

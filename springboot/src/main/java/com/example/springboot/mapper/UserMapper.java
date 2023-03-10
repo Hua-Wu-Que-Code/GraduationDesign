@@ -2,6 +2,7 @@ package com.example.springboot.mapper;
 
 import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @author huawuque
@@ -12,5 +13,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper {
-    User findUserById(int id);
+    User findUserById(String id);
+
+    @Select("select * from user where username = #{username}")
+    User findUserByUserName(String username);
 }

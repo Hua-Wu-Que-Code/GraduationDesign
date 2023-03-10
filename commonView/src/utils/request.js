@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from "@/router";
 
 const request = axios.create({
-    baseURL: "/api",
+    baseURL: "http://localhost:9999",
     timeout: 5000
 })
 
@@ -22,7 +22,7 @@ request.interceptors.request.use(config => {
             router.push("/login")
         } else {
             let user = JSON.parse(userJson);
-            config.headers['token'] = user.token;  // 设置请求头
+            config.headers['Authorization'] = user.token;  // 设置请求头
         }
     }
     return config

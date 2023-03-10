@@ -37,8 +37,7 @@ public class AuthInterceptor implements HandlerInterceptor
             throw new JwtException("token已过期！");
         }
         String initId = claim.getSubject();
-        Integer id = Integer.parseInt(initId);
-        User user = userService.findUserById(id);
+        User user = userService.findUserById(initId);
         if(user == null)
         {
             throw new Exception("用户验证失败");

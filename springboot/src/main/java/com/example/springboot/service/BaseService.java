@@ -3,6 +3,7 @@ package com.example.springboot.service;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author huawuque
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @description 基础的Service层
  * @date 2023/3/9 21:24:25
  */
+@Service
 public class BaseService {
     @Autowired
     UserMapper userMapper;
