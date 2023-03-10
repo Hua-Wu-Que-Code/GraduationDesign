@@ -1,5 +1,7 @@
 package com.example.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +16,7 @@ public class Permission implements Serializable {
      * 路由id
 	
      */
+    @JsonIgnore
     private Integer id;
     /**
      * 路由名称
@@ -28,6 +31,7 @@ public class Permission implements Serializable {
      * 角色是否可以访问
 
      */
+    @JsonIgnore
     private Integer role;
     /**
      * 路由名称

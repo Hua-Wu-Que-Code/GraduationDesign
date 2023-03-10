@@ -2,8 +2,10 @@ package com.example.springboot.entity.eneityVO;
 
 import com.example.springboot.entity.Permission;
 import com.example.springboot.entity.User;
-import lombok.Data;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +44,26 @@ public class UserVO {
      * 权限
      */
     private List<Permission> permissions;
+    private String permissionJson;
+    /**
+     * 角色：
+     1.管理员
+     2.医生
+     3.供药商
+     4.患者
+     */
+    private Integer role;
+
+    public UserVO(String token, User user) {
+        this.token = token;
+        this.username = user.getUsername();
+        this.nickname  = user.getNickname();
+        this.age = user.getAge();
+        this.sex = user.getSex();
+        this.address = user.getAddress();
+        this.role = user.getRole();
+        this.permissions = user.getPermissions();
+    }
 
     public List<Permission> getPermissions() {
         return permissions;
@@ -51,25 +73,13 @@ public class UserVO {
         this.permissions = permissions;
     }
 
-    public UserVO(String token, User user) {
-        this.token = token;
-        this.username = user.getUsername();
-        this.age = user.getAge();
-        this.sex = user.getSex();
-        this.address = user.getAddress();
-        this.role = user.getRole();
-        this.permissions = user.getPermissions();
+    public String getPermissionJson() {
+        return permissionJson;
     }
 
-    /**
-     * 角色：
-     1.管理员
-     2.医生
-     3.供药商
-     4.患者
-     */
-
-    private Integer role;
+    public void setPermissionJson(String permissionJson) {
+        this.permissionJson = permissionJson;
+    }
 
     public String getToken() {
         return token;

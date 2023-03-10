@@ -3,7 +3,7 @@ import router from "@/router";
 
 const request = axios.create({
     baseURL: "http://localhost:9999",
-    timeout: 5000
+    timeout: 50000
 })
 
 // 请求白名单，如果请求在白名单里面，将不会被拦截校验权限
@@ -19,6 +19,7 @@ request.interceptors.request.use(config => {
     let userJson = sessionStorage.getItem("user")
     if (!whiteUrls.includes(config.url)) {  // 校验请求白名单
         if(!userJson) {
+            console.log("快去登陆")
             router.push("/login")
         } else {
             let user = JSON.parse(userJson);

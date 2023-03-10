@@ -4,6 +4,8 @@ import com.example.springboot.entity.Result;
 import com.example.springboot.entity.User;
 import com.example.springboot.entity.eneityVO.UserVO;
 import com.example.springboot.jwt.JwtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,6 +32,16 @@ public class UserController extends BaseController{
         if (logInUser != null && logInUser.getPassword().equals(user.getPassword())) {
             logInUser = userService.findUserById(logInUser.getId());
             UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);
+            // 创建ObjectMapper对象
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                // 将ArrayList转换为JSON字符串
+                json = mapper.writeValueAsString(logInUser.getPermissions());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            userVO.setPermissionJson(json);
             return Result.succeed(userVO);
         }
         return Result.fail("登陆失败");
