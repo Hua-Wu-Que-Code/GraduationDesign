@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户信息表(User)实体类
@@ -44,17 +45,13 @@ public class User implements Serializable {
      */
     private String address;
     /**
-     * 角色：
-        1.管理员
-        2.医生
-        3.供药商
-        4.患者
+     * 角色信息
      */
-    private Integer role;
+    private List<Integer> roles;
     /**
      * 权限
      */
-    private List<Permission> permissions;
+    private Set<Permission> permissions;
 
 }
 

@@ -17,14 +17,8 @@ import java.util.List;
 public interface UserMapper {
 
     @Select("select * from user where id = #{id}")
-    @Results({
-            @Result(property = "permissions", column = "role", javaType = List.class,
-                    many = @Many(select = "findPermissions"))
-    })
     User findUserById(String id);
 
-    @Select("select * from permission where role = #{role}")
-    List<Permission> findPermissions(int role);
 
     @Select("select * from user where username = #{username}")
     User findUserByUserName(String username);

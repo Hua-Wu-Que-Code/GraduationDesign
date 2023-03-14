@@ -1,12 +1,16 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.entity.Result;
-import com.example.springboot.entity.User;
+import com.example.springboot.entity.*;
 import com.example.springboot.entity.eneityVO.UserVO;
 import com.example.springboot.jwt.JwtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.springboot.service.UserRoleService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author huawuque
@@ -26,25 +30,39 @@ public class UserController extends BaseController{
     @RequestMapping("/login")
     @CrossOrigin
     @ResponseBody
-    public Result login(@RequestBody User user) {
+    public Result login(@RequestBody User userParam) {
 
-        User logInUser = userService.findUserByUserName(user.getUsername());
-        if (logInUser != null && logInUser.getPassword().equals(user.getPassword())) {
-            logInUser = userService.findUserById(logInUser.getId());
-            UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);
-            // 创建ObjectMapper对象
-            ObjectMapper mapper = new ObjectMapper();
-            String json = null;
-            try {
-                // 将ArrayList转换为JSON字符串
-                json = mapper.writeValueAsString(logInUser.getPermissions());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            userVO.setPermissionJson(json);
-            return Result.succeed(userVO);
+        //查找用户
+        User logInUser = userService.findUserByUserName(userParam.getUsername());
+
+        //判断密码是否正确
+        if (!logInUser.getPassword().equals(userParam.getPassword())) {
+            return Result.fail("密码错误");
         }
-        return Result.fail("登陆失败");
+        if (logInUser == null ) return Result.fail("用户名或密码错误");
+
+        HashSet<Permission> permissionSet = new HashSet<>();
+        //1.获取角色信息
+        logInUser = userService.findUserById(logInUser.getId());
+        List<UserRole> userRoles = userRoleService.findRoleId(logInUser.getId());
+        //设置角色id
+        logInUser.setRoles(userRoles.stream().map(UserRole::getRoleId).distinct().collect(Collectors.toList()));
+        for (UserRole userRole:userRoles) {
+            // 2.根据roleId从role_permission表查询出所有的permissionId
+            List<RolePermission> rolePermissions = permissionMapper.getRolePermissionByRoleId(userRole.getRoleId());
+            for (RolePermission rolePermission : rolePermissions) {
+                Integer permissionId = rolePermission.getPermissionId();
+                // 3. 根据permissionId查询permission信息
+                Permission permission = permissionMapper.selectById(permissionId);
+                permissionSet.add(permission);
+            }
+        }
+        // 对资源根据id进行排序
+        LinkedHashSet<Permission> sortedSet = permissionSet.stream().sorted(Comparator.comparing(Permission::getId)).collect(Collectors.toCollection(LinkedHashSet::new));
+        //设置当前用户的资源信息
+        logInUser.setPermissions(sortedSet);
+        UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);
+        return Result.succeed(userVO);
 
     }
 

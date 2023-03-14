@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author huawuque
@@ -43,16 +44,8 @@ public class UserVO {
     /**
      * 权限
      */
-    private List<Permission> permissions;
-    private String permissionJson;
-    /**
-     * 角色：
-     1.管理员
-     2.医生
-     3.供药商
-     4.患者
-     */
-    private Integer role;
+    private Set<Permission> permissions;
+
 
     public UserVO(String token, User user) {
         this.token = token;
@@ -61,24 +54,16 @@ public class UserVO {
         this.age = user.getAge();
         this.sex = user.getSex();
         this.address = user.getAddress();
-        this.role = user.getRole();
         this.permissions = user.getPermissions();
     }
 
-    public List<Permission> getPermissions() {
+
+    public Set<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
-    }
-
-    public String getPermissionJson() {
-        return permissionJson;
-    }
-
-    public void setPermissionJson(String permissionJson) {
-        this.permissionJson = permissionJson;
     }
 
     public String getToken() {
@@ -105,9 +90,7 @@ public class UserVO {
         return address;
     }
 
-    public Integer getRole() {
-        return role;
-    }
+
 
     public void setToken(String token) {
         this.token = token;
@@ -133,7 +116,5 @@ public class UserVO {
         this.address = address;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
-    }
+
 }

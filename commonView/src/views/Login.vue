@@ -111,20 +111,17 @@ export default {
             return
           }
           Login(this.form).then(res => {
+            console.log(res)
             if (res.code === 100) {
               this.$message({
                 type: "success",
                 message: "登录成功"
               })
-              console.log(res.data)
               console.log(res.data.permissions)
-              let jsArray = JSON.parse(res.data.permissionJson);
-              console.log(jsArray)
-              res.data.permissions = jsArray;
-              /*res.data.permissions = [
-                {path: '/home', name: 'Home',comment: "主页" },
-                {path: '/hello', name: 'Hello',comment: "哈喽"},
-              ];*/
+              res.data.permissions = [
+                {name: 'Hello',path: '/hello', comment: "哈喽"},
+                {name: 'Home',path: '/home',comment: "主页" },
+              ];
               sessionStorage.setItem("user", JSON.stringify(res.data))  // 缓存用户信息
               // 登录成功的时候更新当前路由
               activeRouter()
