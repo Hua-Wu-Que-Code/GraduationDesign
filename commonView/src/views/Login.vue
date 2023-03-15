@@ -111,17 +111,12 @@ export default {
             return
           }
           Login(this.form).then(res => {
-            console.log(res)
             if (res.code === 100) {
               this.$message({
                 type: "success",
                 message: "登录成功"
               })
-              console.log(res.data.permissions)
-              res.data.permissions = [
-                {name: 'Hello',path: '/hello', comment: "哈喽"},
-                {name: 'Home',path: '/home',comment: "主页" },
-              ];
+
               sessionStorage.setItem("user", JSON.stringify(res.data))  // 缓存用户信息
               // 登录成功的时候更新当前路由
               activeRouter()

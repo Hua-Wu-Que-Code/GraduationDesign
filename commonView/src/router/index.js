@@ -60,4 +60,19 @@ function activeRouter() {
         }
     }
 }
+router.beforeEach((to, from, next) => {
+    if (to.path === '/login' || to.path === '/register') {
+        next()
+    }
+    let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+    if (user == null) {
+        next('/login')
+    } else if (!user.permissions.find(p => "/"+ p.path === to.path)) {
+        next('/login')
+    } else {
+        next()
+    }
+})
+
+
 export default router
