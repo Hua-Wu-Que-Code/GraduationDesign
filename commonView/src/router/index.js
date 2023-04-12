@@ -65,6 +65,7 @@ router.beforeEach((to, from, next) => {
         next()
     }
     let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+    console.log(user)
     if (user == null) {
         next('/login')
     } else if (!user.permissions.find(p => "/"+ p.path === to.path)) {

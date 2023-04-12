@@ -1,10 +1,8 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.Permission;
+import com.example.springboot.entity.Role;
 import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.*;
-
-import java.util.List;
 
 /**
  * @author huawuque

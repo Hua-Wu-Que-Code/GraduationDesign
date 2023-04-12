@@ -1,6 +1,5 @@
 package com.example.springboot.service;
 
-import com.example.springboot.entity.Permission;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

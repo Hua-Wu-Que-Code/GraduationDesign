@@ -1,7 +1,6 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.Permission;
-import com.example.springboot.entity.UserRole;
+import com.example.springboot.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,8 +14,8 @@ import java.util.List;
  * @date 2023/3/14 15:37:28
  */
 @Mapper
-public interface UserRoleMapper {
+public interface RoleMapper {
 
-    @Select("select * from user_role where userId = #{userId}")
-    List<UserRole> findRoleId(String userId);
+    @Select("select name from role where id = #{id}")
+    List<String> findRole(Integer id);
 }

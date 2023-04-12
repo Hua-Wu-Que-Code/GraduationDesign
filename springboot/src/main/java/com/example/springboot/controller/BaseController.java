@@ -1,7 +1,6 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.mapper.PermissionMapper;
-import com.example.springboot.service.UserRoleService;
+import com.example.springboot.mapper.RoleMapper;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,8 +22,6 @@ public class BaseController {
     HttpServletRequest request;
 
     @Autowired
-    UserRoleService userRoleService;
+    RoleMapper roleMapper;
 
-    @Autowired
-    PermissionMapper permissionMapper;
 }

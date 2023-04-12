@@ -3,14 +3,10 @@ package com.example.springboot.controller;
 import com.example.springboot.entity.*;
 import com.example.springboot.entity.eneityVO.UserVO;
 import com.example.springboot.jwt.JwtUtil;
-import com.example.springboot.service.UserRoleService;
+import com.example.springboot.mapper.RoleMapper;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author huawuque
@@ -41,7 +37,7 @@ public class UserController extends BaseController{
         }
         if (logInUser == null ) return Result.fail("用户名或密码错误");
 
-        HashSet<Permission> permissionSet = new HashSet<>();
+       /* HashSet<Permission> permissionSet = new HashSet<>();
         //1.获取角色信息
         logInUser = userService.findUserById(logInUser.getId());
         List<UserRole> userRoles = userRoleService.findRoleId(logInUser.getId());
@@ -61,24 +57,34 @@ public class UserController extends BaseController{
         LinkedHashSet<Permission> sortedSet = permissionSet.stream().sorted(Comparator.comparing(Permission::getId)).collect(Collectors.toCollection(LinkedHashSet::new));
         //设置当前用户的资源信息
         logInUser.setPermissions(sortedSet);
-        UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);
-        return Result.succeed(userVO);
-
+        UserVO userVO = new UserVO(JwtUtil.generateToken(logInUser.getId()),logInUser);*/
+        logInUser = userService.findUserById(logInUser.getId());
+        return Result.succeed(JwtUtil.generateToken(logInUser.getId()));
     }
 
     /**
      * 获取用户最新信息
      * @return
      */
-    @RequestMapping("/upgrade")
+    @RequestMapping("/info")
     @CrossOrigin
     @ResponseBody
-    public Result upgrade() {
+    public Result getInfo() {
 
         String id = (String) request.getAttribute("id");
 
         if (id != null) {
-            return Result.succeed(userService.findUserById(id));
+            //获取角色信息
+            User user = userService.findUserById(id);
+            Integer roleId = user.getRoleid();
+            List<String> roleList = roleMapper.findRole(roleId);
+            user.setRoles(roleList);
+            UserVO userVO = UserVO.builder().
+                    roles(user.getRoles()).
+                    name(user.getNickname()).
+                    avatar(user.getAvatar()).
+                    build();
+            return Result.succeed(userVO);
         }
         return Result.fail("请重新登陆");
 
