@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Element Admin',
+  title: '乡村诊所平台',
 
   /**
    * @type {boolean} true | false
@@ -23,7 +23,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false,
+  sidebarLogo: true,
 
   /**
    * @type {string | array} 'production' | ['production', 'development']

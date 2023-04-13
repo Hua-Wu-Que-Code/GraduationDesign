@@ -14,6 +14,8 @@ import java.util.UUID;
 public class userIdGenerateTest {
     @Test
     void IDGenerate() {
-        System.out.println(UUID.randomUUID().toString());
+        for (int i = 0;i< 10;i++)
+        System.out.println(UUID.randomUUID().toString()
+        );
     }
 }

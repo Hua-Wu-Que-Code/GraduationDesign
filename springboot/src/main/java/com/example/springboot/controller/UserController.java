@@ -6,7 +6,10 @@ import com.example.springboot.jwt.JwtUtil;
 import com.example.springboot.mapper.RoleMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author huawuque
@@ -88,5 +91,18 @@ public class UserController extends BaseController{
         }
         return Result.fail("请重新登陆");
 
+    }
+
+
+    /**
+     * 获取用户列表
+     * @return
+     */
+    @RequestMapping("/list")
+    @CrossOrigin
+    @ResponseBody
+    public Result getUserList(@RequestBody ListQuery query) {
+
+        return Result.succeed(query);
     }
 }

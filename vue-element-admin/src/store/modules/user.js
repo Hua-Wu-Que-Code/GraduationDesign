@@ -49,6 +49,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
+        console.log(data)
         if (!data) {
           reject('Verification failed, please Login again.')
         }
@@ -79,9 +80,6 @@ const actions = {
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
-
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
         dispatch('tagsView/delAllViews', null, { root: true })
 
         resolve()

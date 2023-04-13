@@ -82,14 +82,15 @@ export default {
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      /*if (!validUsername(value)) {
         callback(new Error('Please enter the correct user name'))
       } else {
         callback()
-      }
+      }*/
+      callback()
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
+      if (value.length < 6) {
         callback(new Error('The password can not be less than 6 digits'))
       } else {
         callback()
@@ -98,7 +99,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'admin'
+        password: '123321'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

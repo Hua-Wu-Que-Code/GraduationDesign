@@ -79,32 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation'}
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -118,7 +93,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        meta: { title: '个人中心', icon: 'user', noCache: true }
       }
     ]
   }
@@ -129,6 +104,21 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/applierAdmin',
+    component: Layout,
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/applier-management/index'),
+        name: 'ApplierAdmin',
+        meta: { title: '供货商管理', icon: 'icon', noCache: true }
+      }
+    ]
+  },
   {
     path: '/drugAdmin',
     component: Layout,
@@ -145,13 +135,43 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/accountInfoAdmin',
+    component: Layout,
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/account-information-management/index.vue'),
+        name: 'AccountInfoMana',
+        meta: { title: '账号管理', icon: 'icon', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/clinicAdmin',
+    component: Layout,
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/clinic-management/index.vue'),
+        name: 'ClinicAdmin',
+        meta: { title: '诊所管理', icon: 'icon', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
-      title: 'Permission',
+      title: '权限管理',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
