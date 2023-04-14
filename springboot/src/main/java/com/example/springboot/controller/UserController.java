@@ -1,15 +1,11 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.entity.*;
-import com.example.springboot.entity.eneityVO.UserVO;
+import com.example.springboot.entity.eneityVO.*;
 import com.example.springboot.jwt.JwtUtil;
-import com.example.springboot.mapper.RoleMapper;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author huawuque
@@ -80,7 +76,7 @@ public class UserController extends BaseController{
             //获取角色信息
             User user = userService.findUserById(id);
             Integer roleId = user.getRoleid();
-            List<String> roleList = roleMapper.findRole(roleId);
+            List<String> roleList = roleMapper.findRoleName(roleId);
             user.setRoles(roleList);
             UserVO userVO = UserVO.builder().
                     roles(user.getRoles()).
@@ -102,7 +98,27 @@ public class UserController extends BaseController{
     @CrossOrigin
     @ResponseBody
     public Result getUserList(@RequestBody ListQuery query) {
+        List<User> userList = userService.findUsersAdmin(query);
+        userList.forEach(user -> {
+            Integer roleId = user.getRoleid();
+            List<String> roleList = roleMapper.findRoleIntroduction(roleId);
+            user.setRoles(roleList);
+        });
 
-        return Result.succeed(query);
+        return Result.succeed(userList);
+    }
+
+    /**
+     * 删除用户
+     * @return
+     */
+    @RequestMapping("/delete")
+    @CrossOrigin
+    @ResponseBody
+    public Result forEachDelete(@RequestBody User userParam) {
+
+        String id = userParam.getId();
+        int flag = userService.forEachDelete(id);
+        return Result.succeed(flag);
     }
 }

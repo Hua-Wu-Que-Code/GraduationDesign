@@ -4,6 +4,8 @@ import com.example.springboot.entity.Role;
 import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * @author huawuque
  * @version 1.0
@@ -21,4 +23,9 @@ public interface UserMapper {
     @Select("select * from user where username = #{username}")
     User findUserByUserName(String username);
 
+    @Select("select * from user limit #{page},#{limit} ")
+    List<User> findUsersAdmin(int page,int limit);
+
+    @Delete("delete from user where id = #{id}")
+    int forEachDelete(String id);
 }

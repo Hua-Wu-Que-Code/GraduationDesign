@@ -1,18 +1,18 @@
 import request from '@/utils/request'
 
 export function fetchList(query) {
-  return request({
-    url: '/user/list',
-    method: 'post',
-    params: query
+  return request.post('/user/list',{
+    page:  query.page,
+    limit: query.limit,
+    importance: query.importance,
+    title: query.title,
+    type: query.type
   })
 }
 
-export function fetchArticle(id) {
-  return request({
-    url: '/article/detail',
-    method: 'get',
-    params: { id }
+export function fetchDelete(id) {
+  return request.post('/user/delete',{
+    id:id
   })
 }
 

@@ -17,5 +17,8 @@ import java.util.List;
 public interface RoleMapper {
 
     @Select("select name from role where id = #{id}")
-    List<String> findRole(Integer id);
+    List<String> findRoleName(Integer id);
+
+    @Select("select introduction from role where id = #{id}")
+    List<String> findRoleIntroduction(Integer id);
 }

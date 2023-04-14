@@ -21,7 +21,6 @@ service.interceptors.request.use(
 
     // 取出store里面缓存的用户信息
     const userJson = store.getters.token
-    console.log(config.url)
     if (!whiteUrls.includes(config.url)) { // 校验请求白名单
       if (!userJson) {
         console.log('快去登陆')

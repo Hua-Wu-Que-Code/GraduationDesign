@@ -1,9 +1,12 @@
 package com.example.springboot.service;
 
+import com.example.springboot.entity.ListQuery;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -27,4 +30,13 @@ public class UserService{
         return userMapper.findUserByUserName(username);
     }
 
+    public List<User> findUsersAdmin(ListQuery query) {
+        int page = query.getPage();
+        int limit = query.getLimit();
+        return userMapper.findUsersAdmin(page,limit);
+    }
+
+    public int forEachDelete(String id) {
+        return userMapper.forEachDelete(id);
+    }
 }

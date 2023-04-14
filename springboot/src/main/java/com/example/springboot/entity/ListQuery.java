@@ -16,5 +16,4 @@ public class ListQuery {
     String importance;
     String title;
     String type;
-    String sort;
 }
