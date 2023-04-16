@@ -131,7 +131,7 @@ export const asyncRoutes = [
         component: () => import('@/views/drug-admin/index'),
         name: 'DrugAdmin',
         meta: { title: '药品管理', icon: 'icon', noCache: true }
-      }
+      },
     ]
   },
   {
@@ -146,6 +146,13 @@ export const asyncRoutes = [
         component: () => import('@/views/account-information-management/index.vue'),
         name: 'AccountInfoMana',
         meta: { title: '账号管理', icon: 'icon', noCache: true }
+      },
+      {
+        path: 'info',
+        hidden: true,
+        component: () => import('@/views/account-information-management/detailInfo.vue'),
+        name: 'InfoEdit',
+        meta: { title: '详情', icon: 'icon', noCache: true }
       }
     ]
   },

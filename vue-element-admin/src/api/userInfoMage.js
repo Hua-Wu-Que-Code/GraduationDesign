@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+/*查询用户列表*/
 export function fetchList(query) {
   return request.post('/user/list',{
     page:  query.page,
@@ -9,13 +10,18 @@ export function fetchList(query) {
     type: query.type
   })
 }
-
+/*删除用户*/
 export function fetchDelete(id) {
   return request.post('/user/delete',{
     id:id
   })
 }
-
+/*查询用户健康档案*/
+export function fetchHealthCare(id) {
+  return request.post('/user/fetchHealthCare',{
+    id:id
+  })
+}
 export function fetchPv(pv) {
   return request({
     url: '/article/pv',

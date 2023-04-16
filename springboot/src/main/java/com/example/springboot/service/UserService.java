@@ -39,4 +39,6 @@ public class UserService{
     public int forEachDelete(String id) {
         return userMapper.forEachDelete(id);
     }
+
+
 }

@@ -57,6 +57,11 @@ public class User implements Serializable {
 
     private List<String> roles;
 
+    /**
+     * 账号状态
+     */
+    private boolean status;
+
 
 }
 

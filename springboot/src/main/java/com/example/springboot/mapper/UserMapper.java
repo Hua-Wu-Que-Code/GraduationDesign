@@ -1,6 +1,5 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.Role;
 import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -28,4 +27,7 @@ public interface UserMapper {
 
     @Delete("delete from user where id = #{id}")
     int forEachDelete(String id);
+
+    @Select("select * from healthCare where userID = #{id}")
+    List<Healthcare> fetchMedicalExaminationFile(String id);
 }

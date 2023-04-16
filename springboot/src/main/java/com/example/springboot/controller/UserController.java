@@ -115,10 +115,24 @@ public class UserController extends BaseController{
     @RequestMapping("/delete")
     @CrossOrigin
     @ResponseBody
-    public Result forEachDelete(@RequestBody User userParam) {
+    public Result fetchHealthCare(@RequestBody User userParam) {
 
         String id = userParam.getId();
         int flag = userService.forEachDelete(id);
         return Result.succeed(flag);
+    }
+
+    /**
+     * 查询用户健康档案
+     * @return
+     */
+    @RequestMapping("/fetchHealthCare")
+    @CrossOrigin
+    @ResponseBody
+    public Result forEachDelete(@RequestBody User userParam) {
+
+        String userId = userParam.getId();
+        List<Healthcare> healthcareList = userService.fetchMedicalExaminationFile(userId);
+        return Result.succeed(healthcareList);
     }
 }

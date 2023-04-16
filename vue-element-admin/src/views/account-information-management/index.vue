@@ -66,20 +66,28 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址"
+        label="状态"
+        width="100"
         align="center">
+        <template slot-scope="scope">
+          <el-tag
+            :class="roleType(scope.row.status)"
+            disable-transitions>{{scope.row.status}}</el-tag>
+        </template>
       </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.row)">查看</el-button>
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">停用</el-button>
+          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
             <template #reference>
               <el-button size="mini" type="danger">删除</el-button>
             </template>
           </el-popconfirm>
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -199,11 +207,17 @@ export default {
       if (role == "医生") return 'Insurance'
       if (role == "供货商") return 'Bathe'
       if (role == "患者") return 'Hairdressing'
+      if (role == "正常") return 'Pet'
+      if (role == "停用") return 'Bathe'
     },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(res =>{
         const { data } = res
+        for (let i = 0;i < data.length; i++) {
+          if (data[i].status) data[i].status = "正常"
+          else data[i].status = "停用"
+        }
         this.list = data
         this.listLoading = false
       })
@@ -244,8 +258,9 @@ export default {
         type: ''
       }
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(row) {
+      console.log(row);
+      this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});
     },
     handleDelete(row) {
       console.log(row.id)
