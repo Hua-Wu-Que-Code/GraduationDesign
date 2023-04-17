@@ -193,7 +193,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.getList();
   },
   methods: {
     formatter(row, column) {

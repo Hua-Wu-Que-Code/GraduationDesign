@@ -1,6 +1,6 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.User;
+import com.example.springboot.entity.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -28,6 +28,27 @@ public interface UserMapper {
     @Delete("delete from user where id = #{id}")
     int forEachDelete(String id);
 
-    @Select("select * from healthCare where userID = #{id}")
-    List<Healthcare> fetchMedicalExaminationFile(String id);
+    @Select("select * from MedicalExaminationFile where userID = #{id}")
+    List<Medicalexaminationfile> fetchMedicalExaminationFile(String id);
+
+    @Select("select * from healthRecord where userID = #{userId} ")
+    Healthrecord findHealthRecord(String userId);
+
+    @Select("select * from ethnicGroup ")
+    List<Ethnicgroup> healthCareInfoEthnicGroup();
+
+    @Select("select * from bloodType ")
+    List<Bloodtype> healthCareInfoBloodType();
+
+    @Select("select * from education ")
+    List<Education> healthCareInfoEducation();
+
+    @Select("select * from marriage ")
+    List<Marriage> healthCareInfoMarriage();
+
+    @Select("select * from  pamentMeth")
+    List<Pamentmeth> healthCareInfoPamentMeth();
+
+    @Select("select * from allergyHistory ")
+    List<Allergyhistory> healthCareInfoAllergyHistory();
 }

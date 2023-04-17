@@ -16,6 +16,10 @@ public class Healthrecord implements Serializable {
      */
     private Integer id;
     /**
+     * 姓名
+     */
+    private String name;
+    /**
      * 用户ID
      */
     private String userid;
@@ -270,5 +274,12 @@ public class Healthrecord implements Serializable {
         this.disability = disability;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 

@@ -14,7 +14,7 @@
                 <MedicalExaminationFile :MedicalExaminationFile="MedicalExaminationFile" />
               </el-tab-pane>
               <el-tab-pane label="健康档案" name="healthRecord">
-                <HealthRecord :healthCare="healthCare" />
+                <HealthRecord :healthCare="healthCare" :healthCareInfo="healthCareInfo"/>
               </el-tab-pane>
               <el-tab-pane label="账号信息" name="account">
                 <account :user="user" />
@@ -44,7 +44,8 @@ export default {
       user: {},
       activeTab: 'MedicalExaminationFile',
       MedicalExaminationFile: [],
-      healthCare: {}
+      healthCare: {},
+      healthCareInfo:{}
     }
   },
   computed: {
@@ -58,7 +59,10 @@ export default {
     this.user = this.$route.query.user;
     fetchHealthCare(this.user.id).then(res => {
       const {data} = res
-      this.MedicalExaminationFile = data
+      console.log(data)
+      this.MedicalExaminationFile = data.medicalexaminationfile;
+      this.healthCare = data.healthrecord;
+      this.healthCareInfo = data.healthCareInfo;
     })
   },
   methods: {

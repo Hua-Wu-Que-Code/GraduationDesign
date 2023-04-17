@@ -1,5 +1,5 @@
 <template>
-  <el-form>
+  <el-form label-width="100px">
     <el-form-item label="账号">
       <el-input v-model.trim="user.username" />
     </el-form-item>

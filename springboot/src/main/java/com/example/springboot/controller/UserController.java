@@ -126,13 +126,36 @@ public class UserController extends BaseController{
      * 查询用户健康档案
      * @return
      */
-    @RequestMapping("/fetchHealthCare")
+    @RequestMapping("/fetchMedicalExaminationFile")
     @CrossOrigin
     @ResponseBody
     public Result forEachDelete(@RequestBody User userParam) {
 
         String userId = userParam.getId();
-        List<Healthcare> healthcareList = userService.fetchMedicalExaminationFile(userId);
-        return Result.succeed(healthcareList);
+        List<Medicalexaminationfile> medicalexaminationfiles = userService.fetchMedicalExaminationFile(userId);
+        Healthrecord healthrecord = userService.findHealthRecord(userId);
+        UserInfo userInfo = new UserInfo();
+        List<Ethnicgroup> ethnicgroups = userService.healthCareInfoEthnicGroup();
+        List<Bloodtype> bloodtypes = userService.healthCareInfoBloodType();
+        List<Education> educations = userService.healthCareInfoEducation();
+        List<Marriage> marriages = userService.healthCareInfoMarriage();
+        List<Pamentmeth> pamentmeths = userService.healthCareInfoPamentMeth();
+        List<Allergyhistory> allergyhistories = userService.healthCareInfoAllergyHistory();
+
+        userInfo.setHealthrecord(healthrecord);
+        userInfo.setMedicalexaminationfile(medicalexaminationfiles);
+
+        HealthCareInfo healthCareInfo = new HealthCareInfo();
+        healthCareInfo.setEthnicgroup(ethnicgroups);
+        healthCareInfo.setBloodtype(bloodtypes);
+        healthCareInfo.setEducation(educations);
+        healthCareInfo.setMarriage(marriages);
+        healthCareInfo.setPamentmeth(pamentmeths);
+        healthCareInfo.setAllergyhistory(allergyhistories);
+
+        userInfo.setHealthCareInfo(healthCareInfo);
+
+        return Result.succeed(userInfo);
     }
+
 }

@@ -18,9 +18,13 @@ export function fetchDelete(id) {
 }
 /*查询用户健康档案*/
 export function fetchHealthCare(id) {
-  return request.post('/user/fetchHealthCare',{
+  return request.post('/user/fetchMedicalExaminationFile',{
     id:id
   })
+}
+/*健康档案基础信息*/
+export function healthCareInfo() {
+  return request.post('/user/healthCareInfo')
 }
 export function fetchPv(pv) {
   return request({

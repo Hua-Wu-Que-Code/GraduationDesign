@@ -1,7 +1,6 @@
 package com.example.springboot.service;
 
-import com.example.springboot.entity.ListQuery;
-import com.example.springboot.entity.User;
+import com.example.springboot.entity.*;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,4 +40,35 @@ public class UserService{
     }
 
 
+    public List<Medicalexaminationfile> fetchMedicalExaminationFile(String userId) {
+        return userMapper.fetchMedicalExaminationFile(userId);
+    }
+
+    public Healthrecord findHealthRecord(String userId) {
+        return userMapper.findHealthRecord(userId);
+    }
+
+    public List<Ethnicgroup> healthCareInfoEthnicGroup() {
+        return userMapper.healthCareInfoEthnicGroup();
+    }
+
+    public List<Bloodtype> healthCareInfoBloodType() {
+        return userMapper.healthCareInfoBloodType();
+    }
+
+    public List<Education> healthCareInfoEducation() {
+        return userMapper.healthCareInfoEducation();
+    }
+
+    public List<Marriage> healthCareInfoMarriage() {
+        return userMapper.healthCareInfoMarriage();
+    }
+
+    public List<Pamentmeth> healthCareInfoPamentMeth() {
+        return userMapper.healthCareInfoPamentMeth();
+    }
+
+    public List<Allergyhistory> healthCareInfoAllergyHistory() {
+        return userMapper.healthCareInfoAllergyHistory();
+    }
 }
