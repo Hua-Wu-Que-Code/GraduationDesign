@@ -12,12 +12,12 @@
     </el-form-item>
     <el-form-item label="民族">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group" filterable>
-        <el-option v-for="item in ethnicgroup" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.ethnicgroup" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="血型">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in bloodtype" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.bloodtype" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="身份证号">
@@ -46,22 +46,22 @@
     </el-form-item>
     <el-form-item label="文化程度">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in education" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.education" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="婚姻状况">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in marriage" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.marriage" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="支付方式">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in pamentmeth" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.pamentmeth" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="过敏历史">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in allergyhistory" :label="item.name" :value="item.name"></el-option>
+        <el-option v-for="item in healthCareInfo.allergyhistory" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="疾病历史">
@@ -111,30 +111,12 @@ export default {
   name: "HealthRecord",
   data() {
     return {
-      allergyhistory: [],
-      bloodtype: [],
-      education: [],
-      ethnicgroup: [],
-      marriage: [],
-      pamentmeth: []
+
     }
   },
   created() {
-    this.getInfo();
   },
   methods: {
-    getInfo() {
-      const {allergyhistory,bloodtype,education,ethnicgroup,marriage,pamentmeth} = this.healthCareInfo
-      console.log(this.healthCareInfo)
-      this.allergyhistory = allergyhistory;
-      this.bloodtype = bloodtype;
-      this.education = education;
-      this.ethnicgroup = ethnicgroup;
-      this.marriage = marriage;
-      this.pamentmeth = pamentmeth;
-      console.log("hhhh")
-      console.log(this.pamentmeth)
-    },
     onSubmit() {
       console.log('submit!');
     }
