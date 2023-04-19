@@ -141,6 +141,8 @@ public class UserController extends BaseController{
         List<Marriage> marriages = userService.healthCareInfoMarriage();
         List<Pamentmeth> pamentmeths = userService.healthCareInfoPamentMeth();
         List<Allergyhistory> allergyhistories = userService.healthCareInfoAllergyHistory();
+        List<Work> works = userService.healthCareInfoWorks();
+        List<Sex> sexes = userService.healthCareInfoSex();
 
         userInfo.setHealthrecord(healthrecord);
         userInfo.setMedicalexaminationfile(medicalexaminationfiles);
@@ -152,6 +154,8 @@ public class UserController extends BaseController{
         healthCareInfo.setMarriage(marriages);
         healthCareInfo.setPamentmeth(pamentmeths);
         healthCareInfo.setAllergyhistory(allergyhistories);
+        healthCareInfo.setWorks(works);
+        healthCareInfo.setSexes(sexes);
 
         userInfo.setHealthCareInfo(healthCareInfo);
 

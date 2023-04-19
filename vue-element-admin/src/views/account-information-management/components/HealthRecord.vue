@@ -11,12 +11,12 @@
       </el-select>
     </el-form-item>
     <el-form-item label="民族">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group" filterable>
+      <el-select v-model="healthCare.ethnicgroup" filterable>
         <el-option v-for="item in healthCareInfo.ethnicgroup" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="血型">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
+      <el-select v-model="healthCare.bloodtype">
         <el-option v-for="item in healthCareInfo.bloodtype" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
@@ -25,6 +25,11 @@
     </el-form-item>
     <el-form-item label="出生日期">
       <el-input v-model="healthCare.date"></el-input>
+    </el-form-item>
+    <el-form-item label="职业">
+      <el-select v-model="healthCare.work">
+        <el-option v-for="item in healthCareInfo.works" :label="item.name" :value="item.name"></el-option>
+      </el-select>
     </el-form-item>
     <el-form-item label="工作单位">
       <el-input v-model="healthCare.workplace"></el-input>
@@ -45,29 +50,28 @@
       </template>
     </el-form-item>
     <el-form-item label="文化程度">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
+      <el-select v-model="healthCare.education">
         <el-option v-for="item in healthCareInfo.education" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="婚姻状况">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
+      <el-select v-model="healthCare.marriage">
         <el-option v-for="item in healthCareInfo.marriage" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="支付方式">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
+      <el-select v-model="healthCare.pamentmeth">
         <el-option v-for="item in healthCareInfo.pamentmeth" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="过敏历史">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
+      <el-select v-model="healthCare.allergyhistory" >
         <el-option v-for="item in healthCareInfo.allergyhistory" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="疾病历史">
       <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
+        <el-option v-for="item in healthCareInfo.allergyhistory" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="外伤记录">
@@ -83,9 +87,8 @@
       </el-select>
     </el-form-item>
     <el-form-item label="遗传病历史">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
+      <el-select v-model="healthCare.heredityhistory">
+        <el-option v-for="item in healthCareInfo.heredityhistory" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="残疾情况">

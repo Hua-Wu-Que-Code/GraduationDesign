@@ -51,4 +51,10 @@ public interface UserMapper {
 
     @Select("select * from allergyHistory ")
     List<Allergyhistory> healthCareInfoAllergyHistory();
+
+    @Select("select * from work ")
+    List<Work> healthCareInfoWorks();
+
+    @Select("select * from sex ")
+    List<Sex> healthCareInfoSex();
 }

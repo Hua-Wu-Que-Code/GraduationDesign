@@ -71,4 +71,12 @@ public class UserService{
     public List<Allergyhistory> healthCareInfoAllergyHistory() {
         return userMapper.healthCareInfoAllergyHistory();
     }
+
+    public List<Work> healthCareInfoWorks() {
+        return userMapper.healthCareInfoWorks();
+    }
+
+    public List<Sex> healthCareInfoSex() {
+        return userMapper.healthCareInfoSex();
+    }
 }

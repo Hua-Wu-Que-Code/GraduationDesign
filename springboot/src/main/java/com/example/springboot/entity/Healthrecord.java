@@ -55,8 +55,8 @@ public class Healthrecord implements Serializable {
     private String contactphone;
     /**
      * 常住类型：
-1:户籍
-2:非户籍
+        1:户籍
+        2:非户籍
      */
     private Integer typeofpermanent;
     /**
@@ -105,6 +105,19 @@ public class Healthrecord implements Serializable {
      */
     private Integer disability;
 
+    /**
+     * 工作情况
+     */
+    private Integer workId;
+
+
+    public Integer getWorkId() {
+        return workId;
+    }
+
+    public void setWorkId(Integer workId) {
+        this.workId = workId;
+    }
 
     public Integer getId() {
         return id;

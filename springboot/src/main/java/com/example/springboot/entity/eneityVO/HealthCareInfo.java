@@ -20,4 +20,8 @@ public class HealthCareInfo {
     List<Marriage> marriage;
     List<Pamentmeth> pamentmeth;
     List<Allergyhistory> allergyhistory;
+
+    List<Work> works;
+
+    List<Sex> sexes;
 }
