@@ -63,7 +63,7 @@ export default {
       this.MedicalExaminationFile = data.medicalexaminationfile;
       this.healthCare = data.healthrecord;
       this.healthCareInfo = data.healthCareInfo;
-      this.healthCare.allergyhistory = data.healthCareInfo.allergyhistory[this.healthCare.allergyhistory].name;
+      this.healthCare.allergyhistory = [];
       this.healthCare.bloodtype = data.healthCareInfo.bloodtype[this.healthCare.bloodtypeid].name;
       this.healthCare.education = data.healthCareInfo.education[this.healthCare.education].name;
       this.healthCare.ethnicgroup = data.healthCareInfo.ethnicgroup[this.healthCare.ethnicgroupid].name;

@@ -14,14 +14,31 @@ import java.util.List;
  */
 @Data
 public class HealthCareInfo {
+
+    //民族列表
     List<Ethnicgroup> ethnicgroup;
+
+    //血型列表
     List<Bloodtype> bloodtype;
+
+    //教育经历列表
     List<Education> education;
+
+    //婚姻状况列表
     List<Marriage> marriage;
+
+    //支付方式列表
     List<Pamentmeth> pamentmeth;
+
+    //过敏列表
     List<Allergyhistory> allergyhistory;
 
+    //工作列表
     List<Work> works;
 
+    //性别列表
     List<Sex> sexes;
+
+    //疾病列表
+    List<Disease> diseases;
 }

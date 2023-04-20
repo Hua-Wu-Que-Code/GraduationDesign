@@ -6,8 +6,7 @@
     </el-form-item>
     <el-form-item label="性别">
       <el-select v-model="healthCare.sex">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
+        <el-option v-for="item in healthCareInfo.sexes" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="民族">
@@ -35,7 +34,7 @@
       <el-input v-model="healthCare.workplace"></el-input>
     </el-form-item>
     <el-form-item label="电话号码">
-      <el-input v-model="healthCare.telephonenumer"></el-input>
+      <el-input v-model="healthCare.telephone"></el-input>
     </el-form-item>
     <el-form-item label="联系人姓名">
       <el-input v-model="healthCare.contactname"></el-input>
@@ -65,8 +64,17 @@
       </el-select>
     </el-form-item>
     <el-form-item label="过敏历史">
-      <el-select v-model="healthCare.allergyhistory" >
-        <el-option v-for="item in healthCareInfo.allergyhistory" :label="item.name" :value="item.name"></el-option>
+      <el-select v-model="healthCare.allergyhistory"
+                 :multiple="allergyMul"
+                 filterable
+                 @change="handleChange"
+                 allow-create
+                 default-first-option>
+        <el-option v-for="item in healthCareInfo.allergyhistory"
+                   :label="item.name"
+                   :key="item.name"
+                   :value="item.name">
+        </el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="疾病历史">
@@ -114,7 +122,7 @@ export default {
   name: "HealthRecord",
   data() {
     return {
-
+      allergyMul: true,
     }
   },
   created() {
@@ -122,6 +130,11 @@ export default {
   methods: {
     onSubmit() {
       console.log('submit!');
+    },
+    handleChange(val){
+      if (val.includes('无')) {
+        this.healthCare.allergyhistory = ['无'];
+      }
     }
   }
 }

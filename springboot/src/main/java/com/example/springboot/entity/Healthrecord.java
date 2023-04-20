@@ -1,7 +1,10 @@
 package com.example.springboot.entity;
 
-import java.util.Date;
+import org.w3c.dom.ls.LSException;
+
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
 
 /**
  * 用户健康档案表(Healthrecord)实体类
@@ -24,13 +27,11 @@ public class Healthrecord implements Serializable {
      */
     private String userid;
     /**
-     * 性别；0为男，1为女
-
+     * 性别；0为男，1为女，3为不方便透露
      */
     private Integer sex;
     /**
      * 出生日期
-
      */
     private Date date;
     /**
@@ -44,7 +45,7 @@ public class Healthrecord implements Serializable {
     /**
      * 电话号码
      */
-    private String telephonenumer;
+    private String telephone;
     /**
      * 联系人姓名
      */
@@ -86,7 +87,7 @@ public class Healthrecord implements Serializable {
     /**
      * 疾病历史
      */
-    private Integer disease;
+    private List<Disease> diseases;
     /**
      * 外伤记录
      */
@@ -167,12 +168,12 @@ public class Healthrecord implements Serializable {
         this.workplace = workplace;
     }
 
-    public String getTelephonenumer() {
-        return telephonenumer;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setTelephonenumer(String telephonenumer) {
-        this.telephonenumer = telephonenumer;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getContactname() {
@@ -247,12 +248,12 @@ public class Healthrecord implements Serializable {
         this.allergyhistory = allergyhistory;
     }
 
-    public Integer getDisease() {
-        return disease;
+    public List<Disease> getDiseases() {
+        return diseases;
     }
 
-    public void setDisease(Integer disease) {
-        this.disease = disease;
+    public void setDiseases(List<Disease> diseases) {
+        this.diseases = diseases;
     }
 
     public Integer getSurgery() {

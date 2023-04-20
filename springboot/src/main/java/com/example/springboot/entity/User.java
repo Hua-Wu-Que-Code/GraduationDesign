@@ -16,7 +16,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = -22228781161608810L;
     /**
      * ID
-
      */
     private String id;
     /**
@@ -33,18 +32,6 @@ public class User implements Serializable {
      */
     private String nickname;
 
-    private String avatar;
-    /**
-     * 年龄
-     */
-    private Integer age;
-    /**
-     * 性别
-     */
-    private String sex;
-    /**
-     * 住址
-     */
     private String address;
     /**
      * 角色：
@@ -61,6 +48,11 @@ public class User implements Serializable {
      * 账号状态
      */
     private boolean status;
+
+    /**
+     * 头像
+     */
+    private String avatar;
 
 
 }

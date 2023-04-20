@@ -5,6 +5,7 @@ import com.example.springboot.entity.eneityVO.*;
 import com.example.springboot.jwt.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -132,32 +133,59 @@ public class UserController extends BaseController{
     public Result forEachDelete(@RequestBody User userParam) {
 
         String userId = userParam.getId();
+        //体检信息
         List<Medicalexaminationfile> medicalexaminationfiles = userService.fetchMedicalExaminationFile(userId);
         Healthrecord healthrecord = userService.findHealthRecord(userId);
+        //用户信息
         UserInfo userInfo = new UserInfo();
-        List<Ethnicgroup> ethnicgroups = userService.healthCareInfoEthnicGroup();
-        List<Bloodtype> bloodtypes = userService.healthCareInfoBloodType();
-        List<Education> educations = userService.healthCareInfoEducation();
-        List<Marriage> marriages = userService.healthCareInfoMarriage();
-        List<Pamentmeth> pamentmeths = userService.healthCareInfoPamentMeth();
-        List<Allergyhistory> allergyhistories = userService.healthCareInfoAllergyHistory();
-        List<Work> works = userService.healthCareInfoWorks();
-        List<Sex> sexes = userService.healthCareInfoSex();
-
-        userInfo.setHealthrecord(healthrecord);
-        userInfo.setMedicalexaminationfile(medicalexaminationfiles);
-
+        //健康报信息
         HealthCareInfo healthCareInfo = new HealthCareInfo();
+
+
+        //获取民族列表
+        List<Ethnicgroup> ethnicgroups = userService.healthCareInfoEthnicGroup();
         healthCareInfo.setEthnicgroup(ethnicgroups);
+        //获取血型列表
+        List<Bloodtype> bloodtypes = userService.healthCareInfoBloodType();
         healthCareInfo.setBloodtype(bloodtypes);
+        //获取教育情况列表
+        List<Education> educations = userService.healthCareInfoEducation();
         healthCareInfo.setEducation(educations);
+        //获取婚姻状况列表
+        List<Marriage> marriages = userService.healthCareInfoMarriage();
         healthCareInfo.setMarriage(marriages);
+        //获取支付方式列表
+        List<Pamentmeth> pamentmeths = userService.healthCareInfoPamentMeth();
         healthCareInfo.setPamentmeth(pamentmeths);
+        //获取过敏列表
+        List<Allergyhistory> allergyhistories = userService.healthCareInfoAllergyHistory();
         healthCareInfo.setAllergyhistory(allergyhistories);
+        //获取工作列表
+        List<Work> works = userService.healthCareInfoWorks();
         healthCareInfo.setWorks(works);
+        //获取性别列表
+        List<Sex> sexes = userService.healthCareInfoSex();
         healthCareInfo.setSexes(sexes);
+        //获取疾病列表
+        List<Disease> diseases = commonMapper.healthCareInfoDisease();
+        healthCareInfo.setDiseases(diseases);
+
+
+        //获取用户疾病历史
+        List<UserDisease> userDiseases = commonMapper.userInfoUserDisease(userId);
+        List<Disease> diseasesUser = new ArrayList<Disease>();
+        for (UserDisease userDisease:userDiseases) {
+            for (Disease disease:diseases) {
+                if (disease.getId() == userDisease.getId())
+                    diseasesUser.add(disease);
+            }
+        }
+        healthrecord.setDiseases(diseasesUser);
+
 
         userInfo.setHealthCareInfo(healthCareInfo);
+        userInfo.setHealthrecord(healthrecord);
+        userInfo.setMedicalexaminationfile(medicalexaminationfiles);
 
         return Result.succeed(userInfo);
     }
