@@ -1,6 +1,8 @@
 package com.example.springboot.mapper;
 
+import com.example.springboot.entity.Disability;
 import com.example.springboot.entity.Disease;
+import com.example.springboot.entity.UserDisability;
 import com.example.springboot.entity.UserDisease;
 import org.apache.ibatis.annotations.*;
 
@@ -33,4 +35,10 @@ public interface CommonMapper {
 
     @Select("select * from user_disease where userID = #{userId}")
     List<UserDisease> userInfoUserDisease(String userId);
+
+    @Select("select * from user_disability where user_id = #{userId}")
+    List<UserDisability> userInfoUserDisability(String userId);
+
+    @Select("select * from disability")
+    List<Disability> healthCareInfoUserDisability();
 }

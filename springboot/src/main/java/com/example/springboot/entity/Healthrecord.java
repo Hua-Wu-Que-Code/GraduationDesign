@@ -87,7 +87,7 @@ public class Healthrecord implements Serializable {
     /**
      * 疾病历史
      */
-    private List<Disease> diseases;
+    private List<String> diseases;
     /**
      * 外伤记录
      */
@@ -102,9 +102,8 @@ public class Healthrecord implements Serializable {
     private Integer heredityhistory;
     /**
      * 残疾情况
-
      */
-    private Integer disability;
+    private List<String> disabilities;
 
     /**
      * 工作情况
@@ -138,6 +137,14 @@ public class Healthrecord implements Serializable {
 
     public Integer getSex() {
         return sex;
+    }
+
+    public List<String> getDisabilities() {
+        return disabilities;
+    }
+
+    public void setDisabilities(List<String> disabilities) {
+        this.disabilities = disabilities;
     }
 
     public void setSex(Integer sex) {
@@ -248,11 +255,11 @@ public class Healthrecord implements Serializable {
         this.allergyhistory = allergyhistory;
     }
 
-    public List<Disease> getDiseases() {
+    public List<String> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(List<Disease> diseases) {
+    public void setDiseases(List<String> diseases) {
         this.diseases = diseases;
     }
 
@@ -280,13 +287,6 @@ public class Healthrecord implements Serializable {
         this.heredityhistory = heredityhistory;
     }
 
-    public Integer getDisability() {
-        return disability;
-    }
-
-    public void setDisability(Integer disability) {
-        this.disability = disability;
-    }
 
     public String getName() {
         return name;

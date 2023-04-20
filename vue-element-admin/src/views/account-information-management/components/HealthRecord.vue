@@ -105,9 +105,13 @@
       </el-select>
     </el-form-item>
     <el-form-item label="残疾情况">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
+      <el-select v-model="healthCare.disabilities" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'disabilities')">
+        <el-option
+          v-for="item in healthCareInfo.disabilities"
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
       </el-select>
     </el-form-item>
     <el-form-item>

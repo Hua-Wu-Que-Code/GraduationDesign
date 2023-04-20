@@ -169,18 +169,33 @@ public class UserController extends BaseController{
         //获取疾病列表
         List<Disease> diseases = commonMapper.healthCareInfoDisease();
         healthCareInfo.setDiseases(diseases);
+        //获取残疾列表
+        List<Disability> disabilities = commonMapper.healthCareInfoUserDisability();
+        healthCareInfo.setDisabilities(disabilities);
 
 
         //获取用户疾病历史
         List<UserDisease> userDiseases = commonMapper.userInfoUserDisease(userId);
-        List<Disease> diseasesUser = new ArrayList<Disease>();
+        List<String> diseasesUser = new ArrayList<String>();
         for (UserDisease userDisease:userDiseases) {
             for (Disease disease:diseases) {
-                if (disease.getId() == userDisease.getId())
-                    diseasesUser.add(disease);
+                if (disease.getId() == userDisease.getDiseaseid())
+                    diseasesUser.add(disease.getName());
             }
         }
         healthrecord.setDiseases(diseasesUser);
+
+        //获取用户残疾历史
+        List<UserDisability> userDisabilities = commonMapper.userInfoUserDisability(userId);
+        List<String> disabilityUser = new ArrayList<String>();
+        for (UserDisability userDisability:userDisabilities) {
+            System.out.println(userDisability.getDisabilityId());
+            for (Disability disability:disabilities) {
+                if (disability.getId() == userDisability.getDisabilityId())
+                    disabilityUser.add(disability.getName());
+            }
+        }
+        healthrecord.setDisabilities(disabilityUser);
 
 
         userInfo.setHealthCareInfo(healthCareInfo);
