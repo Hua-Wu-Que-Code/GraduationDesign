@@ -189,9 +189,8 @@ public class UserController extends BaseController{
         List<UserDisability> userDisabilities = commonMapper.userInfoUserDisability(userId);
         List<String> disabilityUser = new ArrayList<String>();
         for (UserDisability userDisability:userDisabilities) {
-            System.out.println(userDisability.getDisabilityId());
             for (Disability disability:disabilities) {
-                if (disability.getId() == userDisability.getDisabilityId())
+                if (disability.getId() == userDisability.getDisabilityid())
                     disabilityUser.add(disability.getName());
             }
         }

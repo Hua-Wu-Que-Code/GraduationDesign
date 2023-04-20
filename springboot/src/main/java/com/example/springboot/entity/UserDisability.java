@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 用户残疾情况表(UserDisability)实体类
  *
  * @author huawuque
- * @since 2023-04-20 22:33:03
+ * @since 2023-04-20 23:14:56
  */
 public class UserDisability implements Serializable {
-    private static final long serialVersionUID = 838465663237496432L;
+    private static final long serialVersionUID = -69279789188960835L;
     /**
      * 用户残疾表ID
      */
@@ -17,11 +17,11 @@ public class UserDisability implements Serializable {
     /**
      * 残疾表ID
      */
-    private Integer disabilityId;
+    private Integer disabilityid;
     /**
      * 用户ID
      */
-    private String userId;
+    private String userid;
 
 
     public Integer getId() {
@@ -32,20 +32,20 @@ public class UserDisability implements Serializable {
         this.id = id;
     }
 
-    public Integer getDisabilityId() {
-        return disabilityId;
+    public Integer getDisabilityid() {
+        return disabilityid;
     }
 
-    public void setDisabilityId(Integer disabilityId) {
-        this.disabilityId = disabilityId;
+    public void setDisabilityid(Integer disabilityid) {
+        this.disabilityid = disabilityid;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
 }
