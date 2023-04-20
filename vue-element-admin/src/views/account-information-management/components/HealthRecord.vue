@@ -65,9 +65,9 @@
     </el-form-item>
     <el-form-item label="过敏历史">
       <el-select v-model="healthCare.allergyhistory"
-                 :multiple="allergyMul"
+                 multiple
                  filterable
-                 @change="handleChange"
+                 @change="(val) => handleChange(val, 'allergyMul')"
                  allow-create
                  default-first-option>
         <el-option v-for="item in healthCareInfo.allergyhistory"
@@ -78,8 +78,13 @@
       </el-select>
     </el-form-item>
     <el-form-item label="疾病历史">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option v-for="item in healthCareInfo.allergyhistory" :label="item.name" :value="item.name"></el-option>
+      <el-select v-model="healthCare.diseases" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'diseases')">
+        <el-option
+          v-for="item in healthCareInfo.diseases"
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="外伤记录">
@@ -106,7 +111,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="getInfo()">立即创建</el-button>
+      <el-button type="primary" @click="onSubmit">立即创建</el-button>
       <el-button @click="getInfo">取消</el-button>
     </el-form-item>
   </el-form>
@@ -122,19 +127,29 @@ export default {
   name: "HealthRecord",
   data() {
     return {
-      allergyMul: true,
     }
   },
   created() {
   },
   methods: {
     onSubmit() {
-      console.log('submit!');
+      console.log(this.healthCare.diseases)
     },
-    handleChange(val){
-      if (val.includes('无')) {
-        this.healthCare.allergyhistory = ['无'];
+    handleChange(val,flag){
+      console.log(flag)
+      if (flag == 'allergyMul'){
+        if (val.includes('无')) {
+          console.log("hello")
+          this.healthCare.allergyhistory = ['无'];
+        }
+      } else if (flag == 'diseases'){
+        console.log(val)
+        if (val.includes('无')) {
+
+          this.healthCare.diseases = ['无'];
+        }
       }
+
     }
   }
 }
