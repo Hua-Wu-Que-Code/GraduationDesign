@@ -59,18 +59,11 @@ export default {
     this.user = this.$route.query.user;
     fetchHealthCare(this.user.id).then(res => {
       const {data} = res
-      console.log(data)
+      console.log(res)
       this.MedicalExaminationFile = data.medicalexaminationfile;
       this.healthCare = data.healthrecord;
       this.healthCareInfo = data.healthCareInfo;
 
-      this.healthCare.bloodtype = data.healthCareInfo.bloodtype[this.healthCare.bloodtypeid].name;
-      this.healthCare.education = data.healthCareInfo.education[this.healthCare.education].name;
-      this.healthCare.ethnicgroup = data.healthCareInfo.ethnicgroup[this.healthCare.ethnicgroupid].name;
-      this.healthCare.pamentmeth = data.healthCareInfo.pamentmeth[this.healthCare.pamentmeth].name;
-      this.healthCare.marriage = data.healthCareInfo.marriage[this.healthCare.marriage].name;
-      this.healthCare.sex = data.healthCareInfo.sexes[this.healthCare.sex].name;
-      this.healthCare.work = data.healthCareInfo.works[this.healthCare.workId].name;
     })
   },
   methods: {

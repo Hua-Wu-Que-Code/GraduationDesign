@@ -10,12 +10,12 @@
       </el-select>
     </el-form-item>
     <el-form-item label="民族">
-      <el-select v-model="healthCare.ethnicgroup" filterable>
+      <el-select v-model="healthCare.ethnicGroup" filterable>
         <el-option v-for="item in healthCareInfo.ethnicgroup" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="血型">
-      <el-select v-model="healthCare.bloodtype">
+      <el-select v-model="healthCare.bloodType">
         <el-option v-for="item in healthCareInfo.bloodtype" :label="item.name" :value="item.name"></el-option>
       </el-select>
     </el-form-item>
