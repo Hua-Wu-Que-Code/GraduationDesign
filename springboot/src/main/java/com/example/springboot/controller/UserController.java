@@ -223,6 +223,21 @@ public class UserController extends BaseController{
                 }
             }
             healthrecord.setHeredityhistory(heritageUser);
+
+            //记录用户血型
+            healthrecord.setBloodType(commonMapper.userInfoBloodType(healthrecord.getBloodtypeID()));
+            //记录用户教育水平
+            healthrecord.setEducation(commonMapper.userInfoEducation(healthrecord.getEducationId()));
+            //记录用户民族
+            healthrecord.setEthnicGroup(commonMapper.userInfoEthnicGroup(healthrecord.getEducationId()));
+            //记录用户支付方式
+            healthrecord.setPamentmeth(commonMapper.userInfoPamentMeth(healthrecord.getPamentmethId()));
+            //记录用户婚姻状况
+            healthrecord.setMarriage(commonMapper.userInfoMarrage(healthrecord.getMarriageId()));
+            //记录用户性别
+            healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexId()));
+            //记录用户工作
+            healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkId()));
         }
 
 

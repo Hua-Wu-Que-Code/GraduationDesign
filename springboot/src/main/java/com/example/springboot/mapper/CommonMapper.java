@@ -47,4 +47,26 @@ public interface CommonMapper {
 
     @Select("select * from user_heritage where userId = #{id}")
     List<UserHeritage> userInfoUserHeritage(String userId);
+
+    @Select("select name from bloodType where id = #{bloodtypeid}")
+    String userInfoBloodType(Integer bloodtypeid);
+
+    @Select("select name from education where id = #{educationId}")
+    String userInfoEducation(Integer educationId);
+
+
+    @Select("select name from ethnicGroup where id = #{ethnicgroupid}")
+    String userInfoEthnicGroup(Integer ethnicgroupid);
+
+    @Select("select name from pamentMeth where id = #{pamentmethId}")
+    String userInfoPamentMeth(Integer pamentmethId);
+
+    @Select("select name from marriage where id = #{marriageId}")
+    String userInfoMarrage(Integer marriageId);
+
+    @Select("select name from sex where id = #{sexId}")
+
+    String userInfoSex(Integer sexId);
+    @Select("select name from work where id = #{workId}")
+    String userInfoWork(Integer workId);
 }
