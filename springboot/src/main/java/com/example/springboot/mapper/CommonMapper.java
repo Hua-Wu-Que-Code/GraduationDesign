@@ -38,4 +38,13 @@ public interface CommonMapper {
 
     @Select("select * from disability")
     List<Disability> healthCareInfoUserDisability();
+
+    @Select("select * from user_allergy where userID = #{id}")
+    List<UserAllergy> userInfoUserAllergy(String userId);
+
+    @Select("select * from heritage_disease")
+    List<HeritageDisease> healthCareInfoHeritageDisease();
+
+    @Select("select * from user_heritage where userId = #{id}")
+    List<UserHeritage> userInfoUserHeritage(String userId);
 }

@@ -23,7 +23,13 @@
       <el-input v-model="healthCare.idcard"></el-input>
     </el-form-item>
     <el-form-item label="出生日期">
-      <el-input v-model="healthCare.date"></el-input>
+      <div class="block">
+        <el-date-picker
+          v-model="healthCare.date"
+          type="date"
+          placeholder="选择日期">
+        </el-date-picker>
+      </div>
     </el-form-item>
     <el-form-item label="职业">
       <el-select v-model="healthCare.work">
@@ -43,10 +49,10 @@
       <el-input v-model="healthCare.contactphone"></el-input>
     </el-form-item>
     <el-form-item label="常住类型">
-      <template>
-        <el-radio v-model="healthCare.typeOfPermanent" label="1">户籍</el-radio>
-        <el-radio v-model="healthCare.typeOfPermanent" label="2">非户籍</el-radio>
-      </template>
+      <el-radio-group v-model="healthCare.typeofpermanent">
+        <el-radio :label="0">户籍</el-radio>
+        <el-radio :label="1">非户籍</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="文化程度">
       <el-select v-model="healthCare.education">
@@ -87,25 +93,20 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="外伤记录">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="输血历史">
-      <el-select v-model="healthCare.group" :placeholder="healthCare.group">
-        <el-option label="男" value="0"></el-option>
-        <el-option label="女" value="1"></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item label="遗传病历史">
-      <el-select v-model="healthCare.heredityhistory">
-        <el-option v-for="item in healthCareInfo.heredityhistory" :label="item.name" :value="item.name"></el-option>
+      <el-select v-model="healthCare.heredityhistory" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'heredityhistory')">
+        <el-option
+          v-for="item in healthCareInfo.heritageDiseases"
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
       </el-select>
     </el-form-item>
+
     <el-form-item label="残疾情况">
-      <el-select v-model="healthCare.disabilities" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'disabilities')">
+      <el-select v-model="healthCare.disabilities" multiple collapse-tags filterable default-first-option
+                 @change="(val) => handleChange(val,'disabilities')">
         <el-option
           v-for="item in healthCareInfo.disabilities"
           :key="item.name"
@@ -131,6 +132,31 @@ export default {
   name: "HealthRecord",
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
     }
   },
   created() {
@@ -143,14 +169,15 @@ export default {
       console.log(flag)
       if (flag == 'allergyMul'){
         if (val.includes('无')) {
-          console.log("hello")
           this.healthCare.allergyhistory = ['无'];
         }
       } else if (flag == 'diseases'){
-        console.log(val)
         if (val.includes('无')) {
-
           this.healthCare.diseases = ['无'];
+        }
+      } else if (flag == 'disabilities') {
+        if(val.includes('无残疾')) {
+          this.healthCare.disabilities = ['无残疾'];
         }
       }
 

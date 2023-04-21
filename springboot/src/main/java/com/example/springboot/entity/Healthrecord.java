@@ -83,7 +83,7 @@ public class Healthrecord implements Serializable {
     /**
      * 过敏历史
      */
-    private Integer allergyhistory;
+    private List<String> allergyhistory;
     /**
      * 疾病历史
      */
@@ -99,7 +99,7 @@ public class Healthrecord implements Serializable {
     /**
      * 遗传病历史
      */
-    private Integer heredityhistory;
+    private List<String> heredityhistory;
     /**
      * 残疾情况
      */
@@ -247,11 +247,11 @@ public class Healthrecord implements Serializable {
         this.pamentmeth = pamentmeth;
     }
 
-    public Integer getAllergyhistory() {
+    public List<String> getAllergyhistory() {
         return allergyhistory;
     }
 
-    public void setAllergyhistory(Integer allergyhistory) {
+    public void setAllergyhistory(List<String> allergyhistory) {
         this.allergyhistory = allergyhistory;
     }
 
@@ -279,14 +279,13 @@ public class Healthrecord implements Serializable {
         this.bloodtrans = bloodtrans;
     }
 
-    public Integer getHeredityhistory() {
+    public List<String> getHeredityhistory() {
         return heredityhistory;
     }
 
-    public void setHeredityhistory(Integer heredityhistory) {
+    public void setHeredityhistory(List<String> heredityhistory) {
         this.heredityhistory = heredityhistory;
     }
-
 
     public String getName() {
         return name;

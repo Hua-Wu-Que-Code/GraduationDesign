@@ -44,4 +44,7 @@ public class HealthCareInfo {
 
     //残疾列表
     List<Disability> disabilities;
+
+    //遗传病列表
+    List<HeritageDisease> heritageDiseases;
 }

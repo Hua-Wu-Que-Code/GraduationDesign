@@ -172,6 +172,9 @@ public class UserController extends BaseController{
         //获取残疾列表
         List<Disability> disabilities = commonMapper.healthCareInfoUserDisability();
         healthCareInfo.setDisabilities(disabilities);
+        //获取遗传病列表
+        List<HeritageDisease> heritageDiseases = commonMapper.healthCareInfoHeritageDisease();
+        healthCareInfo.setHeritageDiseases(heritageDiseases);
 
 
         //获取用户疾病历史
@@ -195,6 +198,31 @@ public class UserController extends BaseController{
             }
         }
         healthrecord.setDisabilities(disabilityUser);
+
+        //获取用户过敏历史
+        List<UserAllergy> userAllergies = commonMapper.userInfoUserAllergy(userId);
+        List<String> allergyUser = new ArrayList<>();
+        for (UserAllergy userAllergy:userAllergies) {
+            for (Allergyhistory allergyhistory:allergyhistories) {
+                if (allergyhistory.getId() == userAllergy.getAllergyid()) {
+                    allergyUser.add(allergyhistory.getName());
+                }
+            }
+        }
+        healthrecord.setAllergyhistory(allergyUser);
+
+        //获取用户遗传病历史
+        List<UserHeritage> userHeritages = commonMapper.userInfoUserHeritage(userId);
+        List<String> heritageUser = new ArrayList<>();
+        for (UserHeritage userHeritage:userHeritages) {
+            for (HeritageDisease heritageDisease:heritageDiseases) {
+                if (userHeritage.getHeritageid() == heritageDisease.getId()) {
+                    heritageUser.add(heritageDisease.getName());
+                }
+            }
+        }
+        healthrecord.setHeredityhistory(heritageUser);
+
 
 
         userInfo.setHealthCareInfo(healthCareInfo);
