@@ -138,7 +138,7 @@ public class UserController extends BaseController{
         Healthrecord healthrecord = userService.findHealthRecord(userId);
         //用户信息
         UserInfo userInfo = new UserInfo();
-        //健康报信息
+        //健康表信息
         HealthCareInfo healthCareInfo = new HealthCareInfo();
 
 
@@ -177,51 +177,53 @@ public class UserController extends BaseController{
         healthCareInfo.setHeritageDiseases(heritageDiseases);
 
 
-        //获取用户疾病历史
-        List<UserDisease> userDiseases = commonMapper.userInfoUserDisease(userId);
-        List<String> diseasesUser = new ArrayList<String>();
-        for (UserDisease userDisease:userDiseases) {
-            for (Disease disease:diseases) {
-                if (disease.getId() == userDisease.getDiseaseid())
-                    diseasesUser.add(disease.getName());
-            }
-        }
-        healthrecord.setDiseases(diseasesUser);
-
-        //获取用户残疾历史
-        List<UserDisability> userDisabilities = commonMapper.userInfoUserDisability(userId);
-        List<String> disabilityUser = new ArrayList<String>();
-        for (UserDisability userDisability:userDisabilities) {
-            for (Disability disability:disabilities) {
-                if (disability.getId() == userDisability.getDisabilityid())
-                    disabilityUser.add(disability.getName());
-            }
-        }
-        healthrecord.setDisabilities(disabilityUser);
-
-        //获取用户过敏历史
-        List<UserAllergy> userAllergies = commonMapper.userInfoUserAllergy(userId);
-        List<String> allergyUser = new ArrayList<>();
-        for (UserAllergy userAllergy:userAllergies) {
-            for (Allergyhistory allergyhistory:allergyhistories) {
-                if (allergyhistory.getId() == userAllergy.getAllergyid()) {
-                    allergyUser.add(allergyhistory.getName());
+        if (healthrecord != null) {
+            //获取用户疾病历史
+            List<UserDisease> userDiseases = commonMapper.userInfoUserDisease(userId);
+            List<String> diseasesUser = new ArrayList<String>();
+            for (UserDisease userDisease:userDiseases) {
+                for (Disease disease:diseases) {
+                    if (disease.getId() == userDisease.getDiseaseid())
+                        diseasesUser.add(disease.getName());
                 }
             }
-        }
-        healthrecord.setAllergyhistory(allergyUser);
+            healthrecord.setDiseases(diseasesUser);
 
-        //获取用户遗传病历史
-        List<UserHeritage> userHeritages = commonMapper.userInfoUserHeritage(userId);
-        List<String> heritageUser = new ArrayList<>();
-        for (UserHeritage userHeritage:userHeritages) {
-            for (HeritageDisease heritageDisease:heritageDiseases) {
-                if (userHeritage.getHeritageid() == heritageDisease.getId()) {
-                    heritageUser.add(heritageDisease.getName());
+            //获取用户残疾历史
+            List<UserDisability> userDisabilities = commonMapper.userInfoUserDisability(userId);
+            List<String> disabilityUser = new ArrayList<String>();
+            for (UserDisability userDisability:userDisabilities) {
+                for (Disability disability:disabilities) {
+                    if (disability.getId() == userDisability.getDisabilityid())
+                        disabilityUser.add(disability.getName());
                 }
             }
+            healthrecord.setDisabilities(disabilityUser);
+
+            //获取用户过敏历史
+            List<UserAllergy> userAllergies = commonMapper.userInfoUserAllergy(userId);
+            List<String> allergyUser = new ArrayList<>();
+            for (UserAllergy userAllergy:userAllergies) {
+                for (Allergyhistory allergyhistory:allergyhistories) {
+                    if (allergyhistory.getId() == userAllergy.getAllergyid()) {
+                        allergyUser.add(allergyhistory.getName());
+                    }
+                }
+            }
+            healthrecord.setAllergyhistory(allergyUser);
+
+            //获取用户遗传病历史
+            List<UserHeritage> userHeritages = commonMapper.userInfoUserHeritage(userId);
+            List<String> heritageUser = new ArrayList<>();
+            for (UserHeritage userHeritage:userHeritages) {
+                for (HeritageDisease heritageDisease:heritageDiseases) {
+                    if (userHeritage.getHeritageid() == heritageDisease.getId()) {
+                        heritageUser.add(heritageDisease.getName());
+                    }
+                }
+            }
+            healthrecord.setHeredityhistory(heritageUser);
         }
-        healthrecord.setHeredityhistory(heritageUser);
 
 
 
