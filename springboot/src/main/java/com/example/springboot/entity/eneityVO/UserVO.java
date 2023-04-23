@@ -35,10 +35,6 @@ public class UserVO {
      */
     private String sex;
     /**
-     * 住址
-     */
-    private String address;
-    /**
      * 权限
      */
     private List<String> roles;

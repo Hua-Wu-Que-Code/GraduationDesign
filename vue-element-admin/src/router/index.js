@@ -216,6 +216,9 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
+    meta: {
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [
       {
         path: 'index',

@@ -32,7 +32,6 @@ public class User implements Serializable {
      */
     private String nickname;
 
-    private String address;
     /**
      * 角色：
         1.管理员

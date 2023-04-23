@@ -69,4 +69,7 @@ public interface CommonMapper {
     String userInfoSex(Integer sexId);
     @Select("select name from work where id = #{workId}")
     String userInfoWork(Integer workId);
+
+    @Select("select nickname from user where id = #{userId}")
+    String getUserName(String userId);
 }

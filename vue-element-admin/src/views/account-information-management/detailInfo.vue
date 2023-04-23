@@ -4,7 +4,7 @@
       <el-row :gutter="20">
 
         <el-col :span="6" :xs="24">
-          <user-card :user="user" />
+          <user-card :user="user" :tags="tags"/>
         </el-col>
 
         <el-col :span="18" :xs="24">
@@ -35,6 +35,7 @@ import MedicalExaminationFile from './components/MedicalExaminationFile.vue'
 import Account from './components/Account'
 import HealthRecord from "@/views/account-information-management/components/HealthRecord.vue";
 import {fetchHealthCare} from "@/api/userInfoMage";
+import th from "element-ui/src/locale/lang/th";
 
 export default {
   name: 'detailInfo',
@@ -45,7 +46,8 @@ export default {
       activeTab: 'MedicalExaminationFile',
       MedicalExaminationFile: [],
       healthCare: {},
-      healthCareInfo:{}
+      healthCareInfo:{},
+      tags: []
     }
   },
   computed: {
@@ -59,22 +61,17 @@ export default {
     this.user = this.$route.query.user;
     fetchHealthCare(this.user.id).then(res => {
       const {data} = res
-      console.log(res)
       this.MedicalExaminationFile = data.medicalexaminationfile;
       this.healthCare = data.healthrecord;
       this.healthCareInfo = data.healthCareInfo;
-
+      if (this.healthCare.allergyhistory.length != 0 ) this.tags.push({name:'过敏人群'})
+      if (this.healthCare.diseases.length != 0 ) this.tags.push({name:'患病人群'})
+      if (this.healthCare.heredityhistory.length != 0 ) this.tags.push({name:'遗传病人群'})
+      console.log(this.tags)
     })
   },
   methods: {
-    getUser() {
-      this.user = {
-        username: this.username,
-        role: this.roles.join(' | '),
-        email: 'admin@test.com',
-        avatar: this.avatar
-      }
-    }
+
   }
 }
 </script>

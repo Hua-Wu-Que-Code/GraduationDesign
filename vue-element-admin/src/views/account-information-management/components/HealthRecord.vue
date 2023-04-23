@@ -94,7 +94,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="遗传病历史">
-      <el-select v-model="healthCare.heredityhistory" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'heredityhistory')">
+      <el-select v-model="healthCare.heredityhistory" multiple collapse-tags filterable default-first-option @change="(val) => handleChange(val,'heritage')">
         <el-option
           v-for="item in healthCareInfo.heritageDiseases"
           :key="item.name"
@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.healthCare.diseases)
+      console.log(this.healthCare)
     },
     handleChange(val,flag){
       console.log(flag)
@@ -178,6 +178,11 @@ export default {
       } else if (flag == 'disabilities') {
         if(val.includes('无残疾')) {
           this.healthCare.disabilities = ['无残疾'];
+        }
+      } else if (flag == 'heritage') {
+        if (val.includes('无')) {
+          this.healthCare.heredityhistory= ['无']
+
         }
       }
 

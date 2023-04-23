@@ -47,4 +47,5 @@ public class HealthCareInfo {
 
     //遗传病列表
     List<HeritageDisease> heritageDiseases;
+
 }

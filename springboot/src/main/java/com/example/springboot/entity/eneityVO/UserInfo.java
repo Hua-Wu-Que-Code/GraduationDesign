@@ -14,7 +14,10 @@ import java.util.List;
  */
 @Data
 public class UserInfo {
+    //健康表
     Healthrecord healthrecord;
+    //体检表
     List<Medicalexaminationfile> medicalexaminationfile;
+    //健康表基础信息
     HealthCareInfo healthCareInfo;
 }

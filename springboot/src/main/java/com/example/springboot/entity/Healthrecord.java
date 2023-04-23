@@ -18,6 +18,7 @@ public class Healthrecord implements Serializable {
     /**
      * 健康档案表id
      */
+    @JsonIgnore
     private Integer id;
     /**
      * 姓名
@@ -30,6 +31,7 @@ public class Healthrecord implements Serializable {
     /**
      * 性别；0为男，1为女，3为不方便透露
      */
+    @JsonIgnore
     private Integer sexId;
     private String sex;
     /**
@@ -113,9 +115,24 @@ public class Healthrecord implements Serializable {
     /**
      * 工作情况
      */
+    @JsonIgnore
     private Integer workId;
     private String work;
 
+    /**
+     *健康表中是否存有数据
+     * 0表示无
+     * 1表示有
+     */
+    private int flag;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 
     public Integer getWorkId() {
         return workId;

@@ -135,6 +135,7 @@ public class UserController extends BaseController{
         String userId = userParam.getId();
         //体检信息
         List<Medicalexaminationfile> medicalexaminationfiles = userService.fetchMedicalExaminationFile(userId);
+        //健康表
         Healthrecord healthrecord = userService.findHealthRecord(userId);
         //用户信息
         UserInfo userInfo = new UserInfo();
@@ -177,6 +178,7 @@ public class UserController extends BaseController{
         healthCareInfo.setHeritageDiseases(heritageDiseases);
 
 
+        //如果没有基本健康表
         if (healthrecord != null) {
             //获取用户疾病历史
             List<UserDisease> userDiseases = commonMapper.userInfoUserDisease(userId);
@@ -238,6 +240,10 @@ public class UserController extends BaseController{
             healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexId()));
             //记录用户工作
             healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkId()));
+        } else {
+            healthrecord = new Healthrecord();
+            healthrecord.setName(commonMapper.getUserName(userId));
+            healthrecord.setUserid(userId);
         }
 
 
