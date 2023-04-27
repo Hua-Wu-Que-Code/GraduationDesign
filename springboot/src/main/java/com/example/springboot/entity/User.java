@@ -1,5 +1,6 @@
 package com.example.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -39,6 +40,7 @@ public class User implements Serializable {
         3.供药商
         4.患者
      */
+    @JsonIgnore
     private Integer roleid;
 
     private List<String> roles;

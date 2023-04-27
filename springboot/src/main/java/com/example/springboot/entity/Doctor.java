@@ -37,6 +37,15 @@ public class Doctor implements Serializable {
 
     private Date date;
 
+    private User doctor;
+
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
+    }
 
     public String getId() {
         return id;

@@ -168,6 +168,13 @@ export const asyncRoutes = [
         component: () => import('@/views/clinic-management/index.vue'),
         name: 'ClinicAdmin',
         meta: { title: '诊所管理', icon: 'icon', noCache: true }
+      },
+      {
+        path: 'info',
+        hidden: true,
+        component: () => import('@/views/clinic-management/detailInfo.vue'),
+        name: 'InfoEdit',
+        meta: { title: '详情', icon: 'icon', noCache: true }
       }
     ]
   },

@@ -6,18 +6,18 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb :image="doctor.doctor.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
-          {{ user.roles[0] }}
+          {{ doctor.doctor.roles[0] }}
         </pan-thumb>
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.nickname }}</div>
-        <div class="user-role text-center text-muted">{{ user.roles[0]}}</div>
+        <div class="user-name text-center">{{ doctor.doctor.nickname }}</div>
+        <div class="user-role text-center text-muted">{{ doctor.roles[0]}}</div>
       </div>
     </div>
 
-    <div class="user-bio">
+<!--    <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header"><i class="el-icon-sunny" style="font-size: 20px" /><span>患者标签</span></div>
         <div class="user-bio-section-body">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </el-card>
 </template>
 
@@ -36,14 +36,13 @@ import PanThumb from '@/components/PanThumb'
 export default {
   components: { PanThumb },
   props: {
-    user: {
+    doctor: {
       type: Object,
       default: () => {
         return {
           name: '',
           email: '',
           avatar: '',
-          roles: []
         }
       }
     },

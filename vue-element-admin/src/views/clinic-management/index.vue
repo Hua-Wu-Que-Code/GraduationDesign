@@ -35,35 +35,32 @@
         align="center">
       </el-table-column>
       <el-table-column
-        prop="nickname"
+        prop="name"
         label="诊所名称"
         width="100"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="username"
-        label="账号名"
+        label="诊所医生"
         width="100"
         align="center">
-      </el-table-column>
-      <el-table-column
-        prop="password"
-        label="密码"
-        width="100"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        label="身份"
-        width="100"
-        :filters="filters"
-        :filter-method="filterTag"
-        align="center"
-        filter-placement="bottom-end">
         <template slot-scope="scope">
           <el-tag
-            :class="roleType(scope.row.roles[0])"
-            disable-transitions>{{scope.row.roles[0]}}</el-tag>
+            class=doctor
+            disable-transitions>{{scope.row.doctor.name}}</el-tag>
         </template>
+      </el-table-column>
+      <el-table-column
+        prop="address"
+        label="地址"
+        width="100"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="telephone"
+        label="联系方式"
+        width="100"
+        align="center">
       </el-table-column>
       <el-table-column
         label="状态"
@@ -80,9 +77,6 @@
           <el-button
             size="mini"
             @click="handleEdit(scope.row)">查看</el-button>
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">停用</el-button>
           <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
             <template #reference>
               <el-button size="mini" type="danger">删除</el-button>
@@ -215,6 +209,7 @@ export default {
       this.listLoading = true
       fetchClinicList(this.listQuery).then(res =>{
         console.log(res)
+        const { data } = res
         this.list = data
         this.listLoading = false
       })
@@ -257,7 +252,7 @@ export default {
     },
     handleEdit(row) {
       console.log(row);
-      this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});
+      this.$router.push({path:'/ClinicAdmin/info' , query: {clinic: row}});
     },
     handleDelete(row) {
       console.log(row.id)
@@ -304,7 +299,7 @@ export default {
 </script>
 
 <style>
-.Pet {
+.doctor {
   background-color: #C06F98;
   color: white;
 }

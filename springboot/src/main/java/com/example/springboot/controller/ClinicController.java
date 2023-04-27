@@ -1,9 +1,6 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.entity.Clinic;
-import com.example.springboot.entity.ListQuery;
-import com.example.springboot.entity.Result;
-import com.example.springboot.entity.User;
+import com.example.springboot.entity.*;
 import com.example.springboot.service.ClinicService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +28,13 @@ public class ClinicController extends BaseController{
 
         List<Clinic> clinicList = clinicService.findClinicAdmin(query);
         clinicList.forEach(clinic -> {
-            clinic.setDoctor(doctorMapper.findDoctorByID(clinic.getDortorid()));
+            Doctor doctor = doctorMapper.findDoctorByID(clinic.getDortorid());
+            User user = userService.findUserById(doctor.getId());
+            Integer roleId = user.getRoleid();
+            List<String> roleList = roleMapper.findRoleIntroduction(roleId);
+            user.setRoles(roleList);
+            doctor.setDoctor(user);
+            clinic.setDoctor(doctor);
         });
         return Result.succeed(clinicList);
     }
