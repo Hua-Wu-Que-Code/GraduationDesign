@@ -1,7 +1,9 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.mapper.CommonMapper;
+import com.example.springboot.mapper.DoctorMapper;
 import com.example.springboot.mapper.RoleMapper;
+import com.example.springboot.service.ClinicService;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,5 +29,11 @@ public class BaseController {
 
     @Autowired
     CommonMapper commonMapper;
+
+    @Autowired
+    ClinicService clinicService;
+
+    @Autowired
+    DoctorMapper doctorMapper;
 
 }

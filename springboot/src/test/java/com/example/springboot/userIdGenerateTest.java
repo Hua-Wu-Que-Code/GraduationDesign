@@ -18,4 +18,5 @@ public class userIdGenerateTest {
         System.out.println(UUID.randomUUID().toString()
         );
     }
+    
 }

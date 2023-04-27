@@ -30,7 +30,7 @@ public class UserService{
     }
 
     public List<User> findUsersAdmin(ListQuery query) {
-        int page = query.getPage();
+        int page = query.getPage() -1 ;
         int limit = query.getLimit();
         return userMapper.findUsersAdmin(page,limit);
     }
