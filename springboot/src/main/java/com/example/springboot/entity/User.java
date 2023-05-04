@@ -12,7 +12,6 @@ import java.util.List;
  * @author huawuque
  * @since 2023-04-13 00:11:57
  */
-@Data
 public class User implements Serializable {
     private static final long serialVersionUID = -22228781161608810L;
     /**
@@ -55,6 +54,68 @@ public class User implements Serializable {
      */
     private String avatar;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }
 
