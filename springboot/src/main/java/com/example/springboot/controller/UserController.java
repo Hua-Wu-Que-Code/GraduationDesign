@@ -130,7 +130,7 @@ public class UserController extends BaseController{
     @RequestMapping("/fetchMedicalExaminationFile")
     @CrossOrigin
     @ResponseBody
-    public Result forEachDelete(@RequestBody User userParam) {
+    public Result forEachMedical(@RequestBody User userParam) {
 
         String userId = userParam.getId();
         //体检信息

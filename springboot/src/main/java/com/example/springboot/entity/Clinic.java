@@ -28,11 +28,7 @@ public class Clinic implements Serializable {
      * 联系方式
      */
     private String telephone;
-    /**
-     * 医生ID
-     */
-    @JsonIgnore
-    private String dortorid;
+
     private Doctor doctor;
     /**
      * 营业时间
@@ -70,14 +66,6 @@ public class Clinic implements Serializable {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getDortorid() {
-        return dortorid;
-    }
-
-    public void setDortorid(String dortorid) {
-        this.dortorid = dortorid;
     }
 
     public String getBusinesshour() {

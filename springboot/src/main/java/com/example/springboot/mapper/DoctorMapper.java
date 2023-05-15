@@ -1,8 +1,12 @@
 package com.example.springboot.mapper;
 
 import com.example.springboot.entity.Doctor;
+import com.example.springboot.entity.ListQuery;
+import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @author huawuque
@@ -13,6 +17,9 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface DoctorMapper {
+    @Select("select * from doctor limit #{page},#{limit} ")
+    List<Doctor> findDoctorsAdmin(int page, int limit);
+
     @Select("select * from doctor where id = #{dortorid}")
-    public Doctor findDoctorByID(String dortorid);
+    Doctor findDoctorByID(String dortorid);
 }

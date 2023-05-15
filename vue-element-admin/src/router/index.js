@@ -179,6 +179,28 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/doctorAdmin',
+    component: Layout,
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor-manage/index.vue'),
+        name: 'DoctorAdmin',
+        meta: { title: '医生管理', icon: 'icon', noCache: true }
+      },
+      {
+        path: 'info',
+        hidden: true,
+        component: () => import('@/views/doctor-manage/detailInfo.vue'),
+        name: 'InfoEdit',
+        meta: { title: '详情', icon: 'icon', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
