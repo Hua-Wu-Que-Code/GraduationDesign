@@ -113,7 +113,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/applier-management/index'),
+        component: () => import('@/views/supplier-management/index'),
         name: 'ApplierAdmin',
         meta: { title: '供货商管理', icon: 'icon', noCache: true }
       }

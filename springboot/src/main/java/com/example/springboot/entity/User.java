@@ -48,6 +48,7 @@ public class User implements Serializable {
      * 账号状态
      */
     private boolean status;
+    private String statusStr;
 
     /**
      * 头像
@@ -60,6 +61,14 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStatusStr() {
+        return statusStr;
+    }
+
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
     }
 
     public String getUsername() {

@@ -3,8 +3,10 @@ package com.example.springboot.controller;
 import com.example.springboot.mapper.CommonMapper;
 import com.example.springboot.mapper.DoctorMapper;
 import com.example.springboot.mapper.RoleMapper;
+import com.example.springboot.mapper.SupplierMapper;
 import com.example.springboot.service.ClinicService;
 import com.example.springboot.service.DoctorService;
+import com.example.springboot.service.SupplierService;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,5 +41,8 @@ public class BaseController {
 
     @Autowired
     DoctorService doctorService;
+
+    @Autowired
+    SupplierService supplierService;
 
 }

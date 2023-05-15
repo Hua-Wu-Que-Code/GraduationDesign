@@ -17,4 +17,7 @@ import java.util.List;
 public interface ClinicMapper {
     @Select("select * from clinic limit #{page},#{limit} ")
     List<Clinic> findClinicAdmin(int page, int limit);
+
+    @Select("select * from clinic where id = #{clinicId}")
+    Clinic findClinicById(String clinicId);
 }

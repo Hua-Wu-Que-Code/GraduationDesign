@@ -39,6 +39,16 @@ public class Doctor implements Serializable {
 
     private User doctor;
 
+    private Clinic clinic;
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
+
     public User getDoctor() {
         return doctor;
     }

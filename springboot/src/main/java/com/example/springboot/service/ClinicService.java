@@ -26,4 +26,8 @@ public class ClinicService {
         int limit = query.getLimit();
         return clinicMapper.findClinicAdmin(page,limit);
     }
+
+    public Clinic findClinicById(String clinicId) {
+        return clinicMapper.findClinicById(clinicId);
+    }
 }
