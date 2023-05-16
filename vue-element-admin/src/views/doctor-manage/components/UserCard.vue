@@ -6,16 +6,39 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb :image="doctor.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
-          {{ user.roles[0] }}
+          {{ doctor.roles[0] }}
         </pan-thumb>
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.roles[0]}}</div>
+        <div class="user-name text-center">{{ doctor.name }}</div>
+        <div class="user-role text-center text-muted">{{ doctor.roles[0]}}</div>
       </div>
     </div>
+
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header"><span>👩🏻‍⚕️介绍</span></div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            十年老中医,专治疑难杂症
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header"><span>👩🏻‍⚕️标签</span></div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            <el-tag v-for="item in doctor.tag">{{item}}</el-tag>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </el-card>
 </template>

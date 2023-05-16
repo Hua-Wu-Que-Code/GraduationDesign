@@ -78,4 +78,10 @@ public interface CommonMapper {
 
     @Select("select clinicID from user_clinic where doctorID = #{id}")
     String findClinicByDoctorId(String id);
+
+    @Select("select addressID from user_address where userID = #{clinicId}")
+    int findAddressIDByUserId(String clinicId);
+
+    @Select("select * from address where id = #{addressID}")
+    Address findAddressByID(int addressID);
 }

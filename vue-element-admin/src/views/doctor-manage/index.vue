@@ -198,7 +198,6 @@ export default {
       this.listLoading = true
       fetchDoctorList(this.listQuery).then(res =>{
         const { data } = res
-        console.log(res)
 
         this.list = data
         this.listLoading = false

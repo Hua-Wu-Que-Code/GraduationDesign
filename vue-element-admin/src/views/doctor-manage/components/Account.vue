@@ -71,7 +71,7 @@ export default {
     },
   },
   created() {
-    console.log(this.doctor)
+
   },
   watch: {
 

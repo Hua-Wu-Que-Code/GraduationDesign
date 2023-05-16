@@ -1,26 +1,31 @@
 <template>
   <div class="user-activity">
-    <div class="post" v-for="i in MedicalExaminationFile">
-      <div class="user-block">
-        <img class="img-circle" :src=i.src>
-        <span class="username text-muted">{{i.nickname}}</span>
-        <span class="date">{{i.date}}</span>
-      </div>
-      <p class="text">
-          {{i.description}}
-      </p>
-    </div>
+    <el-form ref="form" :model="doctorInfo" label-width="100px">
+      <el-form-item label="姓名">
+        <el-input v-model="doctorInfo.name"></el-input>
+      </el-form-item>
+      <el-form-item label="联系电话">
+        <el-input v-model="doctorInfo.telephone"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button @click="getInfo">取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
 
+import CitySelect from "@/components/CitySelect/index.vue";
+
 export default {
+  components: {CitySelect},
   props: {
-    MedicalExaminationFile: []
+    doctorInfo: {}
   },
   created() {
-
+    console.log(this.doctorInfo)
   },
   data() {
     return {

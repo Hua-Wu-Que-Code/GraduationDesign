@@ -37,8 +37,15 @@ public class DoctorController extends BaseController {
             d.setRoles(roleList);
             doctor.setDoctor(d);
 
+
+
+
             String clinicId = commonMapper.findClinicByDoctorId(id);
             Clinic clinic = clinicService.findClinicById(clinicId);
+            //修改诊所地址
+            int addressID = commonMapper.findAddressIDByUserId(clinicId);
+            Address address = commonMapper.findAddressByID(addressID);
+            clinic.setAddress(address);
             doctor.setClinic(clinic);
 
 

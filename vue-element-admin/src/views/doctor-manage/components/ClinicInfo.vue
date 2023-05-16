@@ -5,10 +5,7 @@
       <el-input v-model="clinic.name"></el-input>
     </el-form-item>
     <el-form-item label="地点">
-      <el-input v-model="clinic.address"></el-input>
-    </el-form-item>
-    <el-form-item label="地点">
-      <el-input v-model="clinic.address"></el-input>
+      <CitySelect :selectedOptions="clinic.select" />
     </el-form-item>
     <el-form-item label="联系电话">
       <el-input v-model="clinic.telephone"></el-input>
@@ -22,8 +19,11 @@
 </template>
 
 <script>
-import cityData from '@/utils/cityOptions'
+import CitySelect from "@/components/CitySelect/index.vue";
 export default {
+  components: {
+    CitySelect
+  },
   props: {
     clinic:{},
   },
@@ -34,9 +34,12 @@ export default {
     }
   },
   created() {
+
   },
   methods: {
+    onSubmit() {
 
+    }
   }
 }
 </script>

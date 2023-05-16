@@ -20,10 +20,7 @@ public class Clinic implements Serializable {
      * 诊所名称
      */
     private String name;
-    /**
-     * 诊所地点
-     */
-    private String address;
+
     /**
      * 联系方式
      */
@@ -35,6 +32,16 @@ public class Clinic implements Serializable {
      */
     private String businesshour;
 
+
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getId() {
         return id;
@@ -52,13 +59,6 @@ public class Clinic implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getTelephone() {
         return telephone;
