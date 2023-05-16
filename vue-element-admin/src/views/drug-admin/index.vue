@@ -29,53 +29,30 @@
       style="width: 100%"
     >
       <el-table-column
-        prop="id"
+        prop="drugid"
         label="id"
-        width="330"
+        width="300"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="drugname"
         label="药品名称"
-        width="100"
+        width="200"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="indications"
-        label="功能主治"
-        width="100"
+        prop="manu"
+        label="生产厂家"
+        width="300"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="manufacturedate"
-        label="生产日期"
-        width="100"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="usage"
-        label="用法用量"
-        width="100"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="approvalnum"
+        prop="pzwh"
         label="批准文号"
-        width="100"
+        width="200"
         align="center">
       </el-table-column>
-      <el-table-column
-        prop="marks"
-        label="专有标志"
-        width="100"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="approvalnum"
-        label="批准文号"
-        width="100"
-        align="center">
-      </el-table-column>
+
       <el-table-column label="操作">
         <template #default="scope">
           <el-button
@@ -213,35 +190,18 @@ export default {
       if (role == "停用") return 'Bathe'
     },
     getList() {
-      /*for(let i = 1;i<= 10; i++) {
-        getDrugInfo(i).then(res=> {
-          console.log(res)
-          const {showapi_res_body} = this.res;
-          const {data} = showapi_res_body;
-          console.log(data)
-        })
-      }*/
-      getDrugInfo(1).then(res=> {
-        console.log(res)
-        const {showapi_res_body} = res;
-        const {data} = showapi_res_body;
-        let jsonArray = data;
-        addDrug(jsonArray).then(res => {
-          console.log(res)
-        })
-      })
-      getDrugInfo().then(res=> {
-        console.log(res)
-      })
+
       getClassifyInfo().then(res=> {
         console.log(res)
       })
       this.listLoading = true
       fetchDrugList(this.listQuery).then(res =>{
         const { data } = res
-        console.log(res)
+        const {list,total} = data;
 
-        this.list = data
+
+        this.list = list;
+        this.total = total;
         this.listLoading = false
       })
     },

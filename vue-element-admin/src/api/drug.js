@@ -14,6 +14,6 @@ export function fetchDrugList(query) {
 
 export function addDrug(jsonArray) {
   return request.post('/drug/add',{
-    jsonArray: jsonArray
+    json: jsonArray
   })
 }

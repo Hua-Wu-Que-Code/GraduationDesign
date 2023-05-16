@@ -1,9 +1,6 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.mapper.CommonMapper;
-import com.example.springboot.mapper.DoctorMapper;
-import com.example.springboot.mapper.RoleMapper;
-import com.example.springboot.mapper.SupplierMapper;
+import com.example.springboot.mapper.*;
 import com.example.springboot.service.ClinicService;
 import com.example.springboot.service.DoctorService;
 import com.example.springboot.service.SupplierService;
@@ -44,5 +41,8 @@ public class BaseController {
 
     @Autowired
     SupplierService supplierService;
+
+    @Autowired
+    DrugMapper drugMapper;
 
 }

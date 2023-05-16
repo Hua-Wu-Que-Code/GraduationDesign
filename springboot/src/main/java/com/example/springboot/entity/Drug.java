@@ -21,11 +21,11 @@ public class Drug implements Serializable {
     /**
      * 生产厂家
      */
-    private String nanu;
+    private String manu;
     /**
      * 批准文号
      */
-    private String pawh;
+    private String pzwh;
     /**
      * 药品分类
      */
@@ -48,20 +48,20 @@ public class Drug implements Serializable {
         this.drugname = drugname;
     }
 
-    public String getNanu() {
-        return nanu;
+    public String getManu() {
+        return manu;
     }
 
-    public void setNanu(String nanu) {
-        this.nanu = nanu;
+    public void setManu(String manu) {
+        this.manu = manu;
     }
 
-    public String getPawh() {
-        return pawh;
+    public String getPzwh() {
+        return pzwh;
     }
 
-    public void setPawh(String pawh) {
-        this.pawh = pawh;
+    public void setPzwh(String pzwh) {
+        this.pzwh = pzwh;
     }
 
     public String getClassifyid() {

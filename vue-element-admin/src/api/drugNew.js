@@ -41,10 +41,10 @@ import drugRequest from "@/utils/drugRequest";
  * }
  */
 
-export function getDrugInfo(page) {
+export function getDrugInfo(page,id) {
   return drugRequest.get('/drugInfo',{
     params: {
-      classifyId: '599ad2a0600b2149d689b75a',
+      classifyId: id,
       maxResult: '20',
       page: page
     }
