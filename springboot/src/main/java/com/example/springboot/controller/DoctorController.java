@@ -32,6 +32,9 @@ public class DoctorController extends BaseController {
             User d = userService.findUserById(id);
             String sta = d.isStatus() ? "正常" : "停用";
             d.setStatusStr(sta);
+            Integer roleId = d.getRoleid();
+            List<String> roleList = roleMapper.findRoleIntroduction(roleId);
+            d.setRoles(roleList);
             doctor.setDoctor(d);
 
             String clinicId = commonMapper.findClinicByDoctorId(id);

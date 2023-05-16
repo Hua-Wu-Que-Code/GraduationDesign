@@ -137,23 +137,6 @@ export default {
       tableKey: 0,
       list: [
       ],
-      filters: [
-        {
-          text: '管理员',
-          value: '管理员'
-        },
-        {
-          text: '医生',
-          value: '医生'
-        },
-        {
-          text: '供货商',
-          value: '供货商'
-        },{
-          text: '患者',
-          value: '患者'
-        }
-      ],
       total: 0,
       listLoading: true,
       listQuery: {
@@ -259,7 +242,7 @@ export default {
     },
     handleEdit(row) {
       console.log(row);
-      this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});
+      this.$router.push({path:'/doctorAdmin/info' , query: {user: row}});
     },
     handleDelete(row) {
       console.log(row.id)

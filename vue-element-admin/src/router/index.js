@@ -196,7 +196,7 @@ export const asyncRoutes = [
         hidden: true,
         component: () => import('@/views/doctor-manage/detailInfo.vue'),
         name: 'InfoEdit',
-        meta: { title: '详情', icon: 'icon', noCache: true }
+        meta: { title: '医生详情', icon: 'icon', noCache: true }
       }
     ]
   },

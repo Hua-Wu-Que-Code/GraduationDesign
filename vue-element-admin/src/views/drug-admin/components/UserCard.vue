@@ -12,11 +12,21 @@
         </pan-thumb>
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
+        <div class="user-name text-center">{{ user.nickname }}</div>
         <div class="user-role text-center text-muted">{{ user.roles[0]}}</div>
       </div>
     </div>
 
+    <div class="user-bio">
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header"><i class="el-icon-sunny" style="font-size: 20px" /><span>患者标签</span></div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            <el-tag v-for="item in tags">{{item.name}}</el-tag>
+          </div>
+        </div>
+      </div>
+    </div>
   </el-card>
 </template>
 
@@ -26,16 +36,18 @@ import PanThumb from '@/components/PanThumb'
 export default {
   components: { PanThumb },
   props: {
-    doctor: {
+    user: {
+      type: Object,
+      default: () => {
+        return {
+          name: '',
+          email: '',
+          avatar: '',
+          roles: []
+        }
+      }
     },
-  },
-  data() {
-    return {
-
-    }
-  },
-  created() {
-    console.log(this.doctor)
+    tags:{}
   }
 }
 </script>

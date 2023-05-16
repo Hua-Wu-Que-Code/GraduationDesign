@@ -14,7 +14,7 @@ public class Drug implements Serializable {
     /**
      * 药品ID
      */
-    private String id;
+    private int id;
     /**
      * 药品名称
      */
@@ -61,11 +61,11 @@ public class Drug implements Serializable {
     private Date manufacturedate;
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
