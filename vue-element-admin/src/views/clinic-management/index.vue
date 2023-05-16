@@ -88,7 +88,6 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-
   </div>
 </template>
 
@@ -198,18 +197,20 @@ export default {
       return row.roles[0] === value;
     },
     roleType(role){
-      if (role == "管理员") return 'Pet'
-      if (role == "医生") return 'Insurance'
-      if (role == "供货商") return 'Bathe'
-      if (role == "患者") return 'Hairdressing'
-      if (role == "正常") return 'Pet'
-      if (role == "停用") return 'Bathe'
+      if (role == "营业中") return 'Insurance'
+      if (role == "休息中") return 'Bathe'
     },
     getList() {
       this.listLoading = true
       fetchClinicList(this.listQuery).then(res =>{
         console.log(res)
         const { data } = res
+        data.forEach(item => {
+          const {address} = item;
+          const {province,city,county,detail} = address;
+          let select = province+","+city+","+county;
+          item.address = select;
+        })
         this.list = data
         this.listLoading = false
       })
@@ -251,7 +252,7 @@ export default {
       }
     },
     handleEdit(row) {
-      console.log(row);
+
       this.$router.push({path:'/ClinicAdmin/info' , query: {clinic: row}});
     },
     handleDelete(row) {

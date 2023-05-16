@@ -7,6 +7,9 @@
       <el-form-item label="联系电话">
         <el-input v-model="doctorInfo.telephone"></el-input>
       </el-form-item>
+      <el-form-item label="联系电话">
+        <el-input v-model="doctorInfo.ability"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
         <el-button @click="getInfo">取消</el-button>
@@ -25,7 +28,7 @@ export default {
     doctorInfo: {}
   },
   created() {
-    console.log(this.doctorInfo)
+
   },
   data() {
     return {

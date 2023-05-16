@@ -84,4 +84,7 @@ public interface CommonMapper {
 
     @Select("select * from address where id = #{addressID}")
     Address findAddressByID(int addressID);
+
+    @Select("select * from schedule where id = #{id}")
+    Schedule findScheduleById(int id);
 }

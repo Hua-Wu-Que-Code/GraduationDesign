@@ -41,6 +41,16 @@ public class Doctor implements Serializable {
 
     private Clinic clinic;
 
+    private String ability;
+
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
     public Clinic getClinic() {
         return clinic;
     }

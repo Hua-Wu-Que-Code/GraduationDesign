@@ -4,7 +4,7 @@ import com.example.springboot.entity.*;
 import com.example.springboot.service.ClinicService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author huawuque
@@ -37,6 +37,31 @@ public class ClinicController extends BaseController{
             user.setRoles(roleList);
             doctor.setDoctor(user);
             clinic.setDoctor(doctor);
+
+            //修改诊所地址
+            int addressID = commonMapper.findAddressIDByUserId(id);
+            Address address = commonMapper.findAddressByID(addressID);
+            clinic.setAddress(address);
+
+            int start = clinic.getStartTime();
+            int end = clinic.getCloseTime();
+            ArrayList<Schedule> time = new ArrayList<>();
+            time.add(commonMapper.findScheduleById(start));
+            time.add(commonMapper.findScheduleById(end));
+            clinic.setTime(time);
+
+            GregorianCalendar calendar = new GregorianCalendar();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minutes = calendar.get(Calendar.MINUTE);
+
+            String status = "休息中";
+
+            if ( hour >= Integer.parseInt(time.get(0).getHours() ) && minutes >= Integer.parseInt(time.get(0).getMinutes())) {
+                if (hour <= Integer.parseInt(time.get(1).getHours()) && minutes <= Integer.parseInt(time.get(1).getMinutes()) ) {
+                    status = "营业中";
+                }
+            }
+            clinic.setStatus(status);
         });
         return Result.succeed(clinicList);
     }

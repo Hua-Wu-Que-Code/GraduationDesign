@@ -58,7 +58,6 @@ export default {
   },
   created() {
     this.user = this.$route.query.user;
-    console.log(this.user)
     this.doctor = this.user.doctor;
     this.clinic = this.user.clinic;
     const {address} = this.clinic;
@@ -69,6 +68,7 @@ export default {
     tag.push(this.user.education)
     tag.push(this.user.workexper+"工作经验")
     this.doctor.tag = tag;
+    this.doctor.ability = this.user.ability;
   },
   methods: {
 

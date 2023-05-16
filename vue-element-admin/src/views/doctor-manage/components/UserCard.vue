@@ -22,7 +22,7 @@
         <div class="user-bio-section-header"><span>👩🏻‍⚕️介绍</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            十年老中医,专治疑难杂症
+            {{doctor.ability}}
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default {
     }
   },
   created() {
-    console.log(this.doctor)
+
   }
 }
 </script>
