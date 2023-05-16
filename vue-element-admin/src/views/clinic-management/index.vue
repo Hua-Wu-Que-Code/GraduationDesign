@@ -51,7 +51,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="address"
+        prop="select"
         label="地址"
         width="100"
         align="center">
@@ -73,16 +73,19 @@
         </template>
       </el-table-column>
       <el-table-column label="操作">
-        <template #default="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.row)">查看</el-button>
-          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
-            <template #reference>
-              <el-button size="mini" type="danger">删除</el-button>
-            </template>
-          </el-popconfirm>
-        </template>
+      <template #default="scope">
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.row)">查看</el-button>
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">停用</el-button>
+        <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
+          <template #reference>
+            <el-button size="mini" type="danger">删除</el-button>
+          </template>
+        </el-popconfirm>
+      </template>
       </el-table-column>
     </el-table>
 
@@ -209,8 +212,11 @@ export default {
           const {address} = item;
           const {province,city,county,detail} = address;
           let select = province+","+city+","+county;
-          item.address = select;
+          item.select = select;
+          item.address = [province,city,county];
+          item.detail = detail;
         })
+        console.log(data)
         this.list = data
         this.listLoading = false
       })

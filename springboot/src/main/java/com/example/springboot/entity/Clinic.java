@@ -39,6 +39,26 @@ public class Clinic implements Serializable {
      */
     private String status;
 
+    private String avatar;
+
+    private String desc;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
     private ArrayList<Schedule> time;
 
 

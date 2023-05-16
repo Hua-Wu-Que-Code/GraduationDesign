@@ -6,27 +6,26 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="doctor.doctor.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb :image="clinic.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
-          {{ doctor.doctor.roles[0] }}
         </pan-thumb>
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ doctor.doctor.nickname }}</div>
-        <div class="user-role text-center text-muted">{{ doctor.roles[0]}}</div>
+        <div class="user-name text-center">{{ clinic.name }}</div>
       </div>
     </div>
 
-<!--    <div class="user-bio">
+    <div class="user-bio">
       <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><i class="el-icon-sunny" style="font-size: 20px" /><span>患者标签</span></div>
+        <div class="user-bio-section-header"><span>👩🏻‍⚕️介绍</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            <el-tag v-for="item in tags">{{item.name}}</el-tag>
+            {{clinic.desc}}
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
+
   </el-card>
 </template>
 
@@ -36,17 +35,16 @@ import PanThumb from '@/components/PanThumb'
 export default {
   components: { PanThumb },
   props: {
-    doctor: {
-      type: Object,
-      default: () => {
-        return {
-          name: '',
-          email: '',
-          avatar: '',
-        }
-      }
+    clinic: {
     },
-    tags:{}
+  },
+  data() {
+    return {
+
+    }
+  },
+  created() {
+
   }
 }
 </script>

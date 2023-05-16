@@ -2,6 +2,10 @@ package com.example.springboot;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 /**
@@ -18,5 +22,17 @@ public class userIdGenerateTest {
         System.out.println(UUID.randomUUID().toString()
         );
     }
-    
+
+    @Test
+    void Time() {
+        Date date  = new Date();
+        LocalTime time = LocalTime.now();
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        System.out.println("hour=" + hour);
+        System.out.println("minute="+minutes);
+    }
+
 }
