@@ -103,7 +103,8 @@
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
-import {fetchDrugList} from "@/api/drug"; // secondary package based on el-pagination
+import {addDrug, fetchDrugList} from "@/api/drug";
+import {getDrugInfo, getClassifyInfo} from "@/api/drugNew"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -212,6 +213,29 @@ export default {
       if (role == "停用") return 'Bathe'
     },
     getList() {
+      /*for(let i = 1;i<= 10; i++) {
+        getDrugInfo(i).then(res=> {
+          console.log(res)
+          const {showapi_res_body} = this.res;
+          const {data} = showapi_res_body;
+          console.log(data)
+        })
+      }*/
+      getDrugInfo(1).then(res=> {
+        console.log(res)
+        const {showapi_res_body} = res;
+        const {data} = showapi_res_body;
+        let jsonArray = data;
+        addDrug(jsonArray).then(res => {
+          console.log(res)
+        })
+      })
+      getDrugInfo().then(res=> {
+        console.log(res)
+      })
+      getClassifyInfo().then(res=> {
+        console.log(res)
+      })
       this.listLoading = true
       fetchDrugList(this.listQuery).then(res =>{
         const { data } = res

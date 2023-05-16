@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import drugRequest from "@/utils/drugRequest";
 
 
 export function fetchDrugList(query) {
@@ -8,5 +9,11 @@ export function fetchDrugList(query) {
     importance: query.importance,
     title: query.title,
     type: query.type
+  })
+}
+
+export function addDrug(jsonArray) {
+  return request.post('/drug/add',{
+    jsonArray: jsonArray
   })
 }

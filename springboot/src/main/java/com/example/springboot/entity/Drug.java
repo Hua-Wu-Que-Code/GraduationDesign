@@ -1,160 +1,75 @@
 package com.example.springboot.entity;
 
-import java.util.Date;
 import java.io.Serializable;
 
 /**
- * 药品信息表(Drug)实体类
+ * 药品详细表(Drug)实体类
  *
  * @author huawuque
- * @since 2023-04-27 15:14:40
+ * @since 2023-05-17 00:54:14
  */
 public class Drug implements Serializable {
-    private static final long serialVersionUID = -99012322383917257L;
+    private static final long serialVersionUID = 367597392322817670L;
     /**
-     * 药品ID
+     * 药品表ID
      */
-    private int id;
+    private String drugid;
     /**
      * 药品名称
      */
-    private String name;
+    private String drugname;
     /**
-     * 适用症状
+     * 生产厂家
      */
-    private String indications;
-    /**
-     * 有效期
-     */
-    private Date expirationdate;
-    /**
-     * 用法用量
-     */
-    private String usage;
+    private String nanu;
     /**
      * 批准文号
      */
-    private String approvalnum;
+    private String pawh;
     /**
-     * 专有标志
+     * 药品分类
      */
-    private String marks;
-    /**
-     * 厂家
-     */
-    private String factory;
-    /**
-     * 药品成分
-     */
-    private String ingredients;
-    /**
-     * 存放方法
-     */
-    private String storage;
-    /**
-     * 不良反应
-     */
-    private String adverseactions;
-    /**
-     * 生产日期
-     */
-    private Date manufacturedate;
+    private String classifyid;
 
 
-    public int getId() {
-        return id;
+    public String getDrugid() {
+        return drugid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDrugid(String drugid) {
+        this.drugid = drugid;
     }
 
-    public String getName() {
-        return name;
+    public String getDrugname() {
+        return drugname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDrugname(String drugname) {
+        this.drugname = drugname;
     }
 
-    public String getIndications() {
-        return indications;
+    public String getNanu() {
+        return nanu;
     }
 
-    public void setIndications(String indications) {
-        this.indications = indications;
+    public void setNanu(String nanu) {
+        this.nanu = nanu;
     }
 
-    public Date getExpirationdate() {
-        return expirationdate;
+    public String getPawh() {
+        return pawh;
     }
 
-    public void setExpirationdate(Date expirationdate) {
-        this.expirationdate = expirationdate;
+    public void setPawh(String pawh) {
+        this.pawh = pawh;
     }
 
-    public String getUsage() {
-        return usage;
+    public String getClassifyid() {
+        return classifyid;
     }
 
-    public void setUsage(String usage) {
-        this.usage = usage;
-    }
-
-    public String getApprovalnum() {
-        return approvalnum;
-    }
-
-    public void setApprovalnum(String approvalnum) {
-        this.approvalnum = approvalnum;
-    }
-
-    public String getMarks() {
-        return marks;
-    }
-
-    public void setMarks(String marks) {
-        this.marks = marks;
-    }
-
-    public String getFactory() {
-        return factory;
-    }
-
-    public void setFactory(String factory) {
-        this.factory = factory;
-    }
-
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public String getStorage() {
-        return storage;
-    }
-
-    public void setStorage(String storage) {
-        this.storage = storage;
-    }
-
-    public String getAdverseactions() {
-        return adverseactions;
-    }
-
-    public void setAdverseactions(String adverseactions) {
-        this.adverseactions = adverseactions;
-    }
-
-    public Date getManufacturedate() {
-        return manufacturedate;
-    }
-
-    public void setManufacturedate(Date manufacturedate) {
-        this.manufacturedate = manufacturedate;
+    public void setClassifyid(String classifyid) {
+        this.classifyid = classifyid;
     }
 
 }
