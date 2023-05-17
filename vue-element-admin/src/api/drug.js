@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 import drugRequest from "@/utils/drugRequest";
+import LocalRequest from "@/utils/localRequest";
 
 
 export function fetchDrugList(query) {
@@ -17,3 +18,19 @@ export function addDrug(jsonArray) {
     json: jsonArray
   })
 }
+
+export function addDrugClass(jsonArray) {
+  return request.post('/drug/addClass',{
+    json: jsonArray
+  })
+}
+
+export function andDrugDetailInfo(drug) {
+  return request.post('/drug/addDetail',{
+    drug:drug
+  })
+}
+export function andDrugDetailInfoLocal() {
+  return LocalRequest.get('./detail.json')
+}
+

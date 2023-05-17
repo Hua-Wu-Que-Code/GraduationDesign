@@ -1,6 +1,7 @@
 package com.example.springboot.mapper;
 
 import com.example.springboot.entity.Drug;
+import com.example.springboot.entity.DrugInfo;
 import com.example.springboot.entity.ListQuery;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,4 +28,15 @@ public interface DrugMapper {
 
     @Select("select count(1) from drug")
     int total();
+
+    @Insert(" insert into DrugClass(classname,classify,classifyid) values (#{classname},#{classify},#{classifyid})")
+    void insertDrugClass(String classname, String classify, String classifyid);
+
+
+    @Select("select * from drugInfo where drugId =#{id}")
+    DrugInfo findDrugInfoById(String id);
+
+    @Insert(" insert into drugInfo(drugId,drugName,jj,xz,spmc,jx,syz,yfyl,zycf,zysx,etyy,gg,yfjbrqfnyy,manu,zc,hypy,tymc,pzwh,zxbz,ywxhzy,yxq,blfy,lryy,price) " +
+            "values (#{drugId},#{drugName},#{jj},#{xz},#{spmc},#{jx},#{syz},#{yfyl},#{zycf},#{zysx},#{etyy},#{gg},#{yfjbrqfnyy},#{manu},#{zc},#{hypy},#{tymc},#{pzwh},#{zxbz},#{ywxhzy},#{yxq},#{blfy},#{lryy},#{price})")
+    void insertDrugInfo(String drugId, String drugName, String jj, String gg, String xz, String spmc, String jx, String syz, String yfyl, String zycf, String zysx, String etyy, String yfjbrqfnyy, String manu, String zc, String hypy, String tymc, String pzwh, String zxbz, String ywxhzy, String yxq, String blfy, String lryy, String price);
 }

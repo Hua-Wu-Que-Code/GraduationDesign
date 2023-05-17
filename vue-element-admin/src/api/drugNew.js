@@ -1,5 +1,5 @@
 import drugRequest from "@/utils/drugRequest";
-
+import request from "@/utils/request";
 /**
  * {
  *
@@ -50,6 +50,14 @@ export function getDrugInfo(page,id) {
     }
   })
 }
+
+export function getDrugDetailInfo(id) {
+  return request.post('/drug/drugDetail',{
+    drugid:id
+  })
+}
+
+
 
 export function getClassifyInfo() {
   return drugRequest.get('/classify',{

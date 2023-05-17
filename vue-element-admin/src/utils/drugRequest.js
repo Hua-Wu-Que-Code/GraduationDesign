@@ -8,7 +8,6 @@ import router from '@/router'
 const service = axios.create({
   baseURL: 'http://drug.market.alicloudapi.com', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
 })
 // 请求白名单，如果请求在白名单里面，将不会被拦截校验权限
 // request interceptor

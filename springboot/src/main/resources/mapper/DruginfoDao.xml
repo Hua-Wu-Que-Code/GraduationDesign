@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.entity.dao.DruginfoDao">
+
+    <resultMap type="com.example.springboot.entity.DrugInfo" id="DruginfoMap">
+        <result property="drugid" column="drugId" jdbcType="VARCHAR"/>
+        <result property="drugname" column="drugName" jdbcType="VARCHAR"/>
+        <result property="jj" column="jj" jdbcType="VARCHAR"/>
+        <result property="xz" column="xz" jdbcType="VARCHAR"/>
+        <result property="spmc" column="spmc" jdbcType="VARCHAR"/>
+        <result property="jx" column="jx" jdbcType="VARCHAR"/>
+        <result property="syz" column="syz" jdbcType="VARCHAR"/>
+        <result property="yfyl" column="yfyl" jdbcType="VARCHAR"/>
+        <result property="zycf" column="zycf" jdbcType="VARCHAR"/>
+        <result property="zysx" column="zysx" jdbcType="VARCHAR"/>
+        <result property="etyy" column="etyy" jdbcType="VARCHAR"/>
+        <result property="gg" column="gg" jdbcType="VARCHAR"/>
+        <result property="yfjbrqfnyy" column="yfjbrqfnyy" jdbcType="VARCHAR"/>
+        <result property="manu" column="manu" jdbcType="VARCHAR"/>
+        <result property="zc" column="zc" jdbcType="VARCHAR"/>
+        <result property="hypy" column="hypy" jdbcType="VARCHAR"/>
+        <result property="tymc" column="tymc" jdbcType="VARCHAR"/>
+        <result property="pzwh" column="pzwh" jdbcType="VARCHAR"/>
+        <result property="zxbz" column="zxbz" jdbcType="VARCHAR"/>
+        <result property="ywxhzy" column="ywxhzy" jdbcType="VARCHAR"/>
+        <result property="yxq" column="yxq" jdbcType="VARCHAR"/>
+        <result property="blfy" column="blfy" jdbcType="VARCHAR"/>
+        <result property="lryy" column="lryy" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DruginfoMap">
+        select
+          drugId, drugName, jj, xz, spmc, jx, syz, yfyl, zycf, zysx, etyy, gg, yfjbrqfnyy, manu, zc, hypy, tymc, pzwh, zxbz, ywxhzy, yxq, blfy, lryy, price
+        from drugInfo
+        where drugId = #{drugid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DruginfoMap">
+        select
+          drugId, drugName, jj, xz, spmc, jx, syz, yfyl, zycf, zysx, etyy, gg, yfjbrqfnyy, manu, zc, hypy, tymc, pzwh, zxbz, ywxhzy, yxq, blfy, lryy, price
+        from drugInfo
+        <where>
+            <if test="drugid != null and drugid != ''">
+                and drugId = #{drugid}
+            </if>
+            <if test="drugname != null and drugname != ''">
+                and drugName = #{drugname}
+            </if>
+            <if test="jj != null and jj != ''">
+                and jj = #{jj}
+            </if>
+            <if test="xz != null and xz != ''">
+                and xz = #{xz}
+            </if>
+            <if test="spmc != null and spmc != ''">
+                and spmc = #{spmc}
+            </if>
+            <if test="jx != null and jx != ''">
+                and jx = #{jx}
+            </if>
+            <if test="syz != null and syz != ''">
+                and syz = #{syz}
+            </if>
+            <if test="yfyl != null and yfyl != ''">
+                and yfyl = #{yfyl}
+            </if>
+            <if test="zycf != null and zycf != ''">
+                and zycf = #{zycf}
+            </if>
+            <if test="zysx != null and zysx != ''">
+                and zysx = #{zysx}
+            </if>
+            <if test="etyy != null and etyy != ''">
+                and etyy = #{etyy}
+            </if>
+            <if test="gg != null and gg != ''">
+                and gg = #{gg}
+            </if>
+            <if test="yfjbrqfnyy != null and yfjbrqfnyy != ''">
+                and yfjbrqfnyy = #{yfjbrqfnyy}
+            </if>
+            <if test="manu != null and manu != ''">
+                and manu = #{manu}
+            </if>
+            <if test="zc != null and zc != ''">
+                and zc = #{zc}
+            </if>
+            <if test="hypy != null and hypy != ''">
+                and hypy = #{hypy}
+            </if>
+            <if test="tymc != null and tymc != ''">
+                and tymc = #{tymc}
+            </if>
+            <if test="pzwh != null and pzwh != ''">
+                and pzwh = #{pzwh}
+            </if>
+            <if test="zxbz != null and zxbz != ''">
+                and zxbz = #{zxbz}
+            </if>
+            <if test="ywxhzy != null and ywxhzy != ''">
+                and ywxhzy = #{ywxhzy}
+            </if>
+            <if test="yxq != null and yxq != ''">
+                and yxq = #{yxq}
+            </if>
+            <if test="blfy != null and blfy != ''">
+                and blfy = #{blfy}
+            </if>
+            <if test="lryy != null and lryy != ''">
+                and lryy = #{lryy}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from drugInfo
+        <where>
+            <if test="drugid != null and drugid != ''">
+                and drugId = #{drugid}
+            </if>
+            <if test="drugname != null and drugname != ''">
+                and drugName = #{drugname}
+            </if>
+            <if test="jj != null and jj != ''">
+                and jj = #{jj}
+            </if>
+            <if test="xz != null and xz != ''">
+                and xz = #{xz}
+            </if>
+            <if test="spmc != null and spmc != ''">
+                and spmc = #{spmc}
+            </if>
+            <if test="jx != null and jx != ''">
+                and jx = #{jx}
+            </if>
+            <if test="syz != null and syz != ''">
+                and syz = #{syz}
+            </if>
+            <if test="yfyl != null and yfyl != ''">
+                and yfyl = #{yfyl}
+            </if>
+            <if test="zycf != null and zycf != ''">
+                and zycf = #{zycf}
+            </if>
+            <if test="zysx != null and zysx != ''">
+                and zysx = #{zysx}
+            </if>
+            <if test="etyy != null and etyy != ''">
+                and etyy = #{etyy}
+            </if>
+            <if test="gg != null and gg != ''">
+                and gg = #{gg}
+            </if>
+            <if test="yfjbrqfnyy != null and yfjbrqfnyy != ''">
+                and yfjbrqfnyy = #{yfjbrqfnyy}
+            </if>
+            <if test="manu != null and manu != ''">
+                and manu = #{manu}
+            </if>
+            <if test="zc != null and zc != ''">
+                and zc = #{zc}
+            </if>
+            <if test="hypy != null and hypy != ''">
+                and hypy = #{hypy}
+            </if>
+            <if test="tymc != null and tymc != ''">
+                and tymc = #{tymc}
+            </if>
+            <if test="pzwh != null and pzwh != ''">
+                and pzwh = #{pzwh}
+            </if>
+            <if test="zxbz != null and zxbz != ''">
+                and zxbz = #{zxbz}
+            </if>
+            <if test="ywxhzy != null and ywxhzy != ''">
+                and ywxhzy = #{ywxhzy}
+            </if>
+            <if test="yxq != null and yxq != ''">
+                and yxq = #{yxq}
+            </if>
+            <if test="blfy != null and blfy != ''">
+                and blfy = #{blfy}
+            </if>
+            <if test="lryy != null and lryy != ''">
+                and lryy = #{lryy}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="drugid" useGeneratedKeys="true">
+        insert into drugInfo(drugName, jj, xz, spmc, jx, syz, yfyl, zycf, zysx, etyy, gg, yfjbrqfnyy, manu, zc, hypy, tymc, pzwh, zxbz, ywxhzy, yxq, blfy, lryy, price)
+        values (#{drugname}, #{jj}, #{xz}, #{spmc}, #{jx}, #{syz}, #{yfyl}, #{zycf}, #{zysx}, #{etyy}, #{gg}, #{yfjbrqfnyy}, #{manu}, #{zc}, #{hypy}, #{tymc}, #{pzwh}, #{zxbz}, #{ywxhzy}, #{yxq}, #{blfy}, #{lryy}, #{price})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="drugid" useGeneratedKeys="true">
+        insert into drugInfo(drugName, jj, xz, spmc, jx, syz, yfyl, zycf, zysx, etyy, gg, yfjbrqfnyy, manu, zc, hypy, tymc, pzwh, zxbz, ywxhzy, yxq, blfy, lryy, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.drugname}, #{entity.jj}, #{entity.xz}, #{entity.spmc}, #{entity.jx}, #{entity.syz}, #{entity.yfyl}, #{entity.zycf}, #{entity.zysx}, #{entity.etyy}, #{entity.gg}, #{entity.yfjbrqfnyy}, #{entity.manu}, #{entity.zc}, #{entity.hypy}, #{entity.tymc}, #{entity.pzwh}, #{entity.zxbz}, #{entity.ywxhzy}, #{entity.yxq}, #{entity.blfy}, #{entity.lryy}, #{entity.price})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="drugid" useGeneratedKeys="true">
+        insert into drugInfo(drugName, jj, xz, spmc, jx, syz, yfyl, zycf, zysx, etyy, gg, yfjbrqfnyy, manu, zc, hypy, tymc, pzwh, zxbz, ywxhzy, yxq, blfy, lryy, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.drugname}, #{entity.jj}, #{entity.xz}, #{entity.spmc}, #{entity.jx}, #{entity.syz}, #{entity.yfyl}, #{entity.zycf}, #{entity.zysx}, #{entity.etyy}, #{entity.gg}, #{entity.yfjbrqfnyy}, #{entity.manu}, #{entity.zc}, #{entity.hypy}, #{entity.tymc}, #{entity.pzwh}, #{entity.zxbz}, #{entity.ywxhzy}, #{entity.yxq}, #{entity.blfy}, #{entity.lryy}, #{entity.price})
+        </foreach>
+        on duplicate key update
+        drugName = values(drugName),
+        jj = values(jj),
+        xz = values(xz),
+        spmc = values(spmc),
+        jx = values(jx),
+        syz = values(syz),
+        yfyl = values(yfyl),
+        zycf = values(zycf),
+        zysx = values(zysx),
+        etyy = values(etyy),
+        gg = values(gg),
+        yfjbrqfnyy = values(yfjbrqfnyy),
+        manu = values(manu),
+        zc = values(zc),
+        hypy = values(hypy),
+        tymc = values(tymc),
+        pzwh = values(pzwh),
+        zxbz = values(zxbz),
+        ywxhzy = values(ywxhzy),
+        yxq = values(yxq),
+        blfy = values(blfy),
+        lryy = values(lryy),
+        price = values(price)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update drugInfo
+        <set>
+            <if test="drugname != null and drugname != ''">
+                drugName = #{drugname},
+            </if>
+            <if test="jj != null and jj != ''">
+                jj = #{jj},
+            </if>
+            <if test="xz != null and xz != ''">
+                xz = #{xz},
+            </if>
+            <if test="spmc != null and spmc != ''">
+                spmc = #{spmc},
+            </if>
+            <if test="jx != null and jx != ''">
+                jx = #{jx},
+            </if>
+            <if test="syz != null and syz != ''">
+                syz = #{syz},
+            </if>
+            <if test="yfyl != null and yfyl != ''">
+                yfyl = #{yfyl},
+            </if>
+            <if test="zycf != null and zycf != ''">
+                zycf = #{zycf},
+            </if>
+            <if test="zysx != null and zysx != ''">
+                zysx = #{zysx},
+            </if>
+            <if test="etyy != null and etyy != ''">
+                etyy = #{etyy},
+            </if>
+            <if test="gg != null and gg != ''">
+                gg = #{gg},
+            </if>
+            <if test="yfjbrqfnyy != null and yfjbrqfnyy != ''">
+                yfjbrqfnyy = #{yfjbrqfnyy},
+            </if>
+            <if test="manu != null and manu != ''">
+                manu = #{manu},
+            </if>
+            <if test="zc != null and zc != ''">
+                zc = #{zc},
+            </if>
+            <if test="hypy != null and hypy != ''">
+                hypy = #{hypy},
+            </if>
+            <if test="tymc != null and tymc != ''">
+                tymc = #{tymc},
+            </if>
+            <if test="pzwh != null and pzwh != ''">
+                pzwh = #{pzwh},
+            </if>
+            <if test="zxbz != null and zxbz != ''">
+                zxbz = #{zxbz},
+            </if>
+            <if test="ywxhzy != null and ywxhzy != ''">
+                ywxhzy = #{ywxhzy},
+            </if>
+            <if test="yxq != null and yxq != ''">
+                yxq = #{yxq},
+            </if>
+            <if test="blfy != null and blfy != ''">
+                blfy = #{blfy},
+            </if>
+            <if test="lryy != null and lryy != ''">
+                lryy = #{lryy},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+        </set>
+        where drugId = #{drugid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from drugInfo where drugId = #{drugid}
+    </delete>
+
+</mapper>
+

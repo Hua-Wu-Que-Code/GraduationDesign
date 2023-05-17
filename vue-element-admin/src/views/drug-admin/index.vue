@@ -69,6 +69,92 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="药品详细" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="药品名称" :label-width="formLabelWidth">
+          <el-input v-model="form.drugName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="规格" :label-width="formLabelWidth">
+          <el-input v-model="form.gg" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="禁忌" :label-width="formLabelWidth">
+          <el-input v-model="form.jj" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="形状" :label-width="formLabelWidth">
+          <el-input v-model="form.xz" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="商品通称" :label-width="formLabelWidth">
+          <el-input v-model="form.spmc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item type="textarea"
+                      :rows="2"
+                      label="介绍" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            :rows="2"
+            v-model="form.syz"
+            autocomplete="off">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="适应症" :label-width="formLabelWidth">
+          <el-input v-model="form.yfyl" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="用法用量" :label-width="formLabelWidth">
+          <el-input v-model="form.zycf" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="主要成分" :label-width="formLabelWidth">
+          <el-input v-model="form.etyy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item type="textarea"
+                      :rows="2"
+                      label="注意事项" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            :rows="2"
+            v-model="form.zysx"
+            autocomplete="off">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="儿童用药" :label-width="formLabelWidth">
+          <el-input v-model="form.etyy" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="孕妇及哺乳期" :label-width="formLabelWidth">
+          <el-input v-model="form.fyjbrqfnyy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="生产厂家" :label-width="formLabelWidth">
+          <el-input v-model="form.manu" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="贮存" :label-width="formLabelWidth">
+          <el-input v-model="form.zc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="汉语拼音" :label-width="formLabelWidth">
+          <el-input v-model="form.hypy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="通用名称" :label-width="formLabelWidth">
+          <el-input v-model="form.tymc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="批准文号" :label-width="formLabelWidth">
+          <el-input v-model="form.pzwh" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="执行标准" :label-width="formLabelWidth">
+          <el-input v-model="form.zxbz" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="药物相互作用" :label-width="formLabelWidth">
+          <el-input v-model="form.ywxhzy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="有效期" :label-width="formLabelWidth">
+          <el-input v-model="form.yxq" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="不良反应" :label-width="formLabelWidth">
+          <el-input v-model="form.blfy" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
@@ -80,8 +166,10 @@
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
-import {addDrug, fetchDrugList} from "@/api/drug";
-import {getDrugInfo, getClassifyInfo} from "@/api/drugNew"; // secondary package based on el-pagination
+import detail from '@/api/detail.json'
+import {addDrug, addDrugClass, andDrugDetailInfo, andDrugDetailInfoLocal, fetchDrugList} from "@/api/drug";
+import {getDrugInfo, getClassifyInfo, getDrugDetailInfo} from "@/api/drugNew";
+import source from "echarts/src/data/Source"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -112,26 +200,12 @@ export default {
   },
   data() {
     return {
+      class:[],
+      drugList:[],
       tableKey: 0,
       list: [
       ],
-      filters: [
-        {
-          text: '管理员',
-          value: '管理员'
-        },
-        {
-          text: '医生',
-          value: '医生'
-        },
-        {
-          text: '供货商',
-          value: '供货商'
-        },{
-          text: '患者',
-          value: '患者'
-        }
-      ],
+      form:{},
       total: 0,
       listLoading: true,
       listQuery: {
@@ -141,6 +215,7 @@ export default {
         title: '',
         type: ''
       },
+      formLabelWidth: '100px',
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
@@ -172,6 +247,13 @@ export default {
     }
   },
   created() {
+
+    /*andDrugDetailInfoLocal().then(res => {
+      console.log(res)
+    })
+    andDrugDetailInfo(detail).then(res => {
+          console.log(res)
+    })*/
     this.getList();
   },
   methods: {
@@ -190,10 +272,24 @@ export default {
       if (role == "停用") return 'Bathe'
     },
     getList() {
+      /*getClassifyInfo().then(res=> {
+        const {showapi_res_body} =res;
+        const {data} = showapi_res_body;
+        this.class = data;
 
-      getClassifyInfo().then(res=> {
-        console.log(res)
-      })
+        for (let i = 40;i<=50;i++) {
+          let id = this.class[i].classifyId;
+          getDrugInfo(1,id).then(res=> {
+            const {showapi_res_body} =res;
+            const {data} = showapi_res_body;
+            addDrug(data).then(res => {
+              console.log(res)
+            })
+          })
+
+        }
+      })*/
+
       this.listLoading = true
       fetchDrugList(this.listQuery).then(res =>{
         const { data } = res
@@ -203,7 +299,11 @@ export default {
         this.list = list;
         this.total = total;
         this.listLoading = false
+
+
+
       })
+
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -243,7 +343,13 @@ export default {
     },
     handleEdit(row) {
       console.log(row);
-      this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});
+      this.dialogFormVisible = true;
+      getDrugDetailInfo(row.drugid).then(res => {
+        console.log(res)
+        const {data} = res;
+        this.form = data;
+      })
+      /*this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});*/
     },
     handleDelete(row) {
       console.log(row.id)
