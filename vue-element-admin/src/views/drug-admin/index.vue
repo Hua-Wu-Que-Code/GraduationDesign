@@ -1,24 +1,19 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
+      <el-input v-model="SearchQuery.title" placeholder="请输入" style="width: 200px;" class="filter-item"/>
+
+      <el-select v-model="SearchQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="Search()">
+        查找
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="">
-        Add
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">
+        清空
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="AddDrug()">
+        添加
       </el-button>
     </div>
 
@@ -52,6 +47,19 @@
         width="200"
         align="center">
       </el-table-column>
+      <el-table-column
+        label="状态"
+        width="100"
+        :filters="filters"
+        :filter-method="filterTag"
+        align="center"
+        filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag
+            :class="roleType(scope.row.statusStr)"
+            disable-transitions>{{scope.row.statusStr}}</el-tag>
+        </template>
+      </el-table-column>
 
       <el-table-column label="操作">
         <template #default="scope">
@@ -59,8 +67,13 @@
             size="mini"
             @click="handleEdit(scope.row)">查看</el-button>
           <el-button
+            v-if="scope.row.status == 0"
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">停用</el-button>
+            @click="handleStatus(scope.row)">停用</el-button>
+          <el-button
+            v-if="scope.row.status == 1"
+            size="mini"
+            @click="handleStatus(scope.row)">启用</el-button>
           <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
             <template #reference>
               <el-button size="mini" type="danger">删除</el-button>
@@ -69,10 +82,16 @@
         </template>
       </el-table-column>
     </el-table>
+
+
+
     <el-dialog title="药品详细" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="药品名称" :label-width="formLabelWidth">
           <el-input v-model="form.drugName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="类别" :label-width="formLabelWidth">
+          <ClassSelect :selectedOptions="form.select" />
         </el-form-item>
         <el-form-item label="规格" :label-width="formLabelWidth">
           <el-input v-model="form.gg" autocomplete="off"></el-input>
@@ -152,7 +171,97 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="Submit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="添加商品" :visible.sync="AdddialogFormVisible">
+      <el-form :model="addForm">
+        <el-form-item label="药品名称" :label-width="formLabelWidth">
+          <el-input v-model="addForm.drugName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="类别" :label-width="formLabelWidth">
+          <ClassSelect :selectedOptions="addForm.select" />
+        </el-form-item>
+        <el-form-item label="规格" :label-width="formLabelWidth">
+          <el-input v-model="addForm.gg" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="禁忌" :label-width="formLabelWidth">
+          <el-input v-model="addForm.jj" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="形状" :label-width="formLabelWidth">
+          <el-input v-model="addForm.xz" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="商品通称" :label-width="formLabelWidth">
+          <el-input v-model="addForm.spmc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item type="textarea"
+                      :rows="2"
+                      label="介绍" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            :rows="2"
+            v-model="addForm.syz"
+            autocomplete="off">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="适应症" :label-width="formLabelWidth">
+          <el-input v-model="addForm.yfyl" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="用法用量" :label-width="formLabelWidth">
+          <el-input v-model="addForm.zycf" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="主要成分" :label-width="formLabelWidth">
+          <el-input v-model="addForm.etyy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item type="textarea"
+                      :rows="2"
+                      label="注意事项" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            :rows="2"
+            v-model="addForm.zysx"
+            autocomplete="off">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="儿童用药" :label-width="formLabelWidth">
+          <el-input v-model="addForm.etyy" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="孕妇及哺乳期" :label-width="formLabelWidth">
+          <el-input v-model="addForm.fyjbrqfnyy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="生产厂家" :label-width="formLabelWidth">
+          <el-input v-model="addForm.manu" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="贮存" :label-width="formLabelWidth">
+          <el-input v-model="addForm.zc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="汉语拼音" :label-width="formLabelWidth">
+          <el-input v-model="addForm.hypy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="通用名称" :label-width="formLabelWidth">
+          <el-input v-model="addForm.tymc" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="批准文号" :label-width="formLabelWidth">
+          <el-input v-model="addForm.pzwh" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="执行标准" :label-width="formLabelWidth">
+          <el-input v-model="addForm.zxbz" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="药物相互作用" :label-width="formLabelWidth">
+          <el-input v-model="addForm.ywxhzy" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="有效期" :label-width="formLabelWidth">
+          <el-input v-model="addForm.yxq" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="不良反应" :label-width="formLabelWidth">
+          <el-input v-model="addForm.blfy" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="AdddialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="SubmitAdd">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -167,15 +276,22 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 import detail from '@/api/detail.json'
-import {addDrug, addDrugClass, andDrugDetailInfo, andDrugDetailInfoLocal, fetchDrugList} from "@/api/drug";
+import {
+  addDrug,
+  addDrugClass,
+  andDrugDetailInfo,
+  andDrugDetailInfoLocal,
+  fetchDrugList, SearchDrug,
+  upgradeStatus
+} from "@/api/drug";
 import {getDrugInfo, getClassifyInfo, getDrugDetailInfo} from "@/api/drugNew";
-import source from "echarts/src/data/Source"; // secondary package based on el-pagination
+import source from "echarts/src/data/Source";
+import ClassSelect from "@/components/ClassSelect/index.vue";
+import item from "@/layout/components/Sidebar/Item.vue";
 
 const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+  { key: 'ID', display_name: 'ID' },
+  { key: 'Name', display_name: '名称' },
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -186,7 +302,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'DoctorAdmin',
-  components: { Pagination },
+  components: {ClassSelect, Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -201,13 +317,202 @@ export default {
   data() {
     return {
       class:[],
+      filters: [
+        {
+          text: '正常',
+          value: '正常'
+        },
+        {
+          text: '停用',
+          value: '停用'
+        }
+      ],
+      formJSON: '',
       drugList:[],
       tableKey: 0,
+      /*BigClass:[
+        {
+          "label": "感冒发热",
+          "value": "感冒发热",
+          "children": []
+        },
+        {
+          "label": "男科用药",
+          "value": "男科用药",
+          "children": []
+        },
+        {
+          "label": "肠胃用药",
+          "value": "肠胃用药",
+          "children": []
+        },
+        {
+          "label": "妇科用药",
+          "value": "妇科用药",
+          "children": []
+        },
+        {
+          "label": "皮肤用药",
+          "value": "皮肤用药",
+          "children": []
+        },
+        {
+          "label": "儿童用药",
+          "value": "儿童用药",
+          "children": []
+        },
+        {
+          "label": "五官用药",
+          "value": "五官用药",
+          "children": []
+        },
+        {
+          "label": "老人用药",
+          "value": "老人用药",
+          "children": []
+        },
+        {
+          "label": "保健食品",
+          "value": "保健食品",
+          "children": []
+        },
+        {
+          "label": "滋补食品",
+          "value": "滋补食品",
+          "children": []
+        },
+        {
+          "label": "骨科疾病",
+          "value": "骨科疾病",
+          "children": []
+        },
+        {
+          "label": "心血管系统疾病",
+          "value": "心血管系统疾病",
+          "children": []
+        },
+        {
+          "label": "男科疾病",
+          "value": "男科疾病",
+          "children": []
+        },
+        {
+          "label": "呼吸系统疾病",
+          "value": "呼吸系统疾病",
+          "children": []
+        },
+        {
+          "label": "儿科疾病",
+          "value": "儿科疾病",
+          "children": []
+        },
+        {
+          "label": "泌尿系统疾病",
+          "value": "泌尿系统疾病",
+          "children": []
+        },
+        {
+          "label": "外科疾病",
+          "value": "外科疾病",
+          "children": []
+        },
+        {
+          "label": "耳鼻咽喉疾病",
+          "value": "耳鼻咽喉疾病",
+          "children": []
+        },
+        {
+          "label": "肿瘤疾病",
+          "value": "肿瘤疾病",
+          "children": []
+        },
+        {
+          "label": "精神心理疾病",
+          "value": "精神心理疾病",
+          "children": []
+        },
+        {
+          "label": "皮肤疾病",
+          "value": "皮肤疾病",
+          "children": []
+        },
+        {
+          "label": "消化系统疾病",
+          "value": "消化系统疾病",
+          "children": []
+        },
+        {
+          "label": "代谢疾病",
+          "value": "代谢疾病",
+          "children": []
+        },
+        {
+          "label": "口腔疾病",
+          "value": "口腔疾病",
+          "children": []
+        },
+        {
+          "label": "神经系统疾病",
+          "value": "神经系统疾病",
+          "children": []
+        },
+        {
+          "label": "性传播疾病",
+          "value": "性传播疾病",
+          "children": []
+        },
+        {
+          "label": "眼疾病",
+          "value": "眼疾病",
+          "children": []
+        },
+        {
+          "label": "风湿免疫系统疾病",
+          "value": "风湿免疫系统疾病",
+          "children": []
+        },
+        {
+          "label": "感染性疾病",
+          "value": "感染性疾病",
+          "children": []
+        },
+        {
+          "label": "其它",
+          "value": "其它",
+          "children": []
+        },
+        {
+          "label": "内分泌系统疾病",
+          "value": "内分泌系统疾病",
+          "children": []
+        },
+        {
+          "label": "女性生殖及妊娠疾病",
+          "value": "女性生殖及妊娠疾病",
+          "children": []
+        },
+        {
+          "label": "血液和淋巴系统疾病",
+          "value": "血液和淋巴系统疾病",
+          "children": []
+        },
+        {
+          "label": "维生素与矿物质",
+          "value": "维生素与矿物质",
+          "children": []
+        }
+      ],*/
+      resData:[],
       list: [
       ],
       form:{},
+      addForm:{},
       total: 0,
       listLoading: true,
+      SearchQuery: {
+        title:'',
+        type:''
+      },
       listQuery: {
         page: 1,
         limit: 20,
@@ -216,6 +521,7 @@ export default {
         type: ''
       },
       formLabelWidth: '100px',
+      AdddialogFormVisible: false,
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
@@ -247,6 +553,27 @@ export default {
     }
   },
   created() {
+    /*getClassifyInfo().then(res=> {
+      const {showapi_res_body} = res;
+      const {data} = showapi_res_body;
+      this.resData = data;
+      console.log(this.resData)
+      this.BigClass.forEach(item => {
+        let classname = item.value;
+        for (let j = 0; j <this.resData.length;j++) {
+          let litter = this.resData[j];
+          if (litter.class == classname) {
+            let flag= {};
+            flag.value = litter.classify;
+            flag.label = litter.classify;
+            item.children.push(flag);
+          }
+        }
+      })
+
+      console.log(this.BigClass)
+    })*/
+
 
     /*andDrugDetailInfoLocal().then(res => {
       console.log(res)
@@ -257,17 +584,18 @@ export default {
     this.getList();
   },
   methods: {
+    Search(){
+      SearchDrug(this.SearchQuery.title,this.SearchQuery.type).then(res=> {
+        this.list = res.data
+      })
+    },
     formatter(row, column) {
       return row.address;
     },
     filterTag(value, row) {
-      return row.roles[0] === value;
+      return row.statusStr === value;
     },
     roleType(role){
-      if (role == "管理员") return 'Pet'
-      if (role == "医生") return 'Insurance'
-      if (role == "供货商") return 'Bathe'
-      if (role == "患者") return 'Hairdressing'
       if (role == "正常") return 'Pet'
       if (role == "停用") return 'Bathe'
     },
@@ -294,16 +622,67 @@ export default {
       fetchDrugList(this.listQuery).then(res =>{
         const { data } = res
         const {list,total} = data;
-
-
         this.list = list;
         this.total = total;
         this.listLoading = false
 
 
-
       })
 
+    },
+    handleEdit(row) {
+      this.dialogFormVisible = true;
+      getDrugDetailInfo(row.drugid).then(res => {
+        const {data} = res;
+        this.form = data;
+        this.form.select= [row.drugclass.classname,row.drugclass.classify]
+        this.formJSON = JSON.stringify(this.form);
+      })
+
+    },
+    AddDrug() {
+      this.AdddialogFormVisible = true;
+      this.addForm = {};
+    },
+    SubmitAdd() {
+      andDrugDetailInfo(this.addForm).then(res=> {
+        console.log(res)
+      })
+      this.AdddialogFormVisible = false;
+      this.addForm = {}
+
+    },
+    handleStatus(row){
+      upgradeStatus(row.drugid,row.status).then(res=> {
+        if (res.code === 100) {
+          this.getList();
+          this.$notify({
+            title: 'Success',
+            message: '操作Success',
+            type: 'success',
+            duration: 2000
+          })
+        }
+
+      })
+    },
+    Submit(){
+      this.dialogFormVisible = false;
+      if (this.formJSON == JSON.stringify(this.form)) {
+        this.$notify({
+          title: '提示',
+          message: '您未作出修改',
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        this.$notify({
+          title: 'Success',
+          message: '操作Success',
+          type: 'success',
+          duration: 2000
+        })
+      }
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -340,16 +719,6 @@ export default {
         status: 'published',
         type: ''
       }
-    },
-    handleEdit(row) {
-      console.log(row);
-      this.dialogFormVisible = true;
-      getDrugDetailInfo(row.drugid).then(res => {
-        console.log(res)
-        const {data} = res;
-        this.form = data;
-      })
-      /*this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});*/
     },
     handleDelete(row) {
       console.log(row.id)

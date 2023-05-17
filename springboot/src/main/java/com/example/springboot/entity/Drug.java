@@ -31,6 +31,35 @@ public class Drug implements Serializable {
      */
     private String classifyid;
 
+    private Drugclass drugclass;
+
+    private int status;
+
+    private String statusStr;
+
+    public String getStatusStr() {
+        return statusStr;
+    }
+
+    public Drugclass getDrugclass() {
+        return drugclass;
+    }
+
+    public void setDrugclass(Drugclass drugclass) {
+        this.drugclass = drugclass;
+    }
+
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getDrugid() {
         return drugid;

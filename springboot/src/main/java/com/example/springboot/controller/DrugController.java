@@ -68,40 +68,36 @@ public class DrugController extends BaseController{
     @CrossOrigin
     @ResponseBody
     public Result addDrugDetail(@RequestBody Map map) {
-        ArrayList<DrugInfo> drugInfoArrayList = (ArrayList<DrugInfo>) map.get("drug");
-        String s = JSON.toJSONString(drugInfoArrayList);
-        List<DrugInfo> drugInfos = JSONObject.parseArray(s, DrugInfo.class);
-
-
-        for (int i = 0;i<drugInfos.size();i++) {
-            DrugInfo drugInfo = drugInfos.get(i);
-            String drugId = drugInfo.getDrugid();
-            String drugName = drugInfo.getDrugName();
-            String jj = drugInfo.getJj();
-            String xz = drugInfo.getXz();
-            String spmc = drugInfo.getSpmc();
-            String jx = drugInfo.getJx();
-            String syz = drugInfo.getSyz();
-            String yfyl = drugInfo.getYfyl();
-            String zycf = drugInfo.getZycf();
-            String zysx = drugInfo.getZysx();
-            String etyy = drugInfo.getEtyy();
-            String gg = drugInfo.getGg();
-            String yfjbrqfnyy = drugInfo.getYfjbrqfnyy();
-            String manu = drugInfo.getManu();
-            String zc = drugInfo.getZc();
-            String hypy = drugInfo.getHypy();
-            String tymc = drugInfo.getTymc();
-            String pzwh = drugInfo.getPzwh();
-            String zxbz = drugInfo.getZxbz();
-            String ywxhzy = drugInfo.getYwxhzy();
-            String yxq = drugInfo.getYxq();
-            String blfy = drugInfo.getBlfy();
-            String lryy = drugInfo.getLryy();
-            String price = drugInfo.getPrice();
-            if (drugMapper.findDrugInfoById(drugId) == null)
-            drugMapper.insertDrugInfo(drugId,drugName,jj,gg,xz,spmc,jx,syz,yfyl,zycf,zysx,etyy,yfjbrqfnyy,manu,zc,hypy,tymc,pzwh,zxbz,ywxhzy,yxq,blfy,lryy,price);
-        }
+        Object map1 = new Object();
+        map1 = map.get("drug");
+        String s = JSON.toJSONString(map1);
+        DrugInfo drugInfo = JSONObject.parseObject(s,DrugInfo.class);
+        String drugId = UUID.randomUUID().toString();
+        drugInfo.setDrugid(UUID.randomUUID().toString());
+        String drugName = drugInfo.getDrugName();
+        String jj = drugInfo.getJj();
+        String xz = drugInfo.getXz();
+        String spmc = drugInfo.getSpmc();
+        String jx = drugInfo.getJx();
+        String syz = drugInfo.getSyz();
+        String yfyl = drugInfo.getYfyl();
+        String zycf = drugInfo.getZycf();
+        String zysx = drugInfo.getZysx();
+        String etyy = drugInfo.getEtyy();
+        String gg = drugInfo.getGg();
+        String yfjbrqfnyy = drugInfo.getYfjbrqfnyy();
+        String manu = drugInfo.getManu();
+        String zc = drugInfo.getZc();
+        String hypy = drugInfo.getHypy();
+        String tymc = drugInfo.getTymc();
+        String pzwh = drugInfo.getPzwh();
+        String zxbz = drugInfo.getZxbz();
+        String ywxhzy = drugInfo.getYwxhzy();
+        String yxq = drugInfo.getYxq();
+        String blfy = drugInfo.getBlfy();
+        String lryy = drugInfo.getLryy();
+        String price = drugInfo.getPrice();
+        drugMapper.insertDrugInfo(drugId,drugName,jj,gg,xz,spmc,jx,syz,yfyl,zycf,zysx,etyy,yfjbrqfnyy,manu,zc,hypy,tymc,pzwh,zxbz,ywxhzy,yxq,blfy,lryy,price);
 
         return Result.succeed();
     }
@@ -116,6 +112,12 @@ public class DrugController extends BaseController{
     @ResponseBody
     public Result getDrugList(@RequestBody ListQuery query) {
         ArrayList<Drug> drugList = drugMapper.findDrugsAdmin(query);
+        drugList.forEach(item-> {
+            if (item.getStatus() == 0) item.setStatusStr("正常");
+            else item.setStatusStr("停用");
+            String classifyid = item.getClassifyid();
+            item.setDrugclass(drugMapper.findClassById(classifyid));
+        });
         ListVo listVo = new ListVo(drugMapper.total(),drugList);
         return Result.succeed(listVo);
     }
@@ -130,6 +132,48 @@ public class DrugController extends BaseController{
         String id = drugInfo.getDrugid();
         DrugInfo drugInfo1 = drugMapper.findDrugInfoById(id);
         return Result.succeed(drugInfo1);
+    }
+
+    /**
+     * 更新状态
+     * @return
+     */
+    @RequestMapping("/upgradeStatus")
+    @CrossOrigin
+    @ResponseBody
+    public Result upgradeStatus(@RequestBody Drug drugInfo) {
+        String id = drugInfo.getDrugid();
+        int status = drugInfo.getStatus();
+        int res = 0;
+        if (status == 0) {
+            res = drugMapper.upgradeStatus(id,1);
+        } else {
+            res = drugMapper.upgradeStatus(id,0);
+        }
+        return Result.succeed(res);
+    }
+
+    /**
+     * 寻找药品
+     * @return
+     */
+    @RequestMapping("/search")
+    @CrossOrigin
+    @ResponseBody
+    public Result searchDrug(@RequestBody SearchQuery query) {
+
+        String title = query.getTitle();
+        String type = query.getType();
+        List<Drug> drugList = new ArrayList<>();
+        if (type.equals("ID")) {
+            drugList = drugMapper.findDrugsSearchID(title);
+        }
+        if (type.equals("Name")) {
+            drugList = drugMapper.findDrugsSearchByName(title);
+        }
+
+        return Result.succeed(drugList);
+
     }
 
 

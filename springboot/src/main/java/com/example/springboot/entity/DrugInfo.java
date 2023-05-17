@@ -108,6 +108,8 @@ public class DrugInfo implements Serializable {
     private String price;
 
 
+
+
     public String getDrugid() {
         return drugid;
     }

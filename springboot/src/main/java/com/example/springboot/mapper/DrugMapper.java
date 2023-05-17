@@ -2,10 +2,12 @@ package com.example.springboot.mapper;
 
 import com.example.springboot.entity.Drug;
 import com.example.springboot.entity.DrugInfo;
+import com.example.springboot.entity.Drugclass;
 import com.example.springboot.entity.ListQuery;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,4 +41,17 @@ public interface DrugMapper {
     @Insert(" insert into drugInfo(drugId,drugName,jj,xz,spmc,jx,syz,yfyl,zycf,zysx,etyy,gg,yfjbrqfnyy,manu,zc,hypy,tymc,pzwh,zxbz,ywxhzy,yxq,blfy,lryy,price) " +
             "values (#{drugId},#{drugName},#{jj},#{xz},#{spmc},#{jx},#{syz},#{yfyl},#{zycf},#{zysx},#{etyy},#{gg},#{yfjbrqfnyy},#{manu},#{zc},#{hypy},#{tymc},#{pzwh},#{zxbz},#{ywxhzy},#{yxq},#{blfy},#{lryy},#{price})")
     void insertDrugInfo(String drugId, String drugName, String jj, String gg, String xz, String spmc, String jx, String syz, String yfyl, String zycf, String zysx, String etyy, String yfjbrqfnyy, String manu, String zc, String hypy, String tymc, String pzwh, String zxbz, String ywxhzy, String yxq, String blfy, String lryy, String price);
+
+
+    @Update("update drug set status = #{flag} where drugId = #{id}")
+    int upgradeStatus(String id, int flag);
+
+    @Select("select * from drug where drugName =#{title}")
+    List<Drug> findDrugsSearchByName(String title);
+
+    @Select("select * from drug where drugId =#{title}")
+    List<Drug> findDrugsSearchID(String title);
+
+    @Select("select * from DrugClass where classifyid =#{classifyid}")
+    Drugclass findClassById(String classifyid);
 }

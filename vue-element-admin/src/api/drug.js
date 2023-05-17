@@ -12,7 +12,12 @@ export function fetchDrugList(query) {
     type: query.type
   })
 }
-
+export function upgradeStatus(id,status) {
+  return request.post('/drug/upgradeStatus',{
+    drugid:id,
+    status:status
+  })
+}
 export function addDrug(jsonArray) {
   return request.post('/drug/add',{
     json: jsonArray
@@ -32,5 +37,12 @@ export function andDrugDetailInfo(drug) {
 }
 export function andDrugDetailInfoLocal() {
   return LocalRequest.get('./detail.json')
+}
+
+export function SearchDrug(title,type) {
+  return request.post('/drug/search',{
+    title:title,
+    type:type
+  })
 }
 
