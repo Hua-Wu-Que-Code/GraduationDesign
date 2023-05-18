@@ -85,6 +85,7 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 import detail from '@/api/detail.json'
+import accMul from "@/utils/accMul";
 import {
   addDrug,
   addDrugClass,
@@ -140,6 +141,7 @@ export default {
     }
   },
   created() {
+    console.log(accMul(0.2, 3));
     this.drug = this.$route.query.drug;
     this.getList(this.drug.drugid);
   },
@@ -169,8 +171,9 @@ export default {
         this.total = total;
         this.listLoading = false
         this.list.forEach(item=> {
+
           item.buyNum = 10;
-          item.itemMony = 10*item.price;
+          item.itemMony = accMul(item.buyNum,item.price)
         })
         console.log(res)
 
@@ -196,6 +199,12 @@ export default {
     AddDrug() {
       this.AdddialogFormVisible = true;
       this.addForm = {};
+    },
+    numFilter (value) {
+      // 截取当前数据到小数点后三位
+      let tempVal = parseFloat(value).toFixed(3)
+      let realVal = tempVal.substring(0, tempVal.length - 1)
+      return realVal
     },
     SubmitAdd() {
       console.log(this.addForm)
