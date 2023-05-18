@@ -135,6 +135,65 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/clinicDrugAdmin',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/clinicDrugMage/index'),
+        name: 'DrugAdmin',
+        meta: { title: '药品管理', icon: 'icon' }
+      },
+      {
+        path: 'buyDrug',
+        hidden: true,
+        component: () => import('@/views/doctor/clinicDrugMage/buyDrug.vue'),
+        name: 'DrugAdmin',
+        meta: { title: '购买药品', icon: 'icon' }
+      },
+      {
+        path: 'orderInfo',
+        hidden: true,
+        component: () => import('@/views/doctor/clinicDrugMage/components/orderInfo.vue'),
+        name: 'DrugAdmin',
+        meta: { title: '购买订单', icon: 'icon'}
+      },
+    ]
+  },
+  {
+    path: '/supplierDrugAdmin',
+    component: Layout,
+    meta: {
+      roles: ['supplier']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/supplier/supplierDrugMage/index'),
+        name: 'DrugAdmin',
+        meta: { title: '药品管理', icon: 'icon', noCache: true }
+      },
+    ]
+  },
+  {
+    path: '/supplerOrders',
+    component: Layout,
+    meta: {
+      roles: ['supplier']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/supplier/supplierOrders/index'),
+        name: 'DrugAdmin',
+        meta: { title: '订单管理', icon: 'icon', noCache: true }
+      },
+    ]
+  },
+  {
     path: '/accountInfoAdmin',
     component: Layout,
     meta: {

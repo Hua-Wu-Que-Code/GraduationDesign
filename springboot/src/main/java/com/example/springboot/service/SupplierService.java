@@ -26,4 +26,8 @@ public class SupplierService {
         int limit = query.getLimit();
         return supplierMapper.findSuppliersAdmin(page,limit);
     }
+
+    public Supplier findSupplierById(String supplierId) {
+        return supplierMapper.findSupplierById(supplierId);
+    }
 }

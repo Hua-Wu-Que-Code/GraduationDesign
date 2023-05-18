@@ -12,9 +12,6 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">
         清空
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="AddDrug()">
-        添加
-      </el-button>
     </div>
 
     <el-table
@@ -24,41 +21,40 @@
       style="width: 100%"
     >
       <el-table-column
-        prop="drugid"
-        label="id"
-        width="300"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="drugname"
         label="药品名称"
         width="200"
         align="center">
+        <template slot-scope="scope">
+          {{scope.row.drug.drugname}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="manu"
         label="生产厂家"
         width="300"
         align="center">
+        <template slot-scope="scope">
+          {{scope.row.drug.manu}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="pzwh"
         label="批准文号"
+        width="200"
+        align="center">
+        <template slot-scope="scope">
+          {{scope.row.drug.pzwh}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="num"
+        label="库存"
         width="200"
         align="center">
       </el-table-column>
       <el-table-column
-        label="状态"
+        prop="price"
+        label="售价"
         width="100"
-        :filters="filters"
-        :filter-method="filterTag"
-        align="center"
-        filter-placement="bottom-end">
-        <template slot-scope="scope">
-          <el-tag
-            :class="roleType(scope.row.statusStr)"
-            disable-transitions>{{scope.row.statusStr}}</el-tag>
-        </template>
+        align="center">
       </el-table-column>
 
       <el-table-column label="操作">
@@ -67,9 +63,8 @@
             size="mini"
             @click="handleEdit(scope.row)">查看</el-button>
           <el-button
-            v-if="scope.row.status == 0"
             size="mini"
-            @click="handleStatus(scope.row)">停用</el-button>
+            @click="handleStatus(scope.row)">补货</el-button>
           <el-button
             v-if="scope.row.status == 1"
             size="mini"
@@ -88,27 +83,28 @@
     <el-dialog title="药品详细" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="药品名称" :label-width="formLabelWidth">
-          <el-input v-model="form.drugName" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.drugName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="类别" :label-width="formLabelWidth">
           <ClassSelect :selectedOptions="form.select" />
         </el-form-item>
         <el-form-item label="规格" :label-width="formLabelWidth">
-          <el-input v-model="form.gg" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.gg" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="禁忌" :label-width="formLabelWidth">
-          <el-input v-model="form.jj" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.jj" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="形状" :label-width="formLabelWidth">
-          <el-input v-model="form.xz" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.xz" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品通称" :label-width="formLabelWidth">
-          <el-input v-model="form.spmc" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.spmc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item type="textarea"
                       :rows="2"
                       label="介绍" :label-width="formLabelWidth">
           <el-input
+            :disabled="true"
             type="textarea"
             :rows="2"
             v-model="form.syz"
@@ -116,154 +112,66 @@
           </el-input>
         </el-form-item>
         <el-form-item label="适应症" :label-width="formLabelWidth">
-          <el-input v-model="form.yfyl" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.yfyl" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="用法用量" :label-width="formLabelWidth">
-          <el-input v-model="form.zycf" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.zycf" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="主要成分" :label-width="formLabelWidth">
-          <el-input v-model="form.etyy" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.etyy" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item type="textarea"
                       :rows="2"
+                      :disabled="true"
                       label="注意事项" :label-width="formLabelWidth">
           <el-input
             type="textarea"
             :rows="2"
+            :disabled="true"
             v-model="form.zysx"
             autocomplete="off">
           </el-input>
         </el-form-item>
-        <el-form-item label="儿童用药" :label-width="formLabelWidth">
-          <el-input v-model="form.etyy" autocomplete="off"></el-input>
+        <el-form-item  label="儿童用药" :label-width="formLabelWidth">
+          <el-input :disabled="true" v-model="form.etyy" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="孕妇及哺乳期" :label-width="formLabelWidth">
-          <el-input v-model="form.fyjbrqfnyy" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.fyjbrqfnyy" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="生产厂家" :label-width="formLabelWidth">
-          <el-input v-model="form.manu" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.manu" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="贮存" :label-width="formLabelWidth">
-          <el-input v-model="form.zc" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.zc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="汉语拼音" :label-width="formLabelWidth">
-          <el-input v-model="form.hypy" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.hypy" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="通用名称" :label-width="formLabelWidth">
-          <el-input v-model="form.tymc" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.tymc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="批准文号" :label-width="formLabelWidth">
-          <el-input v-model="form.pzwh" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.pzwh" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="执行标准" :label-width="formLabelWidth">
-          <el-input v-model="form.zxbz" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.zxbz" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="药物相互作用" :label-width="formLabelWidth">
-          <el-input v-model="form.ywxhzy" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.ywxhzy" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="有效期" :label-width="formLabelWidth">
-          <el-input v-model="form.yxq" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.yxq" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="不良反应" :label-width="formLabelWidth">
-          <el-input v-model="form.blfy" autocomplete="off"></el-input>
+          <el-input :disabled="true" v-model="form.blfy" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="Submit">确 定</el-button>
+        <el-button @click="cancel">关 闭</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="添加商品" :visible.sync="AdddialogFormVisible">
-      <el-form :model="addForm">
-        <el-form-item label="药品名称" :label-width="formLabelWidth">
-          <el-input v-model="addForm.drugName" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="类别" :label-width="formLabelWidth">
-          <ClassSelect :selectedOptions="addForm.select" />
-        </el-form-item>
-        <el-form-item label="规格" :label-width="formLabelWidth">
-          <el-input v-model="addForm.gg" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="禁忌" :label-width="formLabelWidth">
-          <el-input v-model="addForm.jj" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="形状" :label-width="formLabelWidth">
-          <el-input v-model="addForm.xz" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="商品通称" :label-width="formLabelWidth">
-          <el-input v-model="addForm.spmc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item type="textarea"
-                      :rows="2"
-                      label="介绍" :label-width="formLabelWidth">
-          <el-input
-            type="textarea"
-            :rows="2"
-            v-model="addForm.syz"
-            autocomplete="off">
-          </el-input>
-        </el-form-item>
-        <el-form-item label="适应症" :label-width="formLabelWidth">
-          <el-input v-model="addForm.yfyl" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="用法用量" :label-width="formLabelWidth">
-          <el-input v-model="addForm.zycf" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="主要成分" :label-width="formLabelWidth">
-          <el-input v-model="addForm.etyy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item type="textarea"
-                      :rows="2"
-                      label="注意事项" :label-width="formLabelWidth">
-          <el-input
-            type="textarea"
-            :rows="2"
-            v-model="addForm.zysx"
-            autocomplete="off">
-          </el-input>
-        </el-form-item>
-        <el-form-item label="儿童用药" :label-width="formLabelWidth">
-          <el-input v-model="addForm.etyy" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="孕妇及哺乳期" :label-width="formLabelWidth">
-          <el-input v-model="addForm.fyjbrqfnyy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="生产厂家" :label-width="formLabelWidth">
-          <el-input v-model="addForm.manu" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="贮存" :label-width="formLabelWidth">
-          <el-input v-model="addForm.zc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="汉语拼音" :label-width="formLabelWidth">
-          <el-input v-model="addForm.hypy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="通用名称" :label-width="formLabelWidth">
-          <el-input v-model="addForm.tymc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="批准文号" :label-width="formLabelWidth">
-          <el-input v-model="addForm.pzwh" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="执行标准" :label-width="formLabelWidth">
-          <el-input v-model="addForm.zxbz" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="药物相互作用" :label-width="formLabelWidth">
-          <el-input v-model="addForm.ywxhzy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="有效期" :label-width="formLabelWidth">
-          <el-input v-model="addForm.yxq" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="不良反应" :label-width="formLabelWidth">
-          <el-input v-model="addForm.blfy" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="AdddialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="SubmitAdd">确 定</el-button>
-      </div>
-    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
@@ -280,7 +188,7 @@ import {
   addDrug,
   addDrugClass,
   andDrugDetailInfo,
-  andDrugDetailInfoLocal,
+  andDrugDetailInfoLocal, ClinicDrugList,
   fetchDrugList, SearchDrug,
   upgradeStatus
 } from "@/api/drug";
@@ -288,6 +196,7 @@ import {getDrugInfo, getClassifyInfo, getDrugDetailInfo} from "@/api/drugNew";
 import source from "echarts/src/data/Source";
 import ClassSelect from "@/components/ClassSelect/index.vue";
 import item from "@/layout/components/Sidebar/Item.vue";
+import {SupplierDrugList} from "@/api/supplier";
 
 const calendarTypeOptions = [
   { key: 'ID', display_name: 'ID' },
@@ -601,31 +510,19 @@ export default {
       if (role == "正常") return 'Pet'
       if (role == "停用") return 'Bathe'
     },
+    cancel(){
+      this.dialogFormVisible = false;
+    },
     getList() {
-      /*getClassifyInfo().then(res=> {
-        const {showapi_res_body} =res;
-        const {data} = showapi_res_body;
-        this.class = data;
 
-        for (let i = 40;i<=50;i++) {
-          let id = this.class[i].classifyId;
-          getDrugInfo(1,id).then(res=> {
-            const {showapi_res_body} =res;
-            const {data} = showapi_res_body;
-            addDrug(data).then(res => {
-              console.log(res)
-            })
-          })
-
-        }
-      })*/
 
       this.listLoading = true
-      fetchDrugList(this.listQuery).then(res =>{
+      SupplierDrugList(this.listQuery).then(res =>{
         const { data } = res
         const {list,total} = data;
         this.list = list;
         this.total = total;
+        console.log(this.list)
         this.listLoading = false
 
 
@@ -636,8 +533,9 @@ export default {
       this.dialogFormVisible = true;
       getDrugDetailInfo(row.drugid).then(res => {
         const {data} = res;
+        console.log(res)
         this.form = data;
-        this.form.select= [row.drugclass.classname,row.drugclass.classify]
+        this.form.select= [row.drug.drugclass.classname,row.drug.drugclass.classify]
         this.formJSON = JSON.stringify(this.form);
       })
 

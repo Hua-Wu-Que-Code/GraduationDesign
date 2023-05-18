@@ -17,4 +17,7 @@ import java.util.List;
 public interface SupplierMapper {
     @Select("select * from supplier limit #{page},#{limit} ")
     List<Supplier> findSuppliersAdmin(int page, int limit);
+
+    @Select("select * from supplier where  id=#{supplierId}")
+    Supplier findSupplierById(String supplierId);
 }

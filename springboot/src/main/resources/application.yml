@@ -9,15 +9,15 @@ spring:
     username: GraduationDesign
     password: 4tBAZfiYmyJfpxtP
     type: com.alibaba.druid.pool.DruidDataSource
-#  rabbitmq:
-#    host: 49.235.73.252
-#    port: 5672
-#    virtual-host: /
-#    username: admin
-#    password: aaaaaa
-#    listener:
-#      simple:
-#        prefetch: 1 # 每次只能获取一条消息，处理完成才能获取下一条
+  rabbitmq:
+    host: 49.235.73.252
+    port: 5672
+    virtual-host: /
+    username: admin
+    password: aaaaaa
+    listener:
+      simple:
+       prefetch: 1 # 每次只能获取一条消息，处理完成才能获取下一条
 
 mybatis:
   configuration:

@@ -45,4 +45,21 @@ export function SearchDrug(title,type) {
     type:type
   })
 }
-
+export function ClinicDrugList(query) {
+  return request.post('/drug/clinicList',{
+    page:  query.page,
+    limit: query.limit,
+    importance: query.importance,
+    title: query.title,
+    type: query.type
+  })
+}
+export function DrugSoleList(query) {
+  return request.post('/drug/soleList',{
+    page:  query.page,
+    limit: query.limit,
+    importance: query.importance,
+    title: query.title,
+    type: query.type
+  })
+}

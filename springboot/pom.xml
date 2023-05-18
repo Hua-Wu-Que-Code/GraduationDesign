@@ -74,11 +74,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>maven.org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.55</version>
-        </dependency>
         <!--阿里巴巴json库-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -86,6 +81,10 @@
             <version>1.2.77</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

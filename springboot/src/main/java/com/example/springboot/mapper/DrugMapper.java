@@ -1,15 +1,13 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.entity.Drug;
-import com.example.springboot.entity.DrugInfo;
-import com.example.springboot.entity.Drugclass;
-import com.example.springboot.entity.ListQuery;
+import com.example.springboot.entity.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -54,4 +52,21 @@ public interface DrugMapper {
 
     @Select("select * from DrugClass where classifyid =#{classifyid}")
     Drugclass findClassById(String classifyid);
+
+    @Select("select * from clinic_drug  where clinicId = #{clinicId} limit #{page},#{limit}")
+    ArrayList<ClinicDrug> findDrugsDoctor(int page, int limit, String clinicId);
+
+    @Select("select * from clinic_drug  where clinicId = #{clinicId}")
+    ArrayList<Drug> countDrugsDoctor(String clinicId);
+
+    @Select("select * from supplier_drug  where supplierId = #{id} limit #{page},#{limit}")
+    ArrayList<SupplierDrug> findDrugssupplier(int page, int limit, String id);
+
+    @Select("select * from supplier_drug  where supplierId = #{id}")
+    Collection<Object> countDrugsSupplier(String id);
+
+    @Select("select * from supplier_drug where drugId = #{title} limit #{page},#{limit}")
+    ArrayList<SupplierDrug> findDrugsSole(int page, int limit,String title);
+    @Select("select * from supplier_drug where drugId = #{title}")
+    List<SupplierDrug> countDrugsSupplierSole(String title);
 }

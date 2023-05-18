@@ -176,5 +176,82 @@ public class DrugController extends BaseController{
 
     }
 
+    /**
+     * 获取诊所药品列表
+     * @return
+     */
+    @RequestMapping("/clinicList")
+    @CrossOrigin
+    @ResponseBody
+    public Result ClinicDrugList(@RequestBody ListQuery query) {
+        String id = (String) request.getAttribute("id");
+        String clinicId = commonMapper.findClinicByDoctorId(id);
+        ArrayList<ClinicDrug> drugList = drugMapper.findDrugsDoctor(query.getPage()-1,query.getLimit(),clinicId);
+        drugList.forEach(item-> {
+            String drugId = item.getDrugid();
+            List<Drug> drugs = drugMapper.findDrugsSearchID(drugId);
+            Drug d = drugs.get(0);
+            String classifyid = d.getClassifyid();
+            d.setDrugclass(drugMapper.findClassById(classifyid));
+            item.setDrug(d);
+
+        });
+        int total = drugMapper.countDrugsDoctor(clinicId).size();
+        TotalRest totalRest = new TotalRest(total,drugList);
+        return Result.succeed(totalRest);
+    }
+
+    /**
+     * 获取供货商药品列表
+     * @return
+     */
+    @RequestMapping("/supplierDrugList")
+    @CrossOrigin
+    @ResponseBody
+    public Result SupplierDrugList(@RequestBody ListQuery query) {
+        String id = (String) request.getAttribute("id");
+
+        ArrayList<SupplierDrug> drugList = drugMapper.findDrugssupplier(query.getPage()-1,query.getLimit(),id);
+        drugList.forEach(item-> {
+            String drugId = item.getDrugid();
+            List<Drug> drugs = drugMapper.findDrugsSearchID(drugId);
+            Drug d = drugs.get(0);
+            String classifyid = d.getClassifyid();
+            d.setDrugclass(drugMapper.findClassById(classifyid));
+            item.setDrug(d);
+
+        });
+        int total = drugMapper.countDrugsSupplier(id).size();
+        TotalRest totalRest = new TotalRest(total,drugList);
+        return Result.succeed(totalRest);
+    }
+
+    /**
+     * 获取供货商药品列表
+     * @return
+     */
+    @RequestMapping("/soleList")
+    @CrossOrigin
+    @ResponseBody
+    public Result DrugSoleList(@RequestBody ListQuery query) {
+
+        ArrayList<SupplierDrug> drugList = drugMapper.findDrugsSole(query.getPage()-1,query.getLimit(),query.getTitle());
+        drugList.forEach(item-> {
+            String drugId = item.getDrugid();
+            String supplierId = item.getSupplierid();
+            item.setSupplier(supplierService.findSupplierById(supplierId));
+            List<Drug> drugs = drugMapper.findDrugsSearchID(drugId);
+            Drug d = drugs.get(0);
+            String classifyid = d.getClassifyid();
+            d.setDrugclass(drugMapper.findClassById(classifyid));
+            item.setDrug(d);
+
+        });
+        int total = drugMapper.countDrugsSupplierSole(query.getTitle()).size();
+        TotalRest totalRest = new TotalRest(total,drugList);
+        return Result.succeed(totalRest);
+    }
+
+
 
 }

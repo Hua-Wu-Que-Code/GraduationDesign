@@ -37,6 +37,16 @@ public class Drug implements Serializable {
 
     private String statusStr;
 
+    private double tjsj;
+
+    public double getTjsj() {
+        return tjsj;
+    }
+
+    public void setTjsj(double tjsj) {
+        this.tjsj = tjsj;
+    }
+
     public String getStatusStr() {
         return statusStr;
     }
