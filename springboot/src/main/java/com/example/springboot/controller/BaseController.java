@@ -45,4 +45,7 @@ public class BaseController {
     @Autowired
     DrugMapper drugMapper;
 
+    @Autowired
+    OrderMapper orderMapper;
+
 }

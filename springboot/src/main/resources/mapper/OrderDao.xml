@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.entity.dao.OrderDao">
+
+    <resultMap type="com.example.springboot.entity.Order" id="OrderMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="total" column="total" jdbcType="NUMERIC"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="closetime" column="closeTime" jdbcType="TIMESTAMP"/>
+        <result property="doctorid" column="doctorId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrderMap">
+        select
+          id, total, createTime, status, closeTime, doctorId
+        from order
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrderMap">
+        select
+          id, total, createTime, status, closeTime, doctorId
+        from order
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="total != null">
+                and total = #{total}
+            </if>
+            <if test="createtime != null">
+                and createTime = #{createtime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="closetime != null">
+                and closeTime = #{closetime}
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                and doctorId = #{doctorid}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from order
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="total != null">
+                and total = #{total}
+            </if>
+            <if test="createtime != null">
+                and createTime = #{createtime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="closetime != null">
+                and closeTime = #{closetime}
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                and doctorId = #{doctorid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into order(total, createTime, status, closeTime, doctorId)
+        values (#{total}, #{createtime}, #{status}, #{closetime}, #{doctorid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order(total, createTime, status, closeTime, doctorId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.total}, #{entity.createtime}, #{entity.status}, #{entity.closetime}, #{entity.doctorid})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order(total, createTime, status, closeTime, doctorId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.total}, #{entity.createtime}, #{entity.status}, #{entity.closetime}, #{entity.doctorid})
+        </foreach>
+        on duplicate key update
+        total = values(total),
+        createTime = values(createTime),
+        status = values(status),
+        closeTime = values(closeTime),
+        doctorId = values(doctorId)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update order
+        <set>
+            <if test="total != null">
+                total = #{total},
+            </if>
+            <if test="createtime != null">
+                createTime = #{createtime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="closetime != null">
+                closeTime = #{closetime},
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                doctorId = #{doctorid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from order where id = #{id}
+    </delete>
+
+</mapper>
+

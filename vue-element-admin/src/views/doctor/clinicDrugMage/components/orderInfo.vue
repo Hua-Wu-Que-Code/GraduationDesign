@@ -1,8 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-
-
       <el-table
         ref="filterTable"
         :data="list"
@@ -21,7 +19,6 @@
         </el-table-column>
         <el-table-column
           label="药品厂家"
-          width="300"
           align="center">
           <template slot-scope="scope">
             {{scope.row.drug.manu}}
@@ -69,8 +66,15 @@
 
       </el-table>
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
+      <div class="footer-buy">
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="Search()">
+          取消
+        </el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="toBuy()">
+          提交订单
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +97,7 @@ import {getDrugInfo, getClassifyInfo, getDrugDetailInfo} from "@/api/drugNew";
 import source from "echarts/src/data/Source";
 import ClassSelect from "@/components/ClassSelect/index.vue";
 import item from "@/layout/components/Sidebar/Item.vue";
+import {toBuyDrug} from "@/api/order";
 
 const calendarTypeOptions = [
   { key: 'ID', display_name: 'ID' },
@@ -264,6 +269,29 @@ export default {
         })
       }
     },
+    toBuy(){
+      console.log(this.list)
+      this.$alert('<img src="http://cloud.songyuxin.top/picture/IMG_0690.JPG" width="300px"  alt="">', {
+        dangerouslyUseHTMLString: true,
+        confirmButtonText: '已支付',
+        cancelButtonText: '未支付'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '支付成功'
+        });
+        toBuyDrug(this.list).then(res => {
+          console.log(res)
+        })
+      }).catch(action => {
+          this.$message({
+            type: 'info',
+            message: action === 'cancel'
+              ? '取消支付'
+              : '停留在当前页面'
+          })
+        });
+    },
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
@@ -362,5 +390,17 @@ export default {
 .Hairdressing {
   background-color: #61649F;
   color: white;
+}
+.footer-buy {
+  margin-top: 30px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.el-message-box__message p {
+  margin: 0;
+  line-height: 24px;
+  text-align: center;
 }
 </style>
