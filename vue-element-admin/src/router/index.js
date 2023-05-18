@@ -164,6 +164,81 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/doctorOrder',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/doctorOrders/index'),
+        name: 'DrugAdmin',
+        meta: { title: '订单管理', icon: 'icon' }
+      },
+    ]
+  },
+  {
+    path: '/doctorHealthRecord',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/healthRecordMage/index'),
+        name: 'DrugAdmin',
+        meta: { title: '健康档案管理', icon: 'icon' }
+      },
+    ]
+  },
+  {
+    path: '/doctorHealthExm',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/healthExmMage/index'),
+        name: 'DrugAdmin',
+        meta: { title: '体检管理', icon: 'icon' }
+      },
+    ]
+  },
+  {
+    path: '/oldAndBron',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/oldMage/index'),
+        name: 'DrugAdmin',
+        meta: { title: '老年人.新生儿管理', icon: 'icon' }
+      },
+    ]
+  },
+  {
+    path: '/chronic',
+    component: Layout,
+    meta: {
+      roles: ['doctor'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/doctor/chronicMag/index'),
+        name: 'DrugAdmin',
+        meta: { title: '慢性病管理', icon: 'icon' }
+      },
+    ]
+  },
+  {
     path: '/supplierDrugAdmin',
     component: Layout,
     meta: {

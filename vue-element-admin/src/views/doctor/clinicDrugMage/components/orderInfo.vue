@@ -68,10 +68,10 @@
 
 
       <div class="footer-buy">
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="Search()">
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="open()">
           取消
         </el-button>
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="toBuy()">
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="open()">
           提交订单
         </el-button>
       </div>
@@ -97,7 +97,7 @@ import {getDrugInfo, getClassifyInfo, getDrugDetailInfo} from "@/api/drugNew";
 import source from "echarts/src/data/Source";
 import ClassSelect from "@/components/ClassSelect/index.vue";
 import item from "@/layout/components/Sidebar/Item.vue";
-import {toBuyDrug} from "@/api/order";
+import {toBuyDrug, toBuyDrugNoPay} from "@/api/order";
 
 const calendarTypeOptions = [
   { key: 'ID', display_name: 'ID' },
@@ -269,12 +269,39 @@ export default {
         })
       }
     },
+    open(){
+      this.$confirm('确认支付', '确认信息', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '支付',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          this.$message({
+            type: 'info',
+            message: '支付成功'
+          });
+          toBuyDrug(this.list).then(res => {
+            console.log(res)
+          })
+        })
+        .catch(action => {
+          this.$message({
+            type: 'info',
+            message: action === 'cancel'
+              ? '放弃保存并离开页面'
+              : '停留在当前页面'
+          });
+          toBuyDrugNoPay(this.list).then(res=> {
+            console.log(res)
+          })
+        });
+    },
     toBuy(){
-      console.log(this.list)
       this.$alert('<img src="http://cloud.songyuxin.top/picture/IMG_0690.JPG" width="300px"  alt="">', {
         dangerouslyUseHTMLString: true,
         confirmButtonText: '已支付',
-        cancelButtonText: '未支付'
+        cancelButtonText: '未支付',
+        distinguishCancelAndClose: true,
       }).then(() => {
         this.$message({
           type: 'success',
@@ -284,6 +311,9 @@ export default {
           console.log(res)
         })
       }).catch(action => {
+        /*toBuyDrugNoPay.then(res=> {
+          console.log(res)
+        })*/
           this.$message({
             type: 'info',
             message: action === 'cancel'

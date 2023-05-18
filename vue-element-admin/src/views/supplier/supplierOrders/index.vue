@@ -1,19 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="SearchQuery.title" placeholder="请输入" style="width: 200px;" class="filter-item"/>
-
-      <el-select v-model="SearchQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="Search()">
-        查找
-      </el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">
-        清空
-      </el-button>
-    </div>
-
     <el-table
       ref="filterTable"
       :data="list"
@@ -21,156 +7,80 @@
       style="width: 100%"
     >
       <el-table-column
-        label="药品名称"
-        width="200"
-        align="center">
-        <template slot-scope="scope">
-          {{scope.row.drug.drugname}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="生产厂家"
+        label="订单ID"
         width="300"
         align="center">
         <template slot-scope="scope">
-          {{scope.row.drug.manu}}
+          {{scope.row.orderid}}
         </template>
       </el-table-column>
       <el-table-column
-        label="批准文号"
+        label="购买数量"
+        width="100"
+        align="center">
+        <template slot-scope="scope">
+          {{scope.row.buynum}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="总金额"
+        width="100"
+        align="center">
+        <template slot-scope="scope">
+          {{scope.row.itemmony}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="买家名称"
         width="200"
         align="center">
         <template slot-scope="scope">
-          {{scope.row.drug.pzwh}}
+          {{scope.row.doctor.name}}
         </template>
       </el-table-column>
       <el-table-column
-        prop="num"
-        label="库存"
+        label="买家联系方式"
         width="200"
         align="center">
+        <template slot-scope="scope">
+          {{scope.row.doctor.telephone}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="price"
-        label="售价"
+        label="订单状态"
         width="100"
-        align="center">
+        :filters="filters"
+        :filter-method="filterTag"
+        align="center"
+        filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag
+            :class="roleType(scope.row.statusStr)"
+            disable-transitions>{{scope.row.statusStr}}</el-tag>
+        </template>
       </el-table-column>
-
       <el-table-column label="操作">
         <template #default="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.row)">查看</el-button>
+            v-if="scope.row.status == 0"
+            @click="handleEdit(scope.row)">发货</el-button>
           <el-button
             size="mini"
-            @click="handleStatus(scope.row)">补货</el-button>
+            v-if="scope.row.status == 3 || scope.row.status == 7"
+            @click="handleStatus(scope.row,4)">同意</el-button>
           <el-button
-            v-if="scope.row.status == 1"
             size="mini"
-            @click="handleStatus(scope.row)">启用</el-button>
-          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
-            <template #reference>
-              <el-button size="mini" type="danger">删除</el-button>
-            </template>
-          </el-popconfirm>
+            v-if="scope.row.status == 3|| scope.row.status == 7"
+            @click="handleStatus(scope.row,10)">驳回</el-button>
+          <el-button
+            size="mini"
+            v-if="scope.row.status == 0 || scope.row.status == 2 || scope.row.status == 3"
+            @click="handleStatus(scope.row,6)">取消</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-
-
-    <el-dialog title="药品详细" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="药品名称" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.drugName" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="类别" :label-width="formLabelWidth">
-          <ClassSelect :selectedOptions="form.select" />
-        </el-form-item>
-        <el-form-item label="规格" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.gg" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="禁忌" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.jj" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="形状" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.xz" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="商品通称" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.spmc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item type="textarea"
-                      :rows="2"
-                      label="介绍" :label-width="formLabelWidth">
-          <el-input
-            :disabled="true"
-            type="textarea"
-            :rows="2"
-            v-model="form.syz"
-            autocomplete="off">
-          </el-input>
-        </el-form-item>
-        <el-form-item label="适应症" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.yfyl" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="用法用量" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.zycf" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="主要成分" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.etyy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item type="textarea"
-                      :rows="2"
-                      :disabled="true"
-                      label="注意事项" :label-width="formLabelWidth">
-          <el-input
-            type="textarea"
-            :rows="2"
-            :disabled="true"
-            v-model="form.zysx"
-            autocomplete="off">
-          </el-input>
-        </el-form-item>
-        <el-form-item  label="儿童用药" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.etyy" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="孕妇及哺乳期" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.fyjbrqfnyy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="生产厂家" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.manu" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="贮存" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.zc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="汉语拼音" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.hypy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="通用名称" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.tymc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="批准文号" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.pzwh" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="执行标准" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.zxbz" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="药物相互作用" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.ywxhzy" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="有效期" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.yxq" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="不良反应" :label-width="formLabelWidth">
-          <el-input :disabled="true" v-model="form.blfy" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel">关 闭</el-button>
-      </div>
-    </el-dialog>
 
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -197,6 +107,7 @@ import source from "echarts/src/data/Source";
 import ClassSelect from "@/components/ClassSelect/index.vue";
 import item from "@/layout/components/Sidebar/Item.vue";
 import {SupplierDrugList} from "@/api/supplier";
+import {supplierOrderList, upgradeOrderStatus} from "@/api/order";
 
 const calendarTypeOptions = [
   { key: 'ID', display_name: 'ID' },
@@ -228,189 +139,52 @@ export default {
       class:[],
       filters: [
         {
-          text: '正常',
-          value: '正常'
+          text: '待发货',
+          value: '待发货'
         },
         {
-          text: '停用',
-          value: '停用'
+          text: '待支付',
+          value: '待支付'
+        },
+        {
+          text: '待收货',
+          value: '待收货'
+        },
+        {
+          text: '申请取消',
+          value: '申请取消'
+        },
+        {
+          text: '订单取消',
+          value: '订单取消'
+        },
+        {
+          text: '订单完成',
+          value: '订单完成'
+        },
+        {
+          text: '商家取消',
+          value: '商家取消'
+        },
+        {
+          text: '申请退货',
+          value: '商家取消'
+        },
+        {
+          text: '申请退货',
+          value: '商家取消'
+        },
+        {
+          text: '订单超时',
+          value: '订单超时'
+        },{
+          text: '商家拒绝',
+          value: '商家拒绝'
         }
       ],
       formJSON: '',
       drugList:[],
       tableKey: 0,
-      /*BigClass:[
-        {
-          "label": "感冒发热",
-          "value": "感冒发热",
-          "children": []
-        },
-        {
-          "label": "男科用药",
-          "value": "男科用药",
-          "children": []
-        },
-        {
-          "label": "肠胃用药",
-          "value": "肠胃用药",
-          "children": []
-        },
-        {
-          "label": "妇科用药",
-          "value": "妇科用药",
-          "children": []
-        },
-        {
-          "label": "皮肤用药",
-          "value": "皮肤用药",
-          "children": []
-        },
-        {
-          "label": "儿童用药",
-          "value": "儿童用药",
-          "children": []
-        },
-        {
-          "label": "五官用药",
-          "value": "五官用药",
-          "children": []
-        },
-        {
-          "label": "老人用药",
-          "value": "老人用药",
-          "children": []
-        },
-        {
-          "label": "保健食品",
-          "value": "保健食品",
-          "children": []
-        },
-        {
-          "label": "滋补食品",
-          "value": "滋补食品",
-          "children": []
-        },
-        {
-          "label": "骨科疾病",
-          "value": "骨科疾病",
-          "children": []
-        },
-        {
-          "label": "心血管系统疾病",
-          "value": "心血管系统疾病",
-          "children": []
-        },
-        {
-          "label": "男科疾病",
-          "value": "男科疾病",
-          "children": []
-        },
-        {
-          "label": "呼吸系统疾病",
-          "value": "呼吸系统疾病",
-          "children": []
-        },
-        {
-          "label": "儿科疾病",
-          "value": "儿科疾病",
-          "children": []
-        },
-        {
-          "label": "泌尿系统疾病",
-          "value": "泌尿系统疾病",
-          "children": []
-        },
-        {
-          "label": "外科疾病",
-          "value": "外科疾病",
-          "children": []
-        },
-        {
-          "label": "耳鼻咽喉疾病",
-          "value": "耳鼻咽喉疾病",
-          "children": []
-        },
-        {
-          "label": "肿瘤疾病",
-          "value": "肿瘤疾病",
-          "children": []
-        },
-        {
-          "label": "精神心理疾病",
-          "value": "精神心理疾病",
-          "children": []
-        },
-        {
-          "label": "皮肤疾病",
-          "value": "皮肤疾病",
-          "children": []
-        },
-        {
-          "label": "消化系统疾病",
-          "value": "消化系统疾病",
-          "children": []
-        },
-        {
-          "label": "代谢疾病",
-          "value": "代谢疾病",
-          "children": []
-        },
-        {
-          "label": "口腔疾病",
-          "value": "口腔疾病",
-          "children": []
-        },
-        {
-          "label": "神经系统疾病",
-          "value": "神经系统疾病",
-          "children": []
-        },
-        {
-          "label": "性传播疾病",
-          "value": "性传播疾病",
-          "children": []
-        },
-        {
-          "label": "眼疾病",
-          "value": "眼疾病",
-          "children": []
-        },
-        {
-          "label": "风湿免疫系统疾病",
-          "value": "风湿免疫系统疾病",
-          "children": []
-        },
-        {
-          "label": "感染性疾病",
-          "value": "感染性疾病",
-          "children": []
-        },
-        {
-          "label": "其它",
-          "value": "其它",
-          "children": []
-        },
-        {
-          "label": "内分泌系统疾病",
-          "value": "内分泌系统疾病",
-          "children": []
-        },
-        {
-          "label": "女性生殖及妊娠疾病",
-          "value": "女性生殖及妊娠疾病",
-          "children": []
-        },
-        {
-          "label": "血液和淋巴系统疾病",
-          "value": "血液和淋巴系统疾病",
-          "children": []
-        },
-        {
-          "label": "维生素与矿物质",
-          "value": "维生素与矿物质",
-          "children": []
-        }
-      ],*/
       resData:[],
       list: [
       ],
@@ -464,34 +238,7 @@ export default {
     }
   },
   created() {
-    /*getClassifyInfo().then(res=> {
-      const {showapi_res_body} = res;
-      const {data} = showapi_res_body;
-      this.resData = data;
-      console.log(this.resData)
-      this.BigClass.forEach(item => {
-        let classname = item.value;
-        for (let j = 0; j <this.resData.length;j++) {
-          let litter = this.resData[j];
-          if (litter.class == classname) {
-            let flag= {};
-            flag.value = litter.classify;
-            flag.label = litter.classify;
-            item.children.push(flag);
-          }
-        }
-      })
 
-      console.log(this.BigClass)
-    })*/
-
-
-    /*andDrugDetailInfoLocal().then(res => {
-      console.log(res)
-    })
-    andDrugDetailInfo(detail).then(res => {
-          console.log(res)
-    })*/
     this.getList();
   },
   methods: {
@@ -507,8 +254,17 @@ export default {
       return row.statusStr === value;
     },
     roleType(role){
-      if (role == "正常") return 'Pet'
-      if (role == "停用") return 'Bathe'
+      if (role == "待发货") return 'Pet'
+      if (role == "待支付") return 'Bathe'
+      if (role == "待收货") return 'Pet'
+      if (role == "申请取消") return 'Bathe'
+      if (role == "订单取消") return 'Pet'
+      if (role == "订单完成") return 'Bathe'
+      if (role == "商家取消") return 'Pet'
+      if (role == "申请退货") return 'Bathe'
+      if (role == "同意退货") return 'Pet'
+      if (role == "订单超时") return 'Bathe'
+      if (role == "商家拒绝") return 'Pet'
     },
     cancel(){
       this.dialogFormVisible = false;
@@ -517,7 +273,7 @@ export default {
 
 
       this.listLoading = true
-      SupplierDrugList(this.listQuery).then(res =>{
+      supplierOrderList(this.listQuery).then(res =>{
         const { data } = res
         const {list,total} = data;
         this.list = list;
@@ -530,15 +286,20 @@ export default {
 
     },
     handleEdit(row) {
-      this.dialogFormVisible = true;
-      getDrugDetailInfo(row.drugid).then(res => {
-        const {data} = res;
+      console.log(row)
+      let flag = 0;
+      if (row.status == 0) flag = 2;
+      if (row.status == 3) flag = 4
+      upgradeOrderStatus(row.id,flag).then(res=> {
         console.log(res)
-        this.form = data;
-        this.form.select= [row.drug.drugclass.classname,row.drug.drugclass.classify]
-        this.formJSON = JSON.stringify(this.form);
+        this.getList()
+        this.$notify({
+          title: 'Success',
+          message: '操作成功',
+          type: 'success',
+          duration: 2000
+        })
       })
-
     },
     AddDrug() {
       this.AdddialogFormVisible = true;
@@ -553,8 +314,8 @@ export default {
       this.addForm = {}
 
     },
-    handleStatus(row){
-      upgradeStatus(row.drugid,row.status).then(res=> {
+    handleStatus(row,flag){
+      upgradeOrderStatus(row.id,flag).then(res=> {
         if (res.code === 100) {
           this.getList();
           this.$notify({

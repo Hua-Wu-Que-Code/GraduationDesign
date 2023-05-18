@@ -27,7 +27,7 @@ public class SupplierDrug implements Serializable {
     /**
      * 药品价格
      */
-    private Object price;
+    private Double price;
     /**
      * 表ID
      */
@@ -67,11 +67,11 @@ public class SupplierDrug implements Serializable {
         this.num = num;
     }
 
-    public Object getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Object price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

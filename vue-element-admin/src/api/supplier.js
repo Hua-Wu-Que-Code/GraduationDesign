@@ -19,5 +19,17 @@ export function SupplierDrugList(query) {
     type: query.type
   })
 }
+export function supplierUpgradeDrug(price,id) {
+  return request.post('/drug/supplierUpgradeDrug',{
+    price:price,
+    drugid:id
+  })
+}
+export function supplierAddDrug(id) {
+  return request.post('/drug/supplierAddDrug',{
+    drugid:id
+  })
+}
+
 
 

@@ -1,10 +1,7 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.mapper.*;
-import com.example.springboot.service.ClinicService;
-import com.example.springboot.service.DoctorService;
-import com.example.springboot.service.SupplierService;
-import com.example.springboot.service.UserService;
+import com.example.springboot.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,5 +44,8 @@ public class BaseController {
 
     @Autowired
     OrderMapper orderMapper;
+
+    @Autowired
+    SendService sendService;
 
 }

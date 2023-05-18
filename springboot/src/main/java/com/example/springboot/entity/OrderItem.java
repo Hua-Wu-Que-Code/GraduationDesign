@@ -13,7 +13,7 @@ public class OrderItem implements Serializable {
     /**
      * 订单项Id
      */
-    private Integer id;
+    private String id;
     /**
      * 订单Id
      */
@@ -39,13 +39,48 @@ public class OrderItem implements Serializable {
      */
     private Double price;
 
+    private Drug drug;
 
-    public Integer getId() {
+    private Doctor doctor;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+
+    private Supplier supplier;
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+    /**
+     * 订单状态 0:待发货,1:未支付,2待收货,3:申请取消,4:订单取消,5:订单完成,6:商家取消;7:申请退货,8:同意退货,9:订单超时,10:商家拒绝
+     */
+    private Integer status;
+
+    private String statusStr;
+
+    public String getStatusStr() {
+        return statusStr;
+    }
+
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getOrderid() {
@@ -96,5 +131,20 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 }
 

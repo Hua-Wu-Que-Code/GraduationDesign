@@ -1,5 +1,6 @@
 package com.example.springboot.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ public class Order implements Serializable {
     /**
      * 订单表ID
      */
-    private Integer id;
+    private String id;
     /**
      * 订单总价
      */
@@ -24,7 +25,7 @@ public class Order implements Serializable {
      */
     private Date createtime;
     /**
-     * 订单状态
+     * 订单状态 0:待发货,1:未支付,2已经发货,3:申请取消,4:订单取消,5:订单完成
      */
     private Integer status;
     /**
@@ -36,12 +37,31 @@ public class Order implements Serializable {
      */
     private String doctorid;
 
+    private String orderId;
 
-    public Integer getId() {
+    private ArrayList<OrderItem> orderItems;
+
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(ArrayList<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

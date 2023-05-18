@@ -252,6 +252,35 @@ public class DrugController extends BaseController{
         return Result.succeed(totalRest);
     }
 
+    /**
+     * 供货商修改售卖价格
+     * @return
+     */
+    @RequestMapping("/supplierUpgradeDrug")
+    @CrossOrigin
+    @ResponseBody
+    public Result supplierUpgradeDrug(@RequestBody SupplierDrug supplierDrug) {
+        String supplierId = (String) request.getAttribute("id");
+        commonMapper.supplierUpgradeDrug(supplierId,supplierDrug.getDrugid(),supplierDrug.getPrice());
+        return Result.succeed("成功");
+    }
+
+    /**
+     * 供货商加货
+     * @return
+     */
+    @RequestMapping("/supplierAddDrug")
+    @CrossOrigin
+    @ResponseBody
+    public Result supplierAddDrug(@RequestBody SupplierDrug supplierDrug) {
+        String supplierId = (String) request.getAttribute("id");
+        SupplierDrug supplierDrug1 = commonMapper.findSupplierById(supplierId,supplierDrug.getDrugid());
+        commonMapper.supplierAddDrug(supplierId,supplierDrug.getDrugid(),supplierDrug1.getNum()+500);
+        return Result.succeed("成功");
+    }
+
+
+
 
 
 }

@@ -87,4 +87,13 @@ public interface CommonMapper {
 
     @Select("select * from schedule where id = #{id}")
     Schedule findScheduleById(int id);
+
+    @Update("update supplier_drug set price = #{price}  where supplierId = #{supplierId} and drugId = #{drugid}")
+    void supplierUpgradeDrug(String supplierId, String drugid, Double price);
+
+    @Update("update supplier_drug set num = #{i}  where supplierId = #{supplierId} and drugId = #{drugid}")
+    void supplierAddDrug(String supplierId, String drugid, int i);
+
+    @Select("select * from supplier_drug where supplierId = #{supplierId} and drugId = #{drugid}")
+    SupplierDrug findSupplierById(String supplierId, String drugid);
 }

@@ -50,6 +50,9 @@ public interface DrugMapper {
     @Select("select * from drug where drugId =#{title}")
     List<Drug> findDrugsSearchID(String title);
 
+    @Select("select * from drug where drugId =#{title}")
+    Drug findDrugByID(String title);
+
     @Select("select * from DrugClass where classifyid =#{classifyid}")
     Drugclass findClassById(String classifyid);
 
