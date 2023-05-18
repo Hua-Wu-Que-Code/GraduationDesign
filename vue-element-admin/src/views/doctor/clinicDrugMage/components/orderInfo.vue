@@ -50,6 +50,7 @@
         <el-table-column
           label="数量"
           width="200"
+          @change="changeVal"
           align="center">
           <template slot-scope="scope">
             <el-input-number size="small"  v-model="scope.row.buyNum" @change="changeByNum(scope.row)"></el-input-number>
@@ -141,7 +142,6 @@ export default {
     }
   },
   created() {
-    console.log(accMul(0.2, 3));
     this.drug = this.$route.query.drug;
     this.getList(this.drug.drugid);
   },
@@ -161,6 +161,9 @@ export default {
       console.log(typeof row.buyNum)
       console.log(typeof row.buyNum*row.price)
     },
+    changeVal() {
+      this.$forceUpdate();//解决点击计数器失效问题
+    },
     getList(id) {
       this.listLoading = true
       this.listQuery.title = id;
@@ -171,9 +174,8 @@ export default {
         this.total = total;
         this.listLoading = false
         this.list.forEach(item=> {
-
-          item.buyNum = 10;
-          item.itemMony = accMul(item.buyNum,item.price)
+          this.$set(item,'buyNum',10)    //必须要这样赋值
+          item.itemMony = accMul(10,item.price)
         })
         console.log(res)
 
