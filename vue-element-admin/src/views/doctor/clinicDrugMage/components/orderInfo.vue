@@ -8,6 +8,7 @@
         :data="list"
         border
         show-summary
+        :summary-method="getSummaries"
         style="width: 100%"
       >
         <el-table-column
@@ -50,10 +51,9 @@
         <el-table-column
           label="数量"
           width="200"
-          @change="changeVal"
           align="center">
           <template slot-scope="scope">
-            <el-input-number size="small"  v-model="scope.row.buyNum" @change="changeByNum(scope.row)"></el-input-number>
+            <el-input-number size="small" :min="1"  v-model="scope.row.buyNum" @change="changeByNum(scope.row)"></el-input-number>
           </template>
         </el-table-column>
 
@@ -66,13 +66,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button
-              size="mini"
-              @click="byDrug(scope.row)">购买</el-button>
-          </template>
-        </el-table-column>
+
       </el-table>
 
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -128,6 +122,7 @@ export default {
   data() {
     return {
       drug:{},
+      totalMoney: 0,
       listQuery: {
         page: 1,
         limit: 20,
@@ -146,6 +141,23 @@ export default {
     this.getList(this.drug.drugid);
   },
   methods: {
+    getSummaries(param){
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '总价';
+          return;
+        }
+        if (index === 5) {
+          sums[index] = this.totalMoney + '元';
+          return;
+        }
+        else sums[index] = '-';
+      });
+
+      return sums;
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -157,9 +169,11 @@ export default {
       else return "Bathe"
     },
     changeByNum(row){
-      console.log(typeof row.price)
-      console.log(typeof row.buyNum)
-      console.log(typeof row.buyNum*row.price)
+      this.$set(row,'itemMony',accMul(row.price,row.buyNum))    //必须要这样赋值
+      this.totalMoney = 0;
+      this.list.forEach(item => {
+        this.totalMoney+=item.itemMony
+      })
     },
     changeVal() {
       this.$forceUpdate();//解决点击计数器失效问题
@@ -176,6 +190,7 @@ export default {
         this.list.forEach(item=> {
           this.$set(item,'buyNum',10)    //必须要这样赋值
           item.itemMony = accMul(10,item.price)
+          this.totalMoney += item.itemMony;
         })
         console.log(res)
 
