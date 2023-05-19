@@ -32,6 +32,8 @@ public class InterceptorConfig extends WebMvcConfigurationSupport
         ret.add("/user/login");
         ret.add("/user/signUp");
         ret.add("/test/hello");
+        ret.add("/test/insertSupplierDrug");
+        ret.add("/test/insertClinicDrug");
         return ret;
     }
 }

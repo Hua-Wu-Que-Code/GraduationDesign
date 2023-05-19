@@ -72,4 +72,11 @@ public interface DrugMapper {
     ArrayList<SupplierDrug> findDrugsSole(int page, int limit,String title);
     @Select("select * from supplier_drug where drugId = #{title}")
     List<SupplierDrug> countDrugsSupplierSole(String title);
+
+
+    @Select("select * from drug where 1")
+    ArrayList<Drug> findAllDrugs();
+
+    @Select("select * from clinic_drug where clinicId=#{clinicId} and drugId=#{drugId}")
+    ClinicDrug findClinicDrug(String clinicId, String drugId);
 }

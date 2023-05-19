@@ -1,5 +1,6 @@
 package com.example.springboot.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -32,6 +33,8 @@ public class Doctor implements Serializable {
      * 工作经验
      */
     private String workexper;
+
+    private ArrayList<Patient> patients;
 
     private String education;
 

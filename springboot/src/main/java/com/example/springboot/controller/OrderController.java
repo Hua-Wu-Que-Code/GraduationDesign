@@ -165,6 +165,21 @@ public class OrderController extends BaseController {
     @CrossOrigin
     @ResponseBody
     public Result upgradeOrder(@RequestBody OrderItem orderItem) {
+        if (orderItem.getStatus() == 5) {
+            ArrayList<OrderItem> orderItem1 = orderMapper.findOrderItemsByOrderId(orderItem.getOrderid());
+            orderItem1.forEach(item-> {
+                String drugId = item.getDrugid();
+                String supplierId =item.getSupplierid();
+                String doctorId = orderMapper.findDoctorByOrderId(orderItem.getOrderid());
+                String clinicId = commonMapper.findClinicByDoctorId(doctorId);
+                int num = item.getBuynum();
+                ClinicDrug drug = drugMapper.findClinicDrug(clinicId,drugId);
+                if (drug.getNum() == 0) clinicMapper.insertClinicDrug(clinicId,drugId,num);
+                else clinicMapper.upgradeClinicDrug(clinicId,drugId,num+drug.getNum());
+                SupplierDrug supplierDrug = supplierMapper.findSupplierDrug(supplierId,drugId);
+                supplierMapper.upgradeSupplierDrug(supplierId,drugId,supplierDrug.getNum()-num);
+            });
+        }
         orderMapper.upgradeOrderItemById(orderItem.getId(),orderItem.getStatus());
         return Result.succeed();
     }

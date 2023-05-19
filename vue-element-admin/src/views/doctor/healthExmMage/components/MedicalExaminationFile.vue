@@ -4,7 +4,7 @@
       <div class="user-block">
         <img class="img-circle" :src=i.src>
         <span class="username text-muted">{{i.nickname}}</span>
-        <span class="date">{{i.date}}</span>
+        <span class="date">{{i.date | formatDate}}</span>
       </div>
       <p class="text">
           {{i.description}}
@@ -15,12 +15,20 @@
 
 <script>
 
+import {formatDate} from "@/utils/dateFormate";
+
 export default {
   props: {
     MedicalExaminationFile: []
   },
   created() {
 
+  },
+  filters: {
+    formatDate(time) {
+      var date = new Date(time);
+      return formatDate(date, 'yyyy-MM-dd hh:mm');
+    }
   },
   data() {
     return {

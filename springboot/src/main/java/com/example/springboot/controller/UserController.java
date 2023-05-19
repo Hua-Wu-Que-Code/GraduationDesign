@@ -249,9 +249,10 @@ public class UserController extends BaseController{
 
 
         userInfo.setHealthCareInfo(healthCareInfo);
+
+
         userInfo.setHealthrecord(healthrecord);
         userInfo.setMedicalexaminationfile(medicalexaminationfiles);
-
         return Result.succeed(userInfo);
     }
 

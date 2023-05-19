@@ -191,6 +191,13 @@ export const asyncRoutes = [
         name: 'DrugAdmin',
         meta: { title: '健康档案管理', icon: 'icon' }
       },
+      {
+        path: 'info',
+        hidden: true,
+        component: () => import('@/views/doctor/healthRecordMage/detailInfo.vue'),
+        name: 'DrugAdmin',
+        meta: { title: '健康档案详情', icon: 'icon' }
+      }
     ]
   },
   {
@@ -206,6 +213,13 @@ export const asyncRoutes = [
         name: 'DrugAdmin',
         meta: { title: '体检管理', icon: 'icon' }
       },
+      {
+        path: 'info',
+        hidden: true,
+        component: () => import('@/views/doctor/healthExmMage/detailInfo.vue'),
+        name: 'DrugAdmin',
+        meta: { title: '体检详情', icon: 'icon' }
+      }
     ]
   },
   {

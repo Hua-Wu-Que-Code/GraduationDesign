@@ -48,4 +48,11 @@ public class BaseController {
     @Autowired
     SendService sendService;
 
+    @Autowired
+    ClinicMapper clinicMapper;
+
+    @Autowired
+    SupplierMapper supplierMapper;
+
+
 }

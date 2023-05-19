@@ -30,50 +30,39 @@
     >
       <el-table-column
         prop="id"
-        label="ID"
+        label="id"
         width="330"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="nickname"
-        label="昵称"
+        prop="name"
+        label="姓名"
         width="100"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="username"
-        label="账号名"
+        prop="idcard"
+        label="身份证号"
+        width="400"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="sexStr"
+        label="性别"
         width="100"
         align="center">
       </el-table-column>
       <el-table-column
-        prop="password"
-        label="密码"
+        prop="age"
+        label="年龄"
         width="100"
         align="center">
       </el-table-column>
       <el-table-column
-        label="身份"
-        width="100"
-        :filters="filters"
-        :filter-method="filterTag"
-        align="center"
-        filter-placement="bottom-end">
-        <template slot-scope="scope">
-          <el-tag
-            :class="roleType(scope.row.roles[0])"
-            disable-transitions>{{scope.row.roles[0]}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="状态"
+        prop="groupStr"
+        label="民族"
         width="100"
         align="center">
-        <template slot-scope="scope">
-          <el-tag
-            :class="roleType(scope.row.status)"
-            disable-transitions>{{scope.row.status}}</el-tag>
-        </template>
       </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
@@ -102,7 +91,8 @@
 import { fetchList, fetchDelete, createArticle, updateArticle } from '@/api/userInfoMage'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import {patientList} from "@/api/doctor"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -162,6 +152,7 @@ export default {
         title: '',
         type: ''
       },
+      healthCareInfo: [],
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
@@ -212,13 +203,13 @@ export default {
     },
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(res =>{
+      patientList(this.listQuery).then(res =>{
+        console.log(res)
         const { data } = res
-        for (let i = 0;i < data.length; i++) {
-          if (data[i].status) data[i].status = "正常"
-          else data[i].status = "停用"
-        }
-        this.list = data
+        const {healthCareInfo,list,total} = data
+        this.healthCareInfo = healthCareInfo;
+        this.total = total;
+        this.list = list
         this.listLoading = false
       })
     },
@@ -259,8 +250,8 @@ export default {
       }
     },
     handleEdit(row) {
-      console.log(row);
-      this.$router.push({path:'/accountInfoAdmin/info' , query: {user: row}});
+      console.log(row.userInfo.medicalexaminationfile)
+      this.$router.push({path:'/doctorHealthRecord/info' , query: {files: row.userInfo.medicalexaminationfile}});
     },
     handleDelete(row) {
       console.log(row.id)
