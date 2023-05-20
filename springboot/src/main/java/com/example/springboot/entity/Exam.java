@@ -7,10 +7,10 @@ import java.io.Serializable;
  * 体检详情表(Exam)实体类
  *
  * @author huawuque
- * @since 2023-05-04 17:18:00
+ * @since 2023-05-19 18:43:35
  */
 public class Exam implements Serializable {
-    private static final long serialVersionUID = -97422219085136786L;
+    private static final long serialVersionUID = 782673951025571777L;
     /**
      * 用户体检表ID
      */
@@ -31,10 +31,6 @@ public class Exam implements Serializable {
      * 体检医生
      */
     private String doctorname;
-    /**
-     * 医生ID
-     */
-    private String doctorid;
     /**
      * 体温
      */
@@ -76,6 +72,10 @@ public class Exam implements Serializable {
      */
     private String waistline;
     /**
+     * 医生ID
+     */
+    private String doctorid;
+    /**
      * 锻炼频率ID
      */
     private Integer exefreid;
@@ -88,17 +88,13 @@ public class Exam implements Serializable {
      */
     private Integer drinkid;
     /**
-     * 暴露史ID
+     * 性别表ID
      */
-    private Integer exposeid;
+    private Integer sexid;
     /**
-     * 嘴唇ID
+     * 听力ID
      */
-    private Integer lipid;
-    /**
-     * 咽部ID
-     */
-    private Integer pharynxid;
+    private Integer lintenid;
     /**
      * 左眼视力
      */
@@ -115,18 +111,6 @@ public class Exam implements Serializable {
      * 右眼矫正视力
      */
     private String crv;
-    /**
-     * 听力ID
-     */
-    private Integer lintenid;
-    /**
-     * 运动功能ID
-     */
-    private Integer sportid;
-    /**
-     * 眼底ID
-     */
-    private Integer eyegroundid;
 
 
     public Integer getId() {
@@ -167,14 +151,6 @@ public class Exam implements Serializable {
 
     public void setDoctorname(String doctorname) {
         this.doctorname = doctorname;
-    }
-
-    public String getDoctorid() {
-        return doctorid;
-    }
-
-    public void setDoctorid(String doctorid) {
-        this.doctorid = doctorid;
     }
 
     public String getTemperature() {
@@ -257,6 +233,14 @@ public class Exam implements Serializable {
         this.waistline = waistline;
     }
 
+    public String getDoctorid() {
+        return doctorid;
+    }
+
+    public void setDoctorid(String doctorid) {
+        this.doctorid = doctorid;
+    }
+
     public Integer getExefreid() {
         return exefreid;
     }
@@ -281,28 +265,20 @@ public class Exam implements Serializable {
         this.drinkid = drinkid;
     }
 
-    public Integer getExposeid() {
-        return exposeid;
+    public Integer getSexid() {
+        return sexid;
     }
 
-    public void setExposeid(Integer exposeid) {
-        this.exposeid = exposeid;
+    public void setSexid(Integer sexid) {
+        this.sexid = sexid;
     }
 
-    public Integer getLipid() {
-        return lipid;
+    public Integer getLintenid() {
+        return lintenid;
     }
 
-    public void setLipid(Integer lipid) {
-        this.lipid = lipid;
-    }
-
-    public Integer getPharynxid() {
-        return pharynxid;
-    }
-
-    public void setPharynxid(Integer pharynxid) {
-        this.pharynxid = pharynxid;
+    public void setLintenid(Integer lintenid) {
+        this.lintenid = lintenid;
     }
 
     public String getLacuity() {
@@ -335,30 +311,6 @@ public class Exam implements Serializable {
 
     public void setCrv(String crv) {
         this.crv = crv;
-    }
-
-    public Integer getLintenid() {
-        return lintenid;
-    }
-
-    public void setLintenid(Integer lintenid) {
-        this.lintenid = lintenid;
-    }
-
-    public Integer getSportid() {
-        return sportid;
-    }
-
-    public void setSportid(Integer sportid) {
-        this.sportid = sportid;
-    }
-
-    public Integer getEyegroundid() {
-        return eyegroundid;
-    }
-
-    public void setEyegroundid(Integer eyegroundid) {
-        this.eyegroundid = eyegroundid;
     }
 
 }

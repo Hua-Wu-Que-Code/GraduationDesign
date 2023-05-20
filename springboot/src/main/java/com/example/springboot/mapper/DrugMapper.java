@@ -79,4 +79,7 @@ public interface DrugMapper {
 
     @Select("select * from clinic_drug where clinicId=#{clinicId} and drugId=#{drugId}")
     ClinicDrug findClinicDrug(String clinicId, String drugId);
+
+    @Select("select * from clinic_drug where clinicId=#{clinicId} and num != 0 limit #{page},#{limit} ")
+    ArrayList<ClinicDrug> findDrugsDoctorOk(String clinicId,int page,int limit);
 }

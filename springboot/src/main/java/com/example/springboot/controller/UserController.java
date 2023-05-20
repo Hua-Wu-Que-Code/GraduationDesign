@@ -90,6 +90,23 @@ public class UserController extends BaseController{
 
     }
 
+    /**
+     * 获取用户最新信息
+     * @return
+     */
+    @RequestMapping("/userinfo")
+    @CrossOrigin
+    @ResponseBody
+    public Result userinfo() {
+
+        String id = (String) request.getAttribute("id");
+        User user = userService.findUserById(id);
+
+
+        return Result.succeed(user);
+
+    }
+
 
     /**
      * 获取用户列表
@@ -227,19 +244,19 @@ public class UserController extends BaseController{
             healthrecord.setHeredityhistory(heritageUser);
 
             //记录用户血型
-            healthrecord.setBloodType(commonMapper.userInfoBloodType(healthrecord.getBloodtypeID()));
+            healthrecord.setBloodType(commonMapper.userInfoBloodType(healthrecord.getBloodtypeid()));
             //记录用户教育水平
-            healthrecord.setEducation(commonMapper.userInfoEducation(healthrecord.getEducationId()));
+            healthrecord.setEducation(commonMapper.userInfoEducation(healthrecord.getEducationid()));
             //记录用户民族
-            healthrecord.setEthnicGroup(commonMapper.userInfoEthnicGroup(healthrecord.getEducationId()));
+            healthrecord.setEthnicGroup(commonMapper.userInfoEthnicGroup(healthrecord.getEthnicgroupid()));
             //记录用户支付方式
-            healthrecord.setPamentmeth(commonMapper.userInfoPamentMeth(healthrecord.getPamentmethId()));
+            healthrecord.setPamentmeth(commonMapper.userInfoPamentMeth(healthrecord.getPamentmethid()));
             //记录用户婚姻状况
-            healthrecord.setMarriage(commonMapper.userInfoMarrage(healthrecord.getMarriageId()));
+            healthrecord.setMarriage(commonMapper.userInfoMarrage(healthrecord.getMarriageid()));
             //记录用户性别
-            healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexId()));
+            healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexid()));
             //记录用户工作
-            healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkId()));
+            healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkid()));
         } else {
             healthrecord = new Healthrecord();
             healthrecord.setName(commonMapper.getUserName(userId));

@@ -9,10 +9,10 @@
             type="date"
             placeholder="选择日期">
           </el-date-picker>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="addExam">
             查找
           </el-button>
-          <el-button v-waves class="filter-item" type="primary"  @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary"  @click="addExam">
             添加
           </el-button>
         </div>
@@ -60,6 +60,9 @@ export default {
     console.log(this.MedicalExaminationFile)
   },
   methods: {
+    addExam() {
+      this.$router.push({path:'/doctorHealthExm/detail' , query: {id: "addNewExm"}});
+    },
     handleFilter() {
       console.log(this.listQuery)
       /*this.listQuery.page = 1

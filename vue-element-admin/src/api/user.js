@@ -13,7 +13,11 @@ export function getInfo() {
     url: '/user/info'
   })
 }
-
+export function getUserInfo() {
+  return request({
+    url: '/user/userinfo'
+  })
+}
 export function logout() {
   return request({
     url: '/user/logout',

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.MedicalexaminationfileMapper">
+
+    <resultMap type="com.example.springboot.entity.Medicalexaminationfile" id="MedicalexaminationfileMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="src" column="src" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="detailinfo" column="detailInfo" jdbcType="INTEGER"/>
+        <result property="clincid" column="clincID" jdbcType="VARCHAR"/>
+        <result property="userid" column="userID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MedicalexaminationfileMap">
+        select
+          id, nickname, date, src, description, detailInfo, clincID, userID
+        from MedicalExaminationFile
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MedicalexaminationfileMap">
+        select
+          id, nickname, date, src, description, detailInfo, clincID, userID
+        from MedicalExaminationFile
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="src != null and src != ''">
+                and src = #{src}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="detailinfo != null">
+                and detailInfo = #{detailinfo}
+            </if>
+            <if test="clincid != null and clincid != ''">
+                and clincID = #{clincid}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from MedicalExaminationFile
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="src != null and src != ''">
+                and src = #{src}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="detailinfo != null">
+                and detailInfo = #{detailinfo}
+            </if>
+            <if test="clincid != null and clincid != ''">
+                and clincID = #{clincid}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into MedicalExaminationFile(nickname, date, src, description, detailInfo, clincID, userID)
+        values (#{nickname}, #{date}, #{src}, #{description}, #{detailinfo}, #{clincid}, #{userid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into MedicalExaminationFile(nickname, date, src, description, detailInfo, clincID, userID)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.nickname}, #{entity.date}, #{entity.src}, #{entity.description}, #{entity.detailinfo}, #{entity.clincid}, #{entity.userid})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into MedicalExaminationFile(nickname, date, src, description, detailInfo, clincID, userID)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.nickname}, #{entity.date}, #{entity.src}, #{entity.description}, #{entity.detailinfo}, #{entity.clincid}, #{entity.userid})
+        </foreach>
+        on duplicate key update
+        nickname = values(nickname),
+        date = values(date),
+        src = values(src),
+        description = values(description),
+        detailInfo = values(detailInfo),
+        clincID = values(clincID),
+        userID = values(userID)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update MedicalExaminationFile
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="src != null and src != ''">
+                src = #{src},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="detailinfo != null">
+                detailInfo = #{detailinfo},
+            </if>
+            <if test="clincid != null and clincid != ''">
+                clincID = #{clincid},
+            </if>
+            <if test="userid != null and userid != ''">
+                userID = #{userid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from MedicalExaminationFile where id = #{id}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.HealthCardMapper">
+
+    <resultMap type="com.example.springboot.entity.Healthrecord" id="HealthrecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userid" column="userID" jdbcType="VARCHAR"/>
+        <result property="sexid" column="sexId" jdbcType="INTEGER"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="idcard" column="idCard" jdbcType="VARCHAR"/>
+        <result property="workplace" column="workplace" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="contactname" column="contactName" jdbcType="VARCHAR"/>
+        <result property="contactphone" column="contactPhone" jdbcType="VARCHAR"/>
+        <result property="typeofpermanent" column="typeOfPermanent" jdbcType="INTEGER"/>
+        <result property="ethnicgroupid" column="ethnicGroupID" jdbcType="INTEGER"/>
+        <result property="bloodtypeid" column="bloodTypeID" jdbcType="INTEGER"/>
+        <result property="educationid" column="educationId" jdbcType="INTEGER"/>
+        <result property="marriageid" column="marriageId" jdbcType="INTEGER"/>
+        <result property="pamentmethid" column="pamentMethId" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="workid" column="workId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="HealthrecordMap">
+        select
+          id, userID, sexId, date, idCard, workplace, telephone, contactName, contactPhone, typeOfPermanent, ethnicGroupID, bloodTypeID, educationId, marriageId, pamentMethId, name, workId
+        from healthRecord
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="HealthrecordMap">
+        select
+          id, userID, sexId, date, idCard, workplace, telephone, contactName, contactPhone, typeOfPermanent, ethnicGroupID, bloodTypeID, educationId, marriageId, pamentMethId, name, workId
+        from healthRecord
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+            <if test="sexid != null">
+                and sexId = #{sexid}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and idCard = #{idcard}
+            </if>
+            <if test="workplace != null and workplace != ''">
+                and workplace = #{workplace}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="contactname != null and contactname != ''">
+                and contactName = #{contactname}
+            </if>
+            <if test="contactphone != null and contactphone != ''">
+                and contactPhone = #{contactphone}
+            </if>
+            <if test="typeofpermanent != null">
+                and typeOfPermanent = #{typeofpermanent}
+            </if>
+            <if test="ethnicgroupid != null">
+                and ethnicGroupID = #{ethnicgroupid}
+            </if>
+            <if test="bloodtypeid != null">
+                and bloodTypeID = #{bloodtypeid}
+            </if>
+            <if test="educationid != null">
+                and educationId = #{educationid}
+            </if>
+            <if test="marriageid != null">
+                and marriageId = #{marriageid}
+            </if>
+            <if test="pamentmethid != null">
+                and pamentMethId = #{pamentmethid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="workid != null">
+                and workId = #{workid}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from healthRecord
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+            <if test="sexid != null">
+                and sexId = #{sexid}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and idCard = #{idcard}
+            </if>
+            <if test="workplace != null and workplace != ''">
+                and workplace = #{workplace}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="contactname != null and contactname != ''">
+                and contactName = #{contactname}
+            </if>
+            <if test="contactphone != null and contactphone != ''">
+                and contactPhone = #{contactphone}
+            </if>
+            <if test="typeofpermanent != null">
+                and typeOfPermanent = #{typeofpermanent}
+            </if>
+            <if test="ethnicgroupid != null">
+                and ethnicGroupID = #{ethnicgroupid}
+            </if>
+            <if test="bloodtypeid != null">
+                and bloodTypeID = #{bloodtypeid}
+            </if>
+            <if test="educationid != null">
+                and educationId = #{educationid}
+            </if>
+            <if test="marriageid != null">
+                and marriageId = #{marriageid}
+            </if>
+            <if test="pamentmethid != null">
+                and pamentMethId = #{pamentmethid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="workid != null">
+                and workId = #{workid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into healthRecord(userID, sexId, date, idCard, workplace, telephone, contactName, contactPhone, typeOfPermanent, ethnicGroupID, bloodTypeID, educationId, marriageId, pamentMethId, name, workId)
+        values (#{userid}, #{sexid}, #{date}, #{idcard}, #{workplace}, #{telephone}, #{contactname}, #{contactphone}, #{typeofpermanent}, #{ethnicgroupid}, #{bloodtypeid}, #{educationid}, #{marriageid}, #{pamentmethid}, #{name}, #{workid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into healthRecord(userID, sexId, date, idCard, workplace, telephone, contactName, contactPhone, typeOfPermanent, ethnicGroupID, bloodTypeID, educationId, marriageId, pamentMethId, name, workId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userid}, #{entity.sexid}, #{entity.date}, #{entity.idcard}, #{entity.workplace}, #{entity.telephone}, #{entity.contactname}, #{entity.contactphone}, #{entity.typeofpermanent}, #{entity.ethnicgroupid}, #{entity.bloodtypeid}, #{entity.educationid}, #{entity.marriageid}, #{entity.pamentmethid}, #{entity.name}, #{entity.workid})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into healthRecord(userID, sexId, date, idCard, workplace, telephone, contactName, contactPhone, typeOfPermanent, ethnicGroupID, bloodTypeID, educationId, marriageId, pamentMethId, name, workId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userid}, #{entity.sexid}, #{entity.date}, #{entity.idcard}, #{entity.workplace}, #{entity.telephone}, #{entity.contactname}, #{entity.contactphone}, #{entity.typeofpermanent}, #{entity.ethnicgroupid}, #{entity.bloodtypeid}, #{entity.educationid}, #{entity.marriageid}, #{entity.pamentmethid}, #{entity.name}, #{entity.workid})
+        </foreach>
+        on duplicate key update
+        userID = values(userID),
+        sexId = values(sexId),
+        date = values(date),
+        idCard = values(idCard),
+        workplace = values(workplace),
+        telephone = values(telephone),
+        contactName = values(contactName),
+        contactPhone = values(contactPhone),
+        typeOfPermanent = values(typeOfPermanent),
+        ethnicGroupID = values(ethnicGroupID),
+        bloodTypeID = values(bloodTypeID),
+        educationId = values(educationId),
+        marriageId = values(marriageId),
+        pamentMethId = values(pamentMethId),
+        name = values(name),
+        workId = values(workId)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update healthRecord
+        <set>
+            <if test="userid != null and userid != ''">
+                userID = #{userid},
+            </if>
+            <if test="sexid != null">
+                sexId = #{sexid},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="idcard != null and idcard != ''">
+                idCard = #{idcard},
+            </if>
+            <if test="workplace != null and workplace != ''">
+                workplace = #{workplace},
+            </if>
+            <if test="telephone != null and telephone != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="contactname != null and contactname != ''">
+                contactName = #{contactname},
+            </if>
+            <if test="contactphone != null and contactphone != ''">
+                contactPhone = #{contactphone},
+            </if>
+            <if test="typeofpermanent != null">
+                typeOfPermanent = #{typeofpermanent},
+            </if>
+            <if test="ethnicgroupid != null">
+                ethnicGroupID = #{ethnicgroupid},
+            </if>
+            <if test="bloodtypeid != null">
+                bloodTypeID = #{bloodtypeid},
+            </if>
+            <if test="educationid != null">
+                educationId = #{educationid},
+            </if>
+            <if test="marriageid != null">
+                marriageId = #{marriageid},
+            </if>
+            <if test="pamentmethid != null">
+                pamentMethId = #{pamentmethid},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="workid != null">
+                workId = #{workid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from healthRecord where id = #{id}
+    </delete>
+
+</mapper>
+

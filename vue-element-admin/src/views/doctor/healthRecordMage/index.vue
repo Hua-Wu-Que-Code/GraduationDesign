@@ -1,24 +1,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
+      <el-input v-model="listQuery.title" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="searchExam" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="searchExam">
+        查找
+      </el-button>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
+        清空
       </el-button>
     </div>
 
@@ -43,7 +31,7 @@
       <el-table-column
         prop="idcard"
         label="身份证号"
-        width="400"
+        width="300"
         align="center">
       </el-table-column>
       <el-table-column
@@ -69,9 +57,6 @@
           <el-button
             size="mini"
             @click="handleEdit(scope.row)">查看</el-button>
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">停用</el-button>
           <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row)" style="margin-left: 10px">
             <template #reference>
               <el-button size="mini" type="danger">删除</el-button>
@@ -92,7 +77,9 @@ import { fetchList, fetchDelete, createArticle, updateArticle } from '@/api/user
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
-import {patientList} from "@/api/doctor"; // secondary package based on el-pagination
+import {patientList} from "@/api/doctor";
+import {formatDate} from "@/utils/dateFormate";
+import {date} from "jszip/lib/defaults"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -152,6 +139,13 @@ export default {
         title: '',
         type: ''
       },
+      OrignalListQuery: {
+        page: 1,
+        limit: 20,
+        importance: '',
+        title: '',
+        type: ''
+      },
       healthCareInfo: [],
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
@@ -187,6 +181,7 @@ export default {
     this.getList();
   },
   methods: {
+
     formatter(row, column) {
       return row.address;
     },
@@ -201,6 +196,7 @@ export default {
       if (role == "正常") return 'Pet'
       if (role == "停用") return 'Bathe'
     },
+
     getList() {
       this.listLoading = true
       patientList(this.listQuery).then(res =>{
@@ -214,8 +210,12 @@ export default {
       })
     },
     handleFilter() {
-      this.listQuery.page = 1
+      this.listQuery = this.OrignalListQuery;
       this.getList()
+    },
+    searchExam() {
+      this.listQuery.type = "name"
+      this.getList();
     },
     handleModifyStatus(row, status) {
       this.$message({
@@ -250,8 +250,11 @@ export default {
       }
     },
     handleEdit(row) {
-      console.log(row.userInfo.medicalexaminationfile)
-      this.$router.push({path:'/doctorHealthRecord/info' , query: {files: row.userInfo.medicalexaminationfile}});
+      console.log(row)
+      let playLoad = {}
+      playLoad.healthrecord = row.userInfo.healthrecord;
+      playLoad.healthCareInfo = this.healthCareInfo
+      this.$router.push({path:'/doctorHealthRecord/info' , query: {playLoad: playLoad}});
     },
     handleDelete(row) {
       console.log(row.id)

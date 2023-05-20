@@ -8,7 +8,6 @@ import router from '@/router'
 const service = axios.create({
   baseURL: 'http://localhost:9999', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
 })
 // 请求白名单，如果请求在白名单里面，将不会被拦截校验权限
 const whiteUrls = ['/user/login', '/user/register']
@@ -20,7 +19,7 @@ service.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
     // 取出store里面缓存的用户信息
-    const userJson = store.getters.token
+    const userJson = getToken()
     if (!whiteUrls.includes(config.url)) { // 校验请求白名单
       if (!userJson) {
         console.log('快去登陆')

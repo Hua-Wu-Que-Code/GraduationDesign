@@ -1,5 +1,6 @@
 package com.example.springboot.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.springboot.entity.*;
 import com.example.springboot.entity.eneityVO.HealthCareInfo;
 import com.example.springboot.entity.eneityVO.UserInfo;
@@ -68,7 +69,19 @@ public class DoctorController extends BaseController {
     @ResponseBody
     public Result patientList(@RequestBody ListQuery query) {
         String doctorId = (String) request.getAttribute("id");
-        ArrayList<Patient> patients = doctorMapper.patientList(query.getPage()-1,query.getLimit(),doctorId);
+        ArrayList<Patient> patients = new ArrayList<>();
+        if (query.getType().equals("name")) {
+            String title = query.getTitle();
+            List<User> users = userService.findUserByNickName(title);
+            ArrayList<Patient> p = new ArrayList<>();
+            users.forEach(u -> {
+                ArrayList<Patient> p1 = doctorMapper.searchExam(query.getPage()-1,query.getLimit(),doctorId,u.getId());
+                p.addAll(p1);
+            });
+            patients.addAll(p);
+        } else {
+            patients = doctorMapper.patientList(query.getPage()-1,query.getLimit(),doctorId);
+        }
         ArrayList<Patient> allPatients = doctorMapper.allPatientList(doctorId);
         //健康表信息
         HealthCareInfo healthCareInfo = new HealthCareInfo();
@@ -167,19 +180,19 @@ public class DoctorController extends BaseController {
                 healthrecord.setHeredityhistory(heritageUser);
 
                 //记录用户血型
-                healthrecord.setBloodType(commonMapper.userInfoBloodType(healthrecord.getBloodtypeID()));
+                healthrecord.setBloodType(commonMapper.userInfoBloodType(healthrecord.getBloodtypeid()));
                 //记录用户教育水平
-                healthrecord.setEducation(commonMapper.userInfoEducation(healthrecord.getEducationId()));
+                healthrecord.setEducation(commonMapper.userInfoEducation(healthrecord.getEducationid()));
                 //记录用户民族
-                healthrecord.setEthnicGroup(commonMapper.userInfoEthnicGroup(healthrecord.getEducationId()));
+                healthrecord.setEthnicGroup(commonMapper.userInfoEthnicGroup(healthrecord.getEthnicgroupid()));
                 //记录用户支付方式
-                healthrecord.setPamentmeth(commonMapper.userInfoPamentMeth(healthrecord.getPamentmethId()));
+                healthrecord.setPamentmeth(commonMapper.userInfoPamentMeth(healthrecord.getPamentmethid()));
                 //记录用户婚姻状况
-                healthrecord.setMarriage(commonMapper.userInfoMarrage(healthrecord.getMarriageId()));
+                healthrecord.setMarriage(commonMapper.userInfoMarrage(healthrecord.getMarriageid()));
                 //记录用户性别
-                healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexId()));
+                healthrecord.setSex(commonMapper.userInfoSex(healthrecord.getSexid() ));
                 //记录用户工作
-                healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkId()));
+                healthrecord.setWork(commonMapper.userInfoWork(healthrecord.getWorkid()));
             } else {
                 healthrecord = new Healthrecord();
                 healthrecord.setName(commonMapper.getUserName(userId));
@@ -251,6 +264,32 @@ public class DoctorController extends BaseController {
         return Result.succeed(healthCareInfo);
     }
 
+    /**
+     * 获取健康表信息
+     * @return
+     */
+    @RequestMapping("/updateHealthCard")
+    @CrossOrigin
+    @ResponseBody
+    public Result updateHealthCard(@RequestBody Map map) {
 
+
+        Object map1 = new Object();
+        map1 =  map.get("healthCare");
+        String s = JSON.toJSONString(map1);
+        Healthrecord healthrecord = JSON.parseObject(s,Healthrecord.class);
+        Healthrecord h1 = commonMapper.findHealthCordByUserId(healthrecord.getUserid());
+
+        if (h1 == null) {
+            healthCardMapper.insert(healthrecord);
+        } else {
+            healthrecord.setId(h1.getId());
+            healthCardMapper.update(healthrecord);
+        }
+        return Result.succeed("成功");
+
+
+
+    }
 
 }

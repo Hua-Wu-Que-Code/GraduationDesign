@@ -1,41 +1,32 @@
 package com.example.springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.w3c.dom.ls.LSException;
-
+import java.util.Date;
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.List;
 
 /**
  * 用户健康档案表(Healthrecord)实体类
  *
  * @author huawuque
- * @since 2023-04-16 23:14:23
+ * @since 2023-05-19 21:35:06
  */
 public class Healthrecord implements Serializable {
-    private static final long serialVersionUID = -69285681396590704L;
+    private static final long serialVersionUID = -69607476924870660L;
     /**
      * 健康档案表id
      */
-    @JsonIgnore
     private Integer id;
-    /**
-     * 姓名
-     */
-    private String name;
     /**
      * 用户ID
      */
     private String userid;
     /**
-     * 性别；0为男，1为女，3为不方便透露
+     * 性别
      */
-    @JsonIgnore
-    private Integer sexId;
-    private String sex;
+    private Integer sexid;
     /**
      * 出生日期
+
      */
     private Date date;
     /**
@@ -60,40 +51,38 @@ public class Healthrecord implements Serializable {
     private String contactphone;
     /**
      * 常住类型：
-        1:户籍
-        2:非户籍
+1:户籍
+2:非户籍
      */
     private Integer typeofpermanent;
     /**
      * 民族ID
      */
-    @JsonIgnore
-    private Integer ethnicgroupID;
-    private String ethnicGroup;
+    private Integer ethnicgroupid;
     /**
      * 血型
      */
-    @JsonIgnore
-    private Integer bloodtypeID;
-    private String bloodType;
+    private Integer bloodtypeid;
     /**
      * 文化程度
      */
-    @JsonIgnore
-    private Integer educationId;
-    private String education;
+    private Integer educationid;
     /**
      * 婚姻状况
      */
-    @JsonIgnore
-    private Integer marriageId;
-    private String marriage;
+    private Integer marriageid;
     /**
      * 支付方式
      */
-    @JsonIgnore
-    private Integer pamentmethId;
-    private String pamentmeth;
+    private Integer pamentmethid;
+    /**
+     * 姓名
+     */
+    private String name;
+    /**
+     * 职业
+     */
+    private Integer workid;
     /**
      * 过敏历史
      */
@@ -111,35 +100,92 @@ public class Healthrecord implements Serializable {
      * 残疾情况
      */
     private List<String> disabilities;
-
-    /**
-     * 工作情况
-     */
-    @JsonIgnore
-    private Integer workId;
+    private String ethnicGroup;
+    private String bloodType;
+    private String Sex;
+    private String education;
+    private String marriage;
+    private String pamentmeth;
     private String work;
 
-    /**
-     *健康表中是否存有数据
-     * 0表示无
-     * 1表示有
-     */
-    private int flag;
-
-    public int getFlag() {
-        return flag;
+    public List<String> getAllergyhistory() {
+        return allergyhistory;
     }
 
-    public void setFlag(int flag) {
-        this.flag = flag;
+    public void setAllergyhistory(List<String> allergyhistory) {
+        this.allergyhistory = allergyhistory;
     }
 
-    public Integer getWorkId() {
-        return workId;
+    public List<String> getDiseases() {
+        return diseases;
     }
 
-    public void setWorkId(Integer workId) {
-        this.workId = workId;
+    public void setDiseases(List<String> diseases) {
+        this.diseases = diseases;
+    }
+
+    public List<String> getHeredityhistory() {
+        return heredityhistory;
+    }
+
+    public void setHeredityhistory(List<String> heredityhistory) {
+        this.heredityhistory = heredityhistory;
+    }
+
+    public List<String> getDisabilities() {
+        return disabilities;
+    }
+
+    public void setDisabilities(List<String> disabilities) {
+        this.disabilities = disabilities;
+    }
+
+    public String getEthnicGroup() {
+        return ethnicGroup;
+    }
+
+    public void setEthnicGroup(String ethnicGroup) {
+        this.ethnicGroup = ethnicGroup;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(String marriage) {
+        this.marriage = marriage;
+    }
+
+    public String getPamentmeth() {
+        return pamentmeth;
+    }
+
+    public void setPamentmeth(String pamentmeth) {
+        this.pamentmeth = pamentmeth;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
     }
 
     public Integer getId() {
@@ -158,17 +204,13 @@ public class Healthrecord implements Serializable {
         this.userid = userid;
     }
 
-
-
-    public List<String> getDisabilities() {
-        return disabilities;
+    public Integer getSexid() {
+        return sexid;
     }
 
-    public void setDisabilities(List<String> disabilities) {
-        this.disabilities = disabilities;
+    public void setSexid(Integer sexid) {
+        this.sexid = sexid;
     }
-
-
 
     public Date getDate() {
         return date;
@@ -196,6 +238,14 @@ public class Healthrecord implements Serializable {
 
     public String getTelephone() {
         return telephone;
+    }
+
+    public String getSex() {
+        return Sex;
+    }
+
+    public void setSex(String sex) {
+        Sex = sex;
     }
 
     public void setTelephone(String telephone) {
@@ -226,44 +276,44 @@ public class Healthrecord implements Serializable {
         this.typeofpermanent = typeofpermanent;
     }
 
-    public Integer getEthnicgroupID() {
-        return ethnicgroupID;
+    public Integer getEthnicgroupid() {
+        return ethnicgroupid;
     }
 
-    public void setEthnicgroupID(Integer ethnicgroupID) {
-        this.ethnicgroupID = ethnicgroupID;
+    public void setEthnicgroupid(Integer ethnicgroupid) {
+        this.ethnicgroupid = ethnicgroupid;
     }
 
-    public Integer getBloodtypeID() {
-        return bloodtypeID;
+    public Integer getBloodtypeid() {
+        return bloodtypeid;
     }
 
-    public void setBloodtypeID(Integer bloodtypeID) {
-        this.bloodtypeID = bloodtypeID;
+    public void setBloodtypeid(Integer bloodtypeid) {
+        this.bloodtypeid = bloodtypeid;
     }
 
-    public List<String> getAllergyhistory() {
-        return allergyhistory;
+    public Integer getEducationid() {
+        return educationid;
     }
 
-    public void setAllergyhistory(List<String> allergyhistory) {
-        this.allergyhistory = allergyhistory;
+    public void setEducationid(Integer educationid) {
+        this.educationid = educationid;
     }
 
-    public List<String> getDiseases() {
-        return diseases;
+    public Integer getMarriageid() {
+        return marriageid;
     }
 
-    public void setDiseases(List<String> diseases) {
-        this.diseases = diseases;
+    public void setMarriageid(Integer marriageid) {
+        this.marriageid = marriageid;
     }
 
-    public List<String> getHeredityhistory() {
-        return heredityhistory;
+    public Integer getPamentmethid() {
+        return pamentmethid;
     }
 
-    public void setHeredityhistory(List<String> heredityhistory) {
-        this.heredityhistory = heredityhistory;
+    public void setPamentmethid(Integer pamentmethid) {
+        this.pamentmethid = pamentmethid;
     }
 
     public String getName() {
@@ -274,92 +324,13 @@ public class Healthrecord implements Serializable {
         this.name = name;
     }
 
-    public String getBloodType() {
-        return bloodType;
+    public Integer getWorkid() {
+        return workid;
     }
 
-    public void setBloodType(String bloodType) {
-        this.bloodType = bloodType;
+    public void setWorkid(Integer workid) {
+        this.workid = workid;
     }
 
-    public Integer getEducationId() {
-        return educationId;
-    }
-
-    public void setEducationId(Integer educationId) {
-        this.educationId = educationId;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public Integer getSexId() {
-        return sexId;
-    }
-
-    public void setSexId(Integer sexId) {
-        this.sexId = sexId;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getEthnicGroup() {
-        return ethnicGroup;
-    }
-
-    public void setEthnicGroup(String ethnicGroup) {
-        this.ethnicGroup = ethnicGroup;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public Integer getMarriageId() {
-        return marriageId;
-    }
-
-    public void setMarriageId(Integer marriageId) {
-        this.marriageId = marriageId;
-    }
-
-    public String getMarriage() {
-        return marriage;
-    }
-
-    public void setMarriage(String marriage) {
-        this.marriage = marriage;
-    }
-
-    public Integer getPamentmethId() {
-        return pamentmethId;
-    }
-
-    public void setPamentmethId(Integer pamentmethId) {
-        this.pamentmethId = pamentmethId;
-    }
-
-    public String getPamentmeth() {
-        return pamentmeth;
-    }
-
-    public void setPamentmeth(String pamentmeth) {
-        this.pamentmeth = pamentmeth;
-    }
-
-    public String getWork() {
-        return work;
-    }
-
-    public void setWork(String work) {
-        this.work = work;
-    }
 }
 

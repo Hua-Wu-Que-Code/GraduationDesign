@@ -3,6 +3,7 @@ package com.example.springboot.mapper;
 import com.example.springboot.entity.*;
 import org.apache.ibatis.annotations.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,4 +97,34 @@ public interface CommonMapper {
 
     @Select("select * from supplier_drug where supplierId = #{supplierId} and drugId = #{drugid}")
     SupplierDrug findSupplierById(String supplierId, String drugid);
+
+    @Select("select * from exeFre")
+    ArrayList<Exefre> findExeFre();
+
+    @Select("select * from smoke")
+    ArrayList<Smoke> findSmoke();
+
+    @Select("select * from drink")
+    ArrayList<Drink> findDrinks();
+
+
+
+    @Select("select * from sport")
+    ArrayList<Sport> findSports();
+
+    @Select("select * from sex")
+    ArrayList<Sex> findSex();
+
+    @Select("select * from drink")
+    ArrayList<Lip> findLips();
+
+    @Select("select * from lintening")
+    ArrayList<Lintening> findListenings();
+
+    @Select("select * from pharynx")
+    ArrayList<Pharynx> findPharynxes();
+
+
+    @Select("select * from healthRecord where userID =#{userid}")
+    Healthrecord findHealthCordByUserId(String userid);
 }

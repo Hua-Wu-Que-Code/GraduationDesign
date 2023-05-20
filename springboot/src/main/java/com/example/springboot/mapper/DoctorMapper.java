@@ -29,4 +29,7 @@ public interface DoctorMapper {
 
     @Select("select * from patient where doctorId = #{doctorId} ")
     ArrayList<Patient> allPatientList(String doctorId);
+
+    @Select("select * from patient where doctorId = #{doctorId} and id = #{title} limit #{page},#{limit}")
+    ArrayList<Patient> searchExam(int page, int limit, String doctorId, String title);
 }

@@ -57,4 +57,7 @@ public interface UserMapper {
 
     @Select("select * from sex ")
     List<Sex> healthCareInfoSex();
+
+    @Select("select * from user where nickName = #{title}")
+    List<User> findUserByNickName(String title);
 }

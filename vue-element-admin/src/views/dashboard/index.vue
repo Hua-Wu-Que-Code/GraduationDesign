@@ -6,14 +6,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-import doctorDashboard from './doctor'
-import applierDashboard from './supplier'
+import supplierDashboard from '../supplier/supplierDrugMage/index.vue'
 import patientDashboard from './patient'
-
+import doctorDashboard from '../doctor/clinicDrugMage/index.vue'
+import adminDashboard from '../drug-admin/index.vue'
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, doctorDashboard,  applierDashboard, patientDashboard},
+  components: { adminDashboard, doctorDashboard,  supplierDashboard, patientDashboard},
   data() {
     return {
       currentRole: 'adminDashboard'

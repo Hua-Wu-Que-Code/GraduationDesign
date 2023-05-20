@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ExamMapper">
+
+    <resultMap type="com.example.springboot.entity.Exam" id="ExamMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="userName" jdbcType="VARCHAR"/>
+        <result property="userid" column="userID" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="doctorname" column="doctorName" jdbcType="VARCHAR"/>
+        <result property="temperature" column="temperature" jdbcType="VARCHAR"/>
+        <result property="pulse" column="pulse" jdbcType="VARCHAR"/>
+        <result property="lsbp" column="LSBP" jdbcType="VARCHAR"/>
+        <result property="lsrp" column="LSRP" jdbcType="VARCHAR"/>
+        <result property="rsbp" column="RSBP" jdbcType="VARCHAR"/>
+        <result property="rsrp" column="RSRP" jdbcType="VARCHAR"/>
+        <result property="hight" column="hight" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="VARCHAR"/>
+        <result property="bmi" column="BMI" jdbcType="VARCHAR"/>
+        <result property="waistline" column="waistline" jdbcType="VARCHAR"/>
+        <result property="doctorid" column="doctorID" jdbcType="VARCHAR"/>
+        <result property="exefreid" column="exeFreID" jdbcType="INTEGER"/>
+        <result property="smokeid" column="smokeID" jdbcType="INTEGER"/>
+        <result property="drinkid" column="drinkID" jdbcType="INTEGER"/>
+        <result property="sexid" column="sexId" jdbcType="INTEGER"/>
+        <result property="lintenid" column="lintenID" jdbcType="INTEGER"/>
+        <result property="lacuity" column="LAcuity" jdbcType="VARCHAR"/>
+        <result property="racuity" column="RAcuity" jdbcType="VARCHAR"/>
+        <result property="clv" column="CLV" jdbcType="VARCHAR"/>
+        <result property="crv" column="CRV" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ExamMap">
+        select
+          id, userName, userID, date, doctorName, temperature, pulse, LSBP, LSRP, RSBP, RSRP, hight, weight, BMI, waistline, doctorID, exeFreID, smokeID, drinkID, sexId, lintenID, LAcuity, RAcuity, CLV, CRV
+        from exam
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ExamMap">
+        select
+          id, userName, userID, date, doctorName, temperature, pulse, LSBP, LSRP, RSBP, RSRP, hight, weight, BMI, waistline, doctorID, exeFreID, smokeID, drinkID, sexId, lintenID, LAcuity, RAcuity, CLV, CRV
+        from exam
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and userName = #{username}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="doctorname != null and doctorname != ''">
+                and doctorName = #{doctorname}
+            </if>
+            <if test="temperature != null and temperature != ''">
+                and temperature = #{temperature}
+            </if>
+            <if test="pulse != null and pulse != ''">
+                and pulse = #{pulse}
+            </if>
+            <if test="lsbp != null and lsbp != ''">
+                and LSBP = #{lsbp}
+            </if>
+            <if test="lsrp != null and lsrp != ''">
+                and LSRP = #{lsrp}
+            </if>
+            <if test="rsbp != null and rsbp != ''">
+                and RSBP = #{rsbp}
+            </if>
+            <if test="rsrp != null and rsrp != ''">
+                and RSRP = #{rsrp}
+            </if>
+            <if test="hight != null and hight != ''">
+                and hight = #{hight}
+            </if>
+            <if test="weight != null and weight != ''">
+                and weight = #{weight}
+            </if>
+            <if test="bmi != null and bmi != ''">
+                and BMI = #{bmi}
+            </if>
+            <if test="waistline != null and waistline != ''">
+                and waistline = #{waistline}
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                and doctorID = #{doctorid}
+            </if>
+            <if test="exefreid != null">
+                and exeFreID = #{exefreid}
+            </if>
+            <if test="smokeid != null">
+                and smokeID = #{smokeid}
+            </if>
+            <if test="drinkid != null">
+                and drinkID = #{drinkid}
+            </if>
+            <if test="sexid != null">
+                and sexId = #{sexid}
+            </if>
+            <if test="lintenid != null">
+                and lintenID = #{lintenid}
+            </if>
+            <if test="lacuity != null and lacuity != ''">
+                and LAcuity = #{lacuity}
+            </if>
+            <if test="racuity != null and racuity != ''">
+                and RAcuity = #{racuity}
+            </if>
+            <if test="clv != null and clv != ''">
+                and CLV = #{clv}
+            </if>
+            <if test="crv != null and crv != ''">
+                and CRV = #{crv}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from exam
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and userName = #{username}
+            </if>
+            <if test="userid != null and userid != ''">
+                and userID = #{userid}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="doctorname != null and doctorname != ''">
+                and doctorName = #{doctorname}
+            </if>
+            <if test="temperature != null and temperature != ''">
+                and temperature = #{temperature}
+            </if>
+            <if test="pulse != null and pulse != ''">
+                and pulse = #{pulse}
+            </if>
+            <if test="lsbp != null and lsbp != ''">
+                and LSBP = #{lsbp}
+            </if>
+            <if test="lsrp != null and lsrp != ''">
+                and LSRP = #{lsrp}
+            </if>
+            <if test="rsbp != null and rsbp != ''">
+                and RSBP = #{rsbp}
+            </if>
+            <if test="rsrp != null and rsrp != ''">
+                and RSRP = #{rsrp}
+            </if>
+            <if test="hight != null and hight != ''">
+                and hight = #{hight}
+            </if>
+            <if test="weight != null and weight != ''">
+                and weight = #{weight}
+            </if>
+            <if test="bmi != null and bmi != ''">
+                and BMI = #{bmi}
+            </if>
+            <if test="waistline != null and waistline != ''">
+                and waistline = #{waistline}
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                and doctorID = #{doctorid}
+            </if>
+            <if test="exefreid != null">
+                and exeFreID = #{exefreid}
+            </if>
+            <if test="smokeid != null">
+                and smokeID = #{smokeid}
+            </if>
+            <if test="drinkid != null">
+                and drinkID = #{drinkid}
+            </if>
+            <if test="sexid != null">
+                and sexId = #{sexid}
+            </if>
+            <if test="lintenid != null">
+                and lintenID = #{lintenid}
+            </if>
+            <if test="lacuity != null and lacuity != ''">
+                and LAcuity = #{lacuity}
+            </if>
+            <if test="racuity != null and racuity != ''">
+                and RAcuity = #{racuity}
+            </if>
+            <if test="clv != null and clv != ''">
+                and CLV = #{clv}
+            </if>
+            <if test="crv != null and crv != ''">
+                and CRV = #{crv}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into exam(userName, userID, date, doctorName, temperature, pulse, LSBP, LSRP, RSBP, RSRP, hight, weight, BMI, waistline, doctorID, exeFreID, smokeID, drinkID, sexId, lintenID, LAcuity, RAcuity, CLV, CRV)
+        values (#{username}, #{userid}, #{date}, #{doctorname}, #{temperature}, #{pulse}, #{lsbp}, #{lsrp}, #{rsbp}, #{rsrp}, #{hight}, #{weight}, #{bmi}, #{waistline}, #{doctorid}, #{exefreid}, #{smokeid}, #{drinkid}, #{sexid}, #{lintenid}, #{lacuity}, #{racuity}, #{clv}, #{crv})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into exam(userName, userID, date, doctorName, temperature, pulse, LSBP, LSRP, RSBP, RSRP, hight, weight, BMI, waistline, doctorID, exeFreID, smokeID, drinkID, sexId, lintenID, LAcuity, RAcuity, CLV, CRV)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.username}, #{entity.userid}, #{entity.date}, #{entity.doctorname}, #{entity.temperature}, #{entity.pulse}, #{entity.lsbp}, #{entity.lsrp}, #{entity.rsbp}, #{entity.rsrp}, #{entity.hight}, #{entity.weight}, #{entity.bmi}, #{entity.waistline}, #{entity.doctorid}, #{entity.exefreid}, #{entity.smokeid}, #{entity.drinkid}, #{entity.sexid}, #{entity.lintenid}, #{entity.lacuity}, #{entity.racuity}, #{entity.clv}, #{entity.crv})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into exam(userName, userID, date, doctorName, temperature, pulse, LSBP, LSRP, RSBP, RSRP, hight, weight, BMI, waistline, doctorID, exeFreID, smokeID, drinkID, sexId, lintenID, LAcuity, RAcuity, CLV, CRV)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.userid}, #{entity.date}, #{entity.doctorname}, #{entity.temperature}, #{entity.pulse}, #{entity.lsbp}, #{entity.lsrp}, #{entity.rsbp}, #{entity.rsrp}, #{entity.hight}, #{entity.weight}, #{entity.bmi}, #{entity.waistline}, #{entity.doctorid}, #{entity.exefreid}, #{entity.smokeid}, #{entity.drinkid}, #{entity.sexid}, #{entity.lintenid}, #{entity.lacuity}, #{entity.racuity}, #{entity.clv}, #{entity.crv})
+        </foreach>
+        on duplicate key update
+        userName = values(userName),
+        userID = values(userID),
+        date = values(date),
+        doctorName = values(doctorName),
+        temperature = values(temperature),
+        pulse = values(pulse),
+        LSBP = values(LSBP),
+        LSRP = values(LSRP),
+        RSBP = values(RSBP),
+        RSRP = values(RSRP),
+        hight = values(hight),
+        weight = values(weight),
+        BMI = values(BMI),
+        waistline = values(waistline),
+        doctorID = values(doctorID),
+        exeFreID = values(exeFreID),
+        smokeID = values(smokeID),
+        drinkID = values(drinkID),
+        sexId = values(sexId),
+        lintenID = values(lintenID),
+        LAcuity = values(LAcuity),
+        RAcuity = values(RAcuity),
+        CLV = values(CLV),
+        CRV = values(CRV)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update exam
+        <set>
+            <if test="username != null and username != ''">
+                userName = #{username},
+            </if>
+            <if test="userid != null and userid != ''">
+                userID = #{userid},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="doctorname != null and doctorname != ''">
+                doctorName = #{doctorname},
+            </if>
+            <if test="temperature != null and temperature != ''">
+                temperature = #{temperature},
+            </if>
+            <if test="pulse != null and pulse != ''">
+                pulse = #{pulse},
+            </if>
+            <if test="lsbp != null and lsbp != ''">
+                LSBP = #{lsbp},
+            </if>
+            <if test="lsrp != null and lsrp != ''">
+                LSRP = #{lsrp},
+            </if>
+            <if test="rsbp != null and rsbp != ''">
+                RSBP = #{rsbp},
+            </if>
+            <if test="rsrp != null and rsrp != ''">
+                RSRP = #{rsrp},
+            </if>
+            <if test="hight != null and hight != ''">
+                hight = #{hight},
+            </if>
+            <if test="weight != null and weight != ''">
+                weight = #{weight},
+            </if>
+            <if test="bmi != null and bmi != ''">
+                BMI = #{bmi},
+            </if>
+            <if test="waistline != null and waistline != ''">
+                waistline = #{waistline},
+            </if>
+            <if test="doctorid != null and doctorid != ''">
+                doctorID = #{doctorid},
+            </if>
+            <if test="exefreid != null">
+                exeFreID = #{exefreid},
+            </if>
+            <if test="smokeid != null">
+                smokeID = #{smokeid},
+            </if>
+            <if test="drinkid != null">
+                drinkID = #{drinkid},
+            </if>
+            <if test="sexid != null">
+                sexId = #{sexid},
+            </if>
+            <if test="lintenid != null">
+                lintenID = #{lintenid},
+            </if>
+            <if test="lacuity != null and lacuity != ''">
+                LAcuity = #{lacuity},
+            </if>
+            <if test="racuity != null and racuity != ''">
+                RAcuity = #{racuity},
+            </if>
+            <if test="clv != null and clv != ''">
+                CLV = #{clv},
+            </if>
+            <if test="crv != null and crv != ''">
+                CRV = #{crv},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from exam where id = #{id}
+    </delete>
+
+</mapper>
+

@@ -63,3 +63,6 @@ export function DrugSoleList(query) {
     type: query.type
   })
 }
+export function allDrugs() {
+  return request.post('/drug/allDrugs')
+}

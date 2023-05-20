@@ -1,7 +1,7 @@
 <template>
   <div class="user-activity">
     <div class="post" v-for="i in MedicalExaminationFile">
-      <div class="user-block">
+      <div class="user-block" @click="toDetail(i.detailinfo)">
         <img class="img-circle" :src=i.src>
         <span class="username text-muted">{{i.nickname}}</span>
         <span class="date">{{i.date | formatDate}}</span>
@@ -22,7 +22,6 @@ export default {
     MedicalExaminationFile: []
   },
   created() {
-
   },
   filters: {
     formatDate(time) {
@@ -33,7 +32,12 @@ export default {
   data() {
     return {
     }
-  }
+  },
+  methods:{
+    toDetail(id) {
+      this.$router.push({path:'/doctorHealthExm/detail',query: {id: id}});
+    },
+  },
 }
 </script>
 

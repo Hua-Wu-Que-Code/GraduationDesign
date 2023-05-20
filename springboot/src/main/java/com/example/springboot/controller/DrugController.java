@@ -279,6 +279,31 @@ public class DrugController extends BaseController{
         return Result.succeed("成功");
     }
 
+    /**
+     * 查找医生诊所所有可用药
+     * @return
+     */
+    @RequestMapping("/allDrugs")
+    @CrossOrigin
+    @ResponseBody
+    public Result allDrugs() {
+        String doctorId = (String) request.getAttribute("id");
+
+        String clinicId = commonMapper.findClinicByDoctorId(doctorId);
+
+        ArrayList<ClinicDrug> clinicDrugs = drugMapper.findDrugsDoctorOk(clinicId,0,100);
+        clinicDrugs.forEach(item-> {
+            String drugId = item.getDrugid();
+            List<Drug> drugs = drugMapper.findDrugsSearchID(drugId);
+            Drug d = drugs.get(0);
+            String classifyid = d.getClassifyid();
+            d.setDrugclass(drugMapper.findClassById(classifyid));
+            item.setDrug(d);
+
+        });
+        return Result.succeed(clinicDrugs);
+    }
+
 
 
 

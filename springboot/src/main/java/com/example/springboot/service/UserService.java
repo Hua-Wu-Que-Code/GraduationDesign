@@ -79,4 +79,8 @@ public class UserService{
     public List<Sex> healthCareInfoSex() {
         return userMapper.healthCareInfoSex();
     }
+
+    public List<User> findUserByNickName(String title) {
+        return userMapper.findUserByNickName(title);
+    }
 }

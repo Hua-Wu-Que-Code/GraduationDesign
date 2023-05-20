@@ -56,6 +56,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/signUp',
+    component: () => import('@/views/signIn/index'),
+    hidden: true
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
@@ -122,6 +127,7 @@ export const asyncRoutes = [
   {
     path: '/drugAdmin',
     component: Layout,
+    hidden: true,
     meta: {
       roles: ['admin']
     },
@@ -137,6 +143,7 @@ export const asyncRoutes = [
   {
     path: '/clinicDrugAdmin',
     component: Layout,
+    hidden: true,
     meta: {
       roles: ['doctor'],
     },
@@ -194,7 +201,7 @@ export const asyncRoutes = [
       {
         path: 'info',
         hidden: true,
-        component: () => import('@/views/doctor/healthRecordMage/detailInfo.vue'),
+        component: () => import('@/views/doctor/healthRecordMage/components/HealthRecord.vue'),
         name: 'DrugAdmin',
         meta: { title: '健康档案详情', icon: 'icon' }
       }
@@ -218,27 +225,19 @@ export const asyncRoutes = [
         hidden: true,
         component: () => import('@/views/doctor/healthExmMage/detailInfo.vue'),
         name: 'DrugAdmin',
+        meta: { title: '体检列表', icon: 'icon' }
+      },
+      {
+        path: 'detail',
+        hidden: true,
+        component: () => import('@/views/doctor/healthExmMage/components/File.vue'),
+        name: 'DrugAdmin',
         meta: { title: '体检详情', icon: 'icon' }
       }
     ]
   },
   {
-    path: '/oldAndBron',
-    component: Layout,
-    meta: {
-      roles: ['doctor'],
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/doctor/oldMage/index'),
-        name: 'DrugAdmin',
-        meta: { title: '老年人.新生儿管理', icon: 'icon' }
-      },
-    ]
-  },
-  {
-    path: '/chronic',
+    path: '/clinic',
     component: Layout,
     meta: {
       roles: ['doctor'],
@@ -248,13 +247,14 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/doctor/chronicMag/index'),
         name: 'DrugAdmin',
-        meta: { title: '慢性病管理', icon: 'icon' }
+        meta: { title: '诊断', icon: 'icon' }
       },
     ]
   },
   {
     path: '/supplierDrugAdmin',
     component: Layout,
+    hidden: true,
     meta: {
       roles: ['supplier']
     },

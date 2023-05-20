@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+    <el-form ref="loginForm" :model="注册" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">登录界面</h3>
+        <h3 class="title">Login Form</h3>
       </div>
 
       <el-form-item prop="username">
@@ -21,38 +21,15 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon icon-class="password" />
-          </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
-        </el-form-item>
-      </el-tooltip>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="Submit()">注册</el-button>
 
       <div style="position:relative">
         <div class="tips">
+
         </div>
         <div class="tips">
           <span style="margin-right:18px;"></span>
-
+          <span></span>
         </div>
       </div>
     </el-form>
@@ -70,8 +47,6 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
-import router from "@/router";
-import {mapGetters} from "vuex";
 
 export default {
   name: 'Login',
@@ -94,19 +69,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '123321'
+
       },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      passwordType: 'password',
-      capsTooltip: false,
-      loading: false,
-      showDialog: false,
-      redirect: undefined,
-      otherQuery: {}
     }
   },
   watch: {
@@ -120,11 +84,6 @@ export default {
       },
       immediate: true
     }
-  },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
@@ -140,22 +99,8 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    toSignIn(){
-      router.push('/signUp')
-    },
-    checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
-    },
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+    Submit(){
+      this.$router.push({ path: '/signUp'})
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -174,33 +119,7 @@ export default {
           return false
         }
       })
-    },
-    getOtherQuery(query) {
-      return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
-        }
-        return acc
-      }, {})
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>

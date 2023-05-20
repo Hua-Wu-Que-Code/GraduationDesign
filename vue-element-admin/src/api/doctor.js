@@ -20,3 +20,18 @@ export function patientList(query) {
     type: query.type
   })
 }
+
+export function updateHealthCard(healthCare) {
+  return request.post('/doctor/updateHealthCard',{
+    healthCare:healthCare
+  })
+}
+export function insertCure(CureOrder) {
+  return request.post('/cureOrder/insertCure',{
+    CureOrder:CureOrder
+  })
+}
+
+
+
+

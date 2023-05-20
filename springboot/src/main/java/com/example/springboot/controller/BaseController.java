@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseController {
 
     @Autowired
+    ExamMapper examMapper;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -53,6 +56,21 @@ public class BaseController {
 
     @Autowired
     SupplierMapper supplierMapper;
+
+    @Autowired
+    ExamInfoService examInfoService;
+
+    @Autowired
+    MedicalexaminationfileMapper medicalexaminationfileMapper;
+
+    @Autowired
+    HealthCardMapper healthCardMapper;
+
+    @Autowired
+    CureorderitemMapper cureorderitemMapper;
+
+    @Autowired
+    CureOrderMapper cureOrderMapper;
 
 
 }
